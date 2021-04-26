@@ -1,4 +1,4 @@
-package com.gitut
+package com.mychefassistant
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

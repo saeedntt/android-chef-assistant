@@ -1,4 +1,4 @@
-package com.gitut
+package com.mychefassistant
 
 import org.junit.Test
 
