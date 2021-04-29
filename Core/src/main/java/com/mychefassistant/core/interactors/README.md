@@ -1,1 +1,0 @@
-This layer converts and passes user actions, also known as use cases, to inner layers of the application.
