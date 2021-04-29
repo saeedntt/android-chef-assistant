@@ -1,1 +1,0 @@
-The Domain layer contains all the models and business rules of your app. 
