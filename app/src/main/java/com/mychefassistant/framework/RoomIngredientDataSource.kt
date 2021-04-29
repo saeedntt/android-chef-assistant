@@ -1,12 +1,13 @@
 package com.mychefassistant.framework
 
-import com.mychefassistant.core.data.IngredientDataSource
+import com.mychefassistant.core.data.datasource.IngredientDataSource
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.core.domain.Ingredient
 import com.mychefassistant.framework.db.IngredientDao
 import com.mychefassistant.framework.db.IngredientEntity
 
-class RoomIngredientDataSource(private val ingredientDao: IngredientDao) : IngredientDataSource {
+class RoomIngredientDataSource(private val ingredientDao: IngredientDao) :
+    IngredientDataSource {
     override suspend fun add(kitchen: Kitchen, ingredient: Ingredient) = ingredientDao.addIngredient(
         IngredientEntity(kitchen = kitchen.id, title = ingredient.name, quantity = ingredient.quantity)
     )

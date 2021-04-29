@@ -1,11 +1,12 @@
 package com.mychefassistant.framework
 
-import com.mychefassistant.core.data.KitchenDataSource
+import com.mychefassistant.core.data.datasource.KitchenDataSource
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.framework.db.KitchenDao
 import com.mychefassistant.framework.db.KitchenEntity
 
-class RoomKitchenDataSource(private val kitchenDao: KitchenDao) : KitchenDataSource {
+class RoomKitchenDataSource(private val kitchenDao: KitchenDao) :
+    KitchenDataSource {
     override suspend fun add(kitchen: Kitchen) = kitchenDao.addKitchen(
         KitchenEntity(title = kitchen.title)
     )
