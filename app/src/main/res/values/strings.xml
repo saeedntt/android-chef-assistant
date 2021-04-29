@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">MyChefAssistant</string>
+    <string name="app_name">My Chef Assistant</string>
+    <string name="nav_header_desc">Navigation Description</string>
+    <string name="nav_header_subtitle">Kitchen management</string>
+    <string name="version">Version</string>
+    <string name="kitchen">Kitchen</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="setting">Setting</string>
+    <string name="about">About us</string>
+    <string name="add_kitchen">Add new Kitchen</string>
+    <string name="title">Title</string>
+    <string name="kitchen_location">Kitchen location</string>
+    <string name="insert">Insert</string>
+    <string name="cant_empty">Can\'t empty</string>
+    <string name="remove">Remove</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>

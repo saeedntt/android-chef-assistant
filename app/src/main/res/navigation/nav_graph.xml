@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/kitchen">
+
+    <fragment
+        android:id="@+id/kitchen"
+        android:name="com.mychefassistant.presentation.kitchen.manage.KitchenManageFragment"
+        android:label="@string/kitchen"
+        tools:layout="@layout/fragment_kitchen">
+        <action
+            android:id="@+id/action_kitchen_to_kitchen_insert"
+            app:destination="@id/kitchen_insert"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/kitchen"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_kitchen_to_ingredient"
+            app:destination="@id/ingredient" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/kitchen_insert"
+        android:name="com.mychefassistant.presentation.kitchen.insert.KitchenInsertFragment"
+        android:label="@string/kitchen"
+        tools:layout="@layout/fragment_kitchen_insert" />
+
+    <fragment
+        android:id="@+id/ingredient"
+        android:name="com.mychefassistant.presentation.ingredient.IngredientFragment"
+        android:label="@string/ingredient"
+        tools:layout="@layout/fragment_ingredient" />
+
+</navigation>
