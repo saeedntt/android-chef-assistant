@@ -11,7 +11,7 @@ class ChefAssistantApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@ChefAssistantApplication)
-            modules(databaseModule, roomsModel, fragmentModel)
+            modules(databaseModule, roomsModule, fragmentModule)
         }
     }
 }

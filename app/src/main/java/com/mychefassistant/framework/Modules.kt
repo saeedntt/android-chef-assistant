@@ -28,7 +28,7 @@ val databaseModule = module {
     single { get<ChefAssistantDatabase>().ingredientDao() }
 }
 
-val roomsModel = module {
+val roomsModule = module {
     single { RoomKitchenDataSource(get()) as KitchenDataSource }
     single { RoomIngredientDataSource(get()) as IngredientDataSource }
     single { KitchenRepository(get()) }
@@ -49,7 +49,7 @@ val roomsModel = module {
     }
 }
 
-val fragmentModel = module {
+val fragmentModule = module {
     viewModel { KitchenManageViewModel(androidApplication(), get()) }
     viewModel { KitchenInsertViewModel(androidApplication(), get()) }
     viewModel { IngredientViewModel(androidApplication(), get()) }
