@@ -1,6 +1,6 @@
 package com.mychefassistant.core.interactors
 
-import com.mychefassistant.core.data.IngredientRepository
+import com.mychefassistant.core.data.repository.IngredientRepository
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.core.domain.Ingredient
 

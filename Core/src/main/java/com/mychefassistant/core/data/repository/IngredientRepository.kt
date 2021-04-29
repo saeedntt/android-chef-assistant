@@ -1,5 +1,6 @@
-package com.mychefassistant.core.data
+package com.mychefassistant.core.data.repository
 
+import com.mychefassistant.core.data.datasource.IngredientDataSource
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.core.domain.Ingredient
 

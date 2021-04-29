@@ -1,5 +1,6 @@
-package com.mychefassistant.core.data
+package com.mychefassistant.core.data.repository
 
+import com.mychefassistant.core.data.datasource.KitchenDataSource
 import com.mychefassistant.core.domain.Kitchen
 
 class KitchenRepository(private val dataSource: KitchenDataSource) {

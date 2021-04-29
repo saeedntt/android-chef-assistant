@@ -1,4 +1,4 @@
-package com.mychefassistant.core.data
+package com.mychefassistant.core.data.datasource
 
 import com.mychefassistant.core.domain.Kitchen
 
