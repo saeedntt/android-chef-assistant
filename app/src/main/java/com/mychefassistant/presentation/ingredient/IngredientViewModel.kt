@@ -1,6 +1,5 @@
 package com.mychefassistant.presentation.ingredient
 
-import androidx.lifecycle.MutableLiveData
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.framework.Interactors
@@ -8,12 +7,26 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class IngredientViewModel(private val interactors: Interactors) : ChefAssistantViewModel() {
+    private var kitchenId = 0
+    lateinit var kitchen: Kitchen
 
-    val kitchen: MutableLiveData<Kitchen> = MutableLiveData()
+    fun setKitchenId(id: Int) {
+        kitchenId = id
+    }
 
-    fun loadKitchen(id: Int) {
+    private fun loadKitchen() {
         GlobalScope.launch {
-            kitchen.postValue(interactors.getKitchenById(id))
+            kitchen = interactors.getKitchenById(kitchenId)
+            setEvent(onKitchenLoad, kitchen)
         }
+    }
+
+    override fun start() {
+        loadKitchen()
+    }
+
+    companion object {
+        const val onKitchenNotFound = "onKitchenNotFound"
+        const val onKitchenLoad = "onKitchenLoad"
     }
 }

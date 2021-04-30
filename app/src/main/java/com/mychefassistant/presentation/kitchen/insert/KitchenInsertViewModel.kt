@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class KitchenInsertViewModel(private val interactors: Interactors) : ChefAssistantViewModel() {
-
     fun addKitchen(title: String, icon: Int?, location: Int?) {
         GlobalScope.launch {
             withContext(Dispatchers.IO) {

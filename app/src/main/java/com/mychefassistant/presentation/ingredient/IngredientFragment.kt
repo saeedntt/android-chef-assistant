@@ -8,13 +8,11 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.mychefassistant.R
-import com.mychefassistant.core.domain.Kitchen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class IngredientFragment : Fragment() {
-    private val ingredientViewModel: IngredientViewModel by viewModel()
+    private val viewModel: IngredientViewModel by viewModel()
     private var kitchenId = 0
-    private lateinit var kitchen: Kitchen
     private lateinit var title: TextView
 
     override fun onCreateView(
@@ -34,11 +32,13 @@ class IngredientFragment : Fragment() {
         getArgs()
         title = view.findViewById(R.id.title)
 
-        ingredientViewModel.kitchen.observe(viewLifecycleOwner, Observer {
-            kitchen = it
-            loadedKitchen()
+        viewModel.event.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                IngredientViewModel.onKitchenLoad -> onKitchenLoad()
+            }
         })
-        ingredientViewModel.loadKitchen(kitchenId)
+        viewModel.setKitchenId(kitchenId)
+        viewModel.start()
     }
 
     private fun getArgs() {
@@ -47,7 +47,7 @@ class IngredientFragment : Fragment() {
         }
     }
 
-    private fun loadedKitchen(){
-        title.text = kitchen.title
+    private fun onKitchenLoad() {
+        title.text = viewModel.kitchen.title
     }
 }

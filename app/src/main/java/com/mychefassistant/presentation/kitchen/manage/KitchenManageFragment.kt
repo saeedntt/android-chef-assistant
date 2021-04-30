@@ -17,7 +17,7 @@ import com.mychefassistant.core.domain.Kitchen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class KitchenManageFragment : Fragment() {
-    private val kitchenManageViewModel: KitchenManageViewModel by viewModel()
+    private val viewModel: KitchenManageViewModel by viewModel()
     private lateinit var listView: RecyclerView
     private lateinit var fab: FloatingActionButton
 
@@ -38,6 +38,8 @@ class KitchenManageFragment : Fragment() {
 
         fab = view.findViewById(R.id.fab)
         setupFab()
+
+        viewModel.start()
     }
 
     private fun setupListView() {
@@ -47,10 +49,9 @@ class KitchenManageFragment : Fragment() {
             context, RecyclerView.VERTICAL, false
         )
         listView.adapter = adapter
-        kitchenManageViewModel.kitchens.observe(viewLifecycleOwner, Observer {
+        viewModel.kitchens.observe(viewLifecycleOwner, Observer {
             adapter.update(it)
         })
-        kitchenManageViewModel.loadKitchens()
     }
 
     private fun setupFab() {
@@ -75,7 +76,7 @@ class KitchenManageFragment : Fragment() {
                 // skip
             }
             .setPositiveButton(context?.getString(R.string.yes)) { _, _ ->
-                kitchenManageViewModel.removeKitchen(item)
+                viewModel.removeKitchen(item)
             }
             .show()
     }
