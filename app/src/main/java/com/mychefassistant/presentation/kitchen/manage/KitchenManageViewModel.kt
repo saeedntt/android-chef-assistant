@@ -1,6 +1,5 @@
 package com.mychefassistant.presentation.kitchen.manage
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.framework.ChefAssistantViewModel
@@ -10,8 +9,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class KitchenManageViewModel(application: Application, interactors: Interactors) :
-    ChefAssistantViewModel(application, interactors) {
+class KitchenManageViewModel(private val interactors: Interactors) : ChefAssistantViewModel() {
 
     val kitchens: MutableLiveData<List<Kitchen>> = MutableLiveData()
 
