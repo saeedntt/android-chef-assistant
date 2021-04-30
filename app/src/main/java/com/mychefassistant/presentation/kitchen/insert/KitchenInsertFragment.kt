@@ -14,7 +14,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class KitchenInsertFragment : Fragment() {
-    private val kitchenInsertViewModel: KitchenInsertViewModel by viewModel()
+    private val viewModel: KitchenInsertViewModel by viewModel()
     private lateinit var titleInput: TextInputEditText
     private lateinit var titleInputLayout: TextInputLayout
     private lateinit var locationInput: TextInputEditText
@@ -52,7 +52,7 @@ class KitchenInsertFragment : Fragment() {
             val location: Int? =
                 if (locationInput.text.isNullOrBlank()) null else locationInput.text.toString()
                     .toInt()
-            kitchenInsertViewModel.addKitchen(title, location, iconInput)
+            viewModel.addKitchen(title, location, iconInput)
             // activity?.onBackPressed()
             findNavController().navigate(R.id.kitchen)
         }

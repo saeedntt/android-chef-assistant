@@ -10,10 +10,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class KitchenManageViewModel(private val interactors: Interactors) : ChefAssistantViewModel() {
-
     val kitchens: MutableLiveData<List<Kitchen>> = MutableLiveData()
 
-    fun loadKitchens() {
+    private fun loadKitchenList() {
         GlobalScope.launch {
             kitchens.postValue(interactors.getKitchens())
         }
@@ -23,8 +22,12 @@ class KitchenManageViewModel(private val interactors: Interactors) : ChefAssista
         GlobalScope.launch {
             withContext(Dispatchers.IO) {
                 interactors.removeKitchen(item)
-                loadKitchens()
+                loadKitchenList()
             }
         }
+    }
+
+    override fun start() {
+        loadKitchenList()
     }
 }
