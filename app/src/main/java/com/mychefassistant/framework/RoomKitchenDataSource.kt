@@ -2,8 +2,8 @@ package com.mychefassistant.framework
 
 import com.mychefassistant.core.data.datasource.KitchenDataSource
 import com.mychefassistant.core.domain.Kitchen
-import com.mychefassistant.framework.db.KitchenDao
-import com.mychefassistant.framework.db.KitchenEntity
+import com.mychefassistant.framework.db.dao.KitchenDao
+import com.mychefassistant.framework.db.entity.KitchenEntity
 
 class RoomKitchenDataSource(private val kitchenDao: KitchenDao) :
     KitchenDataSource {

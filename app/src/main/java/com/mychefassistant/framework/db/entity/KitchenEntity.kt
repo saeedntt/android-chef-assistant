@@ -1,4 +1,4 @@
-package com.mychefassistant.framework.db
+package com.mychefassistant.framework.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

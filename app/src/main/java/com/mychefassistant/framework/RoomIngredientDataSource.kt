@@ -3,8 +3,8 @@ package com.mychefassistant.framework
 import com.mychefassistant.core.data.datasource.IngredientDataSource
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.core.domain.Ingredient
-import com.mychefassistant.framework.db.IngredientDao
-import com.mychefassistant.framework.db.IngredientEntity
+import com.mychefassistant.framework.db.dao.IngredientDao
+import com.mychefassistant.framework.db.entity.IngredientEntity
 
 class RoomIngredientDataSource(private val ingredientDao: IngredientDao) :
     IngredientDataSource {
