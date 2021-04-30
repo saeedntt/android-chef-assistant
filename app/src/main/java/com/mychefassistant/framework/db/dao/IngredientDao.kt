@@ -1,7 +1,8 @@
-package com.mychefassistant.framework.db
+package com.mychefassistant.framework.db.dao
 
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
+import com.mychefassistant.framework.db.entity.IngredientEntity
 
 @Dao
 interface IngredientDao {

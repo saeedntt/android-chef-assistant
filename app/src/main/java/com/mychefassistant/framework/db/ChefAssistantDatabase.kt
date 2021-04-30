@@ -2,6 +2,10 @@ package com.mychefassistant.framework.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.mychefassistant.framework.db.dao.IngredientDao
+import com.mychefassistant.framework.db.dao.KitchenDao
+import com.mychefassistant.framework.db.entity.IngredientEntity
+import com.mychefassistant.framework.db.entity.KitchenEntity
 
 @Database(
     entities = [KitchenEntity::class, IngredientEntity::class],
