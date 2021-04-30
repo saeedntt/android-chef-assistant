@@ -50,7 +50,7 @@ val roomsModule = module {
 }
 
 val fragmentModule = module {
-    viewModel { KitchenManageViewModel(androidApplication(), get()) }
-    viewModel { KitchenInsertViewModel(androidApplication(), get()) }
-    viewModel { IngredientViewModel(androidApplication(), get()) }
+    viewModel { KitchenManageViewModel(get()) }
+    viewModel { KitchenInsertViewModel(get()) }
+    viewModel { IngredientViewModel(get()) }
 }
