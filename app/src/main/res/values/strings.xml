@@ -15,4 +15,6 @@
     <string name="remove">Remove</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="kitchen_exist">Kitchen exist!</string>
+    <string name="show_ingredient">Show ingredient</string>
 </resources>
