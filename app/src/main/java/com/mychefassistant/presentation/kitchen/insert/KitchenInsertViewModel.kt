@@ -11,7 +11,7 @@ class KitchenInsertViewModel(private val interactors: Interactors) : ChefAssista
             setEvent(onCanNotEmptyTitle)
             return@runBlocking
         }
-        val find = interactors.findKitchen(title, icon, location);
+        val find = interactors.findKitchen(Kitchen(title = title, icon = icon, location = location))
         if (find.isNotEmpty()) {
             setEvent(onKitchenExist, find[0].id)
             return@runBlocking

@@ -20,10 +20,9 @@ class RoomKitchenDataSource(private val kitchenDao: KitchenDao) :
         return Kitchen(x.id, x.title, x.icon, x.location)
     }
 
-    override suspend fun find(title: String, icon: Int?, location: Int?) =
-        kitchenDao.find(title, icon, location).map {
-            Kitchen(it.id, it.title, it.icon, it.location)
-        }
+    override suspend fun find(kitchen: Kitchen) = kitchenDao.find(kitchen).map {
+        Kitchen(it.id, it.title, it.icon, it.location)
+    }
 
     override suspend fun remove(kitchen: Kitchen) = kitchenDao.removeKitchen(
         KitchenEntity(kitchen.id, kitchen.title)
