@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.mychefassistant.R
@@ -37,24 +40,39 @@ class KitchenInsertFragment : Fragment() {
         locationInput = view.findViewById(R.id.location_input)
 
         titleInput.setOnKeyListener { _, _, _ ->
-            titleInputLayout.error = if (titleInput.text.isNullOrBlank()) getString(R.string.cant_empty) else null
+            titleInputLayout.error =
+                if (titleInput.text.isNullOrBlank()) getString(R.string.cant_empty) else null
             true
         }
 
         view.findViewById<Button>(R.id.button).setOnClickListener {
-            insertKitchen()
+            viewModel.addKitchen(
+                title = titleInput.text.toString(),
+                location = if (locationInput.text.isNullOrBlank()) null else locationInput.text.toString()
+                    .toInt(),
+                icon = iconInput
+            )
         }
+
+        viewModel.event.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                KitchenInsertViewModel.onCanNotEmptyTitle ->
+                    titleInputLayout.error = getString(R.string.cant_empty)
+                KitchenInsertViewModel.onKitchenExist ->
+                    onKitchenExist(viewModel.eventData as Int)
+                KitchenInsertViewModel.onSuccessInsert ->
+                    findNavController().navigate(R.id.kitchen_manage)
+            }
+        })
     }
 
-    private fun insertKitchen() {
-        if (!titleInput.text.isNullOrBlank()) {
-            val title = titleInput.text.toString()
-            val location: Int? =
-                if (locationInput.text.isNullOrBlank()) null else locationInput.text.toString()
-                    .toInt()
-            viewModel.addKitchen(title, location, iconInput)
-            // activity?.onBackPressed()
-            findNavController().navigate(R.id.kitchen)
-        }
+    private fun onKitchenExist(id: Int) {
+        Snackbar.make(requireView(), getString(R.string.kitchen_exist), Snackbar.LENGTH_LONG)
+            .setAction(getString(R.string.show_ingredient)) {
+                findNavController().navigate(
+                    R.id.ingredient_manage, bundleOf("id" to id)
+                )
+            }
+            .show()
     }
 }
