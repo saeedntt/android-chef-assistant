@@ -1,9 +1,10 @@
 package com.mychefassistant.presentation.ingredient
 
+import androidx.lifecycle.viewModelScope
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.framework.Interactors
-import kotlinx.coroutines.GlobalScope
+import com.mychefassistant.utils.Event
 import kotlinx.coroutines.launch
 
 class IngredientViewModel(private val interactors: Interactors) : ChefAssistantViewModel() {
@@ -14,19 +15,18 @@ class IngredientViewModel(private val interactors: Interactors) : ChefAssistantV
         kitchenId = id
     }
 
-    private fun loadKitchen() {
-        GlobalScope.launch {
-            kitchen = interactors.getKitchenById(kitchenId)
-            setEvent(onKitchenLoad, kitchen)
-        }
+    private suspend fun loadKitchen() {
+        kitchen = interactors.getKitchenById(kitchenId)
+        setEvent(Event.Info(onKitchenLoad))
     }
 
     override fun start() {
-        loadKitchen()
+        viewModelScope.launch {
+            loadKitchen()
+        }
     }
 
     companion object {
-        const val onKitchenNotFound = "onKitchenNotFound"
         const val onKitchenLoad = "onKitchenLoad"
     }
 }

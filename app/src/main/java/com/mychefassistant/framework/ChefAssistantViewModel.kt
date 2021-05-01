@@ -2,14 +2,13 @@ package com.mychefassistant.framework
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.mychefassistant.utils.Event
 
-abstract class ChefAssistantViewModel : ViewModel() {
-    val event: MutableLiveData<String> = MutableLiveData()
-    var eventData: Any = false
+open class ChefAssistantViewModel : ViewModel() {
+    val event: MutableLiveData<Event> = MutableLiveData()
 
-    fun setEvent(name: String, vararg x: Any) {
-        event.postValue(name)
-        if (x.isNotEmpty()) eventData = x[0]
+    protected fun setEvent(x: Event) {
+        event.postValue(x)
     }
 
     open fun start() {}

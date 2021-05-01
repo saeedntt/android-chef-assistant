@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.mychefassistant.R
+import com.mychefassistant.core.domain.Kitchen
+import com.mychefassistant.utils.Event
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class IngredientFragment : Fragment() {
@@ -34,7 +36,11 @@ class IngredientFragment : Fragment() {
 
         viewModel.event.observe(viewLifecycleOwner, Observer {
             when (it) {
-                IngredientViewModel.onKitchenLoad -> onKitchenLoad()
+                is Event.Info -> {
+                    when(it.type){
+                        IngredientViewModel.onKitchenLoad -> onKitchenLoad()
+                    }
+                }
             }
         })
         viewModel.setKitchenId(kitchenId)

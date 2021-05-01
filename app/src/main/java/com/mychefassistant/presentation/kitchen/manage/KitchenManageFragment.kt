@@ -14,6 +14,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class KitchenManageFragment : Fragment() {
@@ -74,7 +78,11 @@ class KitchenManageFragment : Fragment() {
                 // skip
             }
             .setPositiveButton(context?.getString(R.string.yes)) { _, _ ->
-                viewModel.removeKitchen(item)
+                GlobalScope.launch {
+                    withContext(Dispatchers.IO) {
+                        viewModel.removeKitchen(item)
+                    }
+                }
             }
             .show()
     }

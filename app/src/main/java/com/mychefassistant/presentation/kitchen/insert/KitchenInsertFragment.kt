@@ -13,8 +13,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.mychefassistant.R
+import com.mychefassistant.utils.Event
+import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class KitchenInsertFragment : Fragment() {
     private val viewModel: KitchenInsertViewModel by viewModel()
@@ -40,33 +41,53 @@ class KitchenInsertFragment : Fragment() {
         locationInput = view.findViewById(R.id.location_input)
 
         view.findViewById<Button>(R.id.button).setOnClickListener {
-            viewModel.addKitchen(
-                title = titleInput.text.toString(),
-                location = if (locationInput.text.isNullOrBlank()) null else locationInput.text.toString()
-                    .toInt(),
-                icon = iconInput
-            )
+            GlobalScope.launch {
+                withContext(Dispatchers.IO) {
+                    viewModel.addKitchen(
+                        title = titleInput.text.toString(),
+                        location = if (locationInput.text.isNullOrBlank()) null else locationInput.text.toString()
+                            .toInt(),
+                        icon = iconInput
+                    ).onSuccess {
+                        findNavController().navigate(R.id.kitchen_manage)
+                    }
+                }
+            }
         }
 
         viewModel.event.observe(viewLifecycleOwner, Observer {
             when (it) {
-                KitchenInsertViewModel.onCanNotEmptyTitle ->
-                    titleInputLayout.error = getString(R.string.cant_empty)
-                KitchenInsertViewModel.onKitchenExist ->
-                    onKitchenExist(viewModel.eventData as Int)
-                KitchenInsertViewModel.onSuccessInsert ->
-                    findNavController().navigate(R.id.kitchen_manage)
+                is Event.Error -> renderErrorEvents(it)
             }
         })
     }
 
-    private fun onKitchenExist(id: Int) {
-        Snackbar.make(requireView(), getString(R.string.kitchen_exist), Snackbar.LENGTH_LONG)
-            .setAction(getString(R.string.show_ingredient)) {
-                findNavController().navigate(
-                    R.id.ingredient_manage, bundleOf("id" to id)
-                )
+    private fun renderErrorEvents(event: Event.Error) {
+        when (event.type) {
+            KitchenInsertViewModel.titleInputError ->
+                titleInputLayout.error = event.exception.message
+            KitchenInsertViewModel.snackBarWithAction ->
+                event.exception.message?.let {
+                    event.data?.let { x ->
+                        snackBarWithAction(it, x as KitchenInsertViewModel.SnackbarBtn)
+                    }
+                }
+        }
+    }
+
+    private fun snackBarWithAction(title: String, btn: KitchenInsertViewModel.SnackbarBtn) {
+        Snackbar.make(requireView(), title, Snackbar.LENGTH_LONG)
+            .setAction(btn.title) {
+                when (btn.action) {
+                    KitchenInsertViewModel.routeToIngredient -> routeToIngredient(btn.data as Int)
+                }
             }
             .show()
+    }
+
+    private fun routeToIngredient(id: Int) {
+        findNavController().navigate(
+            R.id.ingredient_manage, bundleOf("id" to id)
+        )
     }
 }
