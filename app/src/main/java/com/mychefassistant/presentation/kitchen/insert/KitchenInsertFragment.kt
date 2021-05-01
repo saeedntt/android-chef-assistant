@@ -39,12 +39,6 @@ class KitchenInsertFragment : Fragment() {
         titleInputLayout = view.findViewById(R.id.title_layout)
         locationInput = view.findViewById(R.id.location_input)
 
-        titleInput.setOnKeyListener { _, _, _ ->
-            titleInputLayout.error =
-                if (titleInput.text.isNullOrBlank()) getString(R.string.cant_empty) else null
-            true
-        }
-
         view.findViewById<Button>(R.id.button).setOnClickListener {
             viewModel.addKitchen(
                 title = titleInput.text.toString(),
