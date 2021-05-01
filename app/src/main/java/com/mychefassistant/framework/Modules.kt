@@ -41,6 +41,7 @@ val roomsModule = module {
             GetKitchenById(get()),
             RemoveKitchen(get()),
             UpdateKitchen(get()),
+            FindKitchen(get()),
             AddIngredient(get()),
             GetIngredients(get()),
             RemoveIngredient(get()),
