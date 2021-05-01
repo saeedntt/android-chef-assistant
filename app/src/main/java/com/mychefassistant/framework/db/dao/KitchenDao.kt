@@ -7,7 +7,7 @@ import com.mychefassistant.framework.db.entity.KitchenEntity
 
 @Dao
 interface KitchenDao {
-    @Insert(onConflict = REPLACE)
+    @Insert
     suspend fun addKitchen(kitchen: KitchenEntity)
 
     @Query("select * from kitchens")
@@ -17,7 +17,11 @@ interface KitchenDao {
     suspend fun getById(id: Int): List<KitchenEntity>
 
     @Query("select * from kitchens where title = :title and icon is :icon and location is :location")
-    suspend fun find(title: String, icon: Int?, location: Int?): List<KitchenEntity>
+    suspend fun findByArgs(title: String, icon: Int?, location: Int?): List<KitchenEntity>
+
+    suspend fun find(kitchen: Kitchen): List<KitchenEntity> {
+        return findByArgs(kitchen.title, kitchen.icon, kitchen.location)
+    }
 
     @Delete
     suspend fun removeKitchen(kitchen: KitchenEntity)
