@@ -13,4 +13,7 @@ class KitchenRepository(private val dataSource: KitchenDataSource) {
     suspend fun getKitchens() = dataSource.getAll()
 
     suspend fun getKitchenById(id: Int) = dataSource.getById(id)
+
+    suspend fun findKitchen(title: String, icon: Int?, location: Int?) =
+        dataSource.find(title, icon, location)
 }

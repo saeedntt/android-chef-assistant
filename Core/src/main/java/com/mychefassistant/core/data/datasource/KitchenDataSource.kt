@@ -12,4 +12,6 @@ interface KitchenDataSource {
     suspend fun getAll(): List<Kitchen>
 
     suspend fun getById(id: Int): Kitchen
+
+    suspend fun find(title: String, icon: Int?, location: Int?): List<Kitchen>
 }
