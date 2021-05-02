@@ -3,11 +3,12 @@ package com.mychefassistant.presentation.ingredient
 import androidx.lifecycle.viewModelScope
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.framework.ChefAssistantViewModel
-import com.mychefassistant.framework.Interactors
+import com.mychefassistant.framework.interactors.KitchenInteractors
 import com.mychefassistant.utils.Event
 import kotlinx.coroutines.launch
 
-class IngredientViewModel(private val interactors: Interactors) : ChefAssistantViewModel() {
+class IngredientViewModel(private val kitchenInteractors: KitchenInteractors) :
+    ChefAssistantViewModel() {
     private var kitchenId = 0
     lateinit var kitchen: Kitchen
 
@@ -16,8 +17,10 @@ class IngredientViewModel(private val interactors: Interactors) : ChefAssistantV
     }
 
     private suspend fun loadKitchen() {
-        kitchen = interactors.getKitchenById(kitchenId)
-        setEvent(Event.Info(onKitchenLoad))
+        kitchenInteractors.getKitchenByIdUseCase(kitchenId).onSuccess {
+            kitchen = it
+            setEvent(Event.Info(onKitchenLoad))
+        }
     }
 
     override fun start() {

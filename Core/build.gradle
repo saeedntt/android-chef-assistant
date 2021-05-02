@@ -8,6 +8,12 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_7
 }
 
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xallow-result-return-type"]
+    }
+}
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1"

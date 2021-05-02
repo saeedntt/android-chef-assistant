@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
+import com.mychefassistant.utils.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -38,22 +40,36 @@ class KitchenManageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listView = view.findViewById(R.id.list)
-        setupListView()
-
         fab = view.findViewById(R.id.fab)
         setupFab()
+
+        viewModel.event.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Event.Info -> when (it.type) {
+                    KitchenManageViewModel.onReady -> setupListView()
+                    KitchenManageViewModel.infoAlert -> showAlert(it.data as String)
+                }
+                is Event.Error -> when (it.type) {
+                    KitchenManageViewModel.errorAlert -> it.exception.message?.let { it1 ->
+                        showAlert(it1, R.color.design_default_color_error)
+                    }
+                }
+            }
+        })
 
         viewModel.start()
     }
 
     private fun setupListView() {
-        val adapter =
-            KitchenManageAdapter(routeToKitchen = ::routeToKitchen, removeKitchen = ::removeKitchen)
+        val adapter = KitchenManageAdapter(
+            routeToKitchen = ::routeToKitchen,
+            removeKitchen = ::removeKitchen
+        )
         listView.layoutManager = LinearLayoutManager(
             context, RecyclerView.VERTICAL, false
         )
         listView.adapter = adapter
-        viewModel.kitchens().observe(viewLifecycleOwner, Observer {
+        viewModel.kitchens.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
     }
@@ -85,5 +101,13 @@ class KitchenManageFragment : Fragment() {
                 }
             }
             .show()
+    }
+
+    private fun showAlert(message: String, color: Int? = null) {
+        val alert = Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG)
+        if (color != null){
+            alert.setBackgroundTint(color)
+        }
+        alert.show()
     }
 }
