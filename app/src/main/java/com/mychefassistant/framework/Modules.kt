@@ -2,11 +2,12 @@ package com.mychefassistant.framework
 
 import androidx.room.Room
 import com.mychefassistant.core.data.datasource.IngredientDataSource
-import com.mychefassistant.core.data.repository.IngredientRepository
 import com.mychefassistant.core.data.datasource.KitchenDataSource
+import com.mychefassistant.core.data.repository.IngredientRepository
 import com.mychefassistant.core.data.repository.KitchenRepository
 import com.mychefassistant.core.interactors.*
 import com.mychefassistant.framework.db.ChefAssistantDatabase
+import com.mychefassistant.framework.interactors.KitchenInteractors
 import com.mychefassistant.presentation.ingredient.IngredientViewModel
 import com.mychefassistant.presentation.kitchen.insert.KitchenInsertViewModel
 import com.mychefassistant.presentation.kitchen.manage.KitchenManageViewModel
@@ -33,19 +34,17 @@ val roomsModule = module {
     single { RoomIngredientDataSource(get()) as IngredientDataSource }
     single { KitchenRepository(get()) }
     single { IngredientRepository(get()) }
+}
 
+val interactorsModule = module {
     factory {
-        Interactors(
-            AddKitchen(get()),
-            GetKitchens(get()),
-            GetKitchenById(get()),
-            RemoveKitchen(get()),
-            UpdateKitchen(get()),
-            FindKitchen(get()),
-            AddIngredient(get()),
-            GetIngredients(get()),
-            RemoveIngredient(get()),
-            UpdateIngredient(get())
+        KitchenInteractors(
+            AddKitchenUseCase(get()),
+            FindKitchenUseCase(get()),
+            GetKitchensUseCase(get()),
+            GetKitchenByIdUseCase(get()),
+            RemoveKitchenUseCase(get()),
+            UpdateKitchenUseCase(get())
         )
     }
 }
