@@ -14,7 +14,10 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.mychefassistant.R
 import com.mychefassistant.utils.Event
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class KitchenInsertFragment : Fragment() {
@@ -40,7 +43,7 @@ class KitchenInsertFragment : Fragment() {
         titleInputLayout = view.findViewById(R.id.title_layout)
         locationInput = view.findViewById(R.id.location_input)
 
-        view.findViewById<Button>(R.id.button).setOnClickListener {
+        view.findViewById<Button>(R.id.button).setOnClickListener body@{
             GlobalScope.launch {
                 withContext(Dispatchers.IO) {
                     viewModel.addKitchen(
@@ -48,9 +51,7 @@ class KitchenInsertFragment : Fragment() {
                         location = if (locationInput.text.isNullOrBlank()) null else locationInput.text.toString()
                             .toInt(),
                         icon = iconInput
-                    ).onSuccess {
-                        activity?.onBackPressed()
-                    }
+                    )
                 }
             }
         }
@@ -58,6 +59,7 @@ class KitchenInsertFragment : Fragment() {
         viewModel.event.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Event.Error -> renderErrorEvents(it)
+                is Event.Info -> renderInfoEvents(it)
             }
         })
     }
@@ -72,6 +74,12 @@ class KitchenInsertFragment : Fragment() {
                         snackBarWithAction(it, x as KitchenInsertViewModel.SnackbarBtn)
                     }
                 }
+        }
+    }
+
+    private fun renderInfoEvents(event: Event.Info) {
+        when (event.type) {
+            KitchenInsertViewModel.backFragment -> activity?.onBackPressed()
         }
     }
 

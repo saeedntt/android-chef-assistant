@@ -53,8 +53,8 @@ class KitchenManageFragment : Fragment() {
             context, RecyclerView.VERTICAL, false
         )
         listView.adapter = adapter
-        viewModel.kitchens.observe(viewLifecycleOwner, Observer {
-            adapter.update(it)
+        viewModel.kitchens().observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
         })
     }
 

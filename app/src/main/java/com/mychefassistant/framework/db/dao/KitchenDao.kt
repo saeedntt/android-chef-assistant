@@ -4,6 +4,7 @@ import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.framework.db.entity.KitchenEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface KitchenDao {
@@ -11,7 +12,7 @@ interface KitchenDao {
     suspend fun addKitchen(kitchen: KitchenEntity)
 
     @Query("select * from kitchens")
-    suspend fun getAll(): List<KitchenEntity>
+    fun getAll(): Flow<List<KitchenEntity>>
 
     @Query("select * from kitchens where id = :id")
     suspend fun getById(id: Int): List<KitchenEntity>
