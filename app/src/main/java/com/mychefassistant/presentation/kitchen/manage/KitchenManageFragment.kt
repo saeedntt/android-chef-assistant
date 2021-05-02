@@ -60,13 +60,13 @@ class KitchenManageFragment : Fragment() {
 
     private fun setupFab() {
         fab.setOnClickListener {
-            findNavController().navigate(R.id.kitchen_insert)
+            findNavController().navigate(R.id.action_kitchen_manage_to_kitchen_insert2)
         }
     }
 
     private fun routeToKitchen(id: Int) {
         findNavController().navigate(
-            R.id.ingredient_manage, bundleOf("id" to id)
+            R.id.action_kitchen_manage_to_ingredient_manage2, bundleOf("id" to id)
         )
     }
 

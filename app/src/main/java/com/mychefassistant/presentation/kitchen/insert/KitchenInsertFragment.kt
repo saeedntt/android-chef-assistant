@@ -49,7 +49,7 @@ class KitchenInsertFragment : Fragment() {
                             .toInt(),
                         icon = iconInput
                     ).onSuccess {
-                        findNavController().navigate(R.id.kitchen_manage)
+                        activity?.onBackPressed()
                     }
                 }
             }
@@ -87,7 +87,7 @@ class KitchenInsertFragment : Fragment() {
 
     private fun routeToIngredient(id: Int) {
         findNavController().navigate(
-            R.id.ingredient_manage, bundleOf("id" to id)
+            R.id.action_kitchen_insert_to_ingredient_manage2, bundleOf("id" to id)
         )
     }
 }

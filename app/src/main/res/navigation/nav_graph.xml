@@ -9,13 +9,26 @@
         android:id="@+id/kitchen_manage"
         android:name="com.mychefassistant.presentation.kitchen.manage.KitchenManageFragment"
         android:label="@string/kitchen"
-        tools:layout="@layout/fragment_kitchen"/>
+        tools:layout="@layout/fragment_kitchen">
+        <action
+            android:id="@+id/action_kitchen_manage_to_kitchen_insert2"
+            app:destination="@id/kitchen_insert" />
+        <action
+            android:id="@+id/action_kitchen_manage_to_ingredient_manage2"
+            app:destination="@id/ingredient_manage" />
+    </fragment>
 
     <fragment
         android:id="@+id/kitchen_insert"
         android:name="com.mychefassistant.presentation.kitchen.insert.KitchenInsertFragment"
-        android:label="@string/kitchen"
-        tools:layout="@layout/fragment_kitchen_insert" />
+        android:label="@string/kitchen_insert"
+        tools:layout="@layout/fragment_kitchen_insert" >
+        <action
+            android:id="@+id/action_kitchen_insert_to_ingredient_manage2"
+            app:destination="@id/ingredient_manage"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/kitchen_manage"/>
+    </fragment>
 
     <fragment
         android:id="@+id/ingredient_manage"
