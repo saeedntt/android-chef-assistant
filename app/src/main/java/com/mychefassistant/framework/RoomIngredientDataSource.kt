@@ -1,27 +1,26 @@
 package com.mychefassistant.framework
 
-import com.mychefassistant.core.data.datasource.IngredientDataSource
-import com.mychefassistant.core.domain.Kitchen
-import com.mychefassistant.core.domain.Ingredient
-import com.mychefassistant.framework.db.dao.IngredientDao
-import com.mychefassistant.framework.db.entity.IngredientEntity
+import com.mychefassistant.core.data.datasource.FoostuffDataSource
+import com.mychefassistant.core.domain.Foodstuff
+import com.mychefassistant.framework.db.dao.FoodstuffDao
+import com.mychefassistant.framework.db.entity.FoodstuffEntity
+import kotlinx.coroutines.flow.map
 
-class RoomIngredientDataSource(private val ingredientDao: IngredientDao) :
-    IngredientDataSource {
-    override suspend fun add(kitchen: Kitchen, ingredient: Ingredient) = ingredientDao.addIngredient(
-        IngredientEntity(kitchen = kitchen.id, title = ingredient.name, quantity = ingredient.quantity)
+class RoomIngredientDataSource(private val foodstuffDao: FoodstuffDao) :
+    FoostuffDataSource {
+    override suspend fun add(foodstuff: Foodstuff) = foodstuffDao.addIngredient(
+        FoodstuffEntity(name = foodstuff.name)
     )
 
-    override suspend fun list(kitchen: Kitchen): List<Ingredient> =
-        ingredientDao.getIngredientByKitchen(kitchen.id).map {
-            Ingredient(it.id, it.title, it.quantity)
-        }
+    override fun getAll() = foodstuffDao.getAll().map { list ->
+        list.map { Foodstuff(it.id, it.name) }
+    }
 
-    override suspend fun remove(kitchen: Kitchen, ingredient: Ingredient) = ingredientDao.removeIngredient(
-        IngredientEntity(ingredient.id, kitchen.id, ingredient.name, ingredient.quantity)
+    override suspend fun remove(foodstuff: Foodstuff) = foodstuffDao.removeIngredient(
+        FoodstuffEntity(foodstuff.id, foodstuff.name)
     )
 
-    override suspend fun update(kitchen: Kitchen, ingredient: Ingredient) = ingredientDao.updateIngredient(
-        IngredientEntity(ingredient.id, kitchen.id, ingredient.name, ingredient.quantity)
+    override suspend fun update(foodstuff: Foodstuff) = foodstuffDao.updateIngredient(
+        FoodstuffEntity(foodstuff.id, foodstuff.name)
     )
 }
