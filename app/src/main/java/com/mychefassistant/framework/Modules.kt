@@ -1,12 +1,13 @@
 package com.mychefassistant.framework
 
 import androidx.room.Room
-import com.mychefassistant.core.data.datasource.IngredientDataSource
+import com.mychefassistant.core.data.datasource.FoostuffDataSource
 import com.mychefassistant.core.data.datasource.KitchenDataSource
-import com.mychefassistant.core.data.repository.IngredientRepository
+import com.mychefassistant.core.data.repository.FoodstuffRepository
 import com.mychefassistant.core.data.repository.KitchenRepository
 import com.mychefassistant.core.interactors.*
 import com.mychefassistant.framework.db.ChefAssistantDatabase
+import com.mychefassistant.framework.interactors.FoodstuffInteractors
 import com.mychefassistant.framework.interactors.KitchenInteractors
 import com.mychefassistant.presentation.ingredient.IngredientViewModel
 import com.mychefassistant.presentation.kitchen.insert.KitchenInsertViewModel
@@ -20,20 +21,20 @@ val databaseModule = module {
         Room.databaseBuilder(
             androidApplication(),
             ChefAssistantDatabase::class.java,
-            "ca_v1.db"
+            "ca_v3.db"
         )
             .fallbackToDestructiveMigration()
             .build()
     }
     single { get<ChefAssistantDatabase>().kitchenDao() }
-    single { get<ChefAssistantDatabase>().ingredientDao() }
+    single { get<ChefAssistantDatabase>().foodstuffDao() }
 }
 
 val roomsModule = module {
     single { RoomKitchenDataSource(get()) as KitchenDataSource }
-    single { RoomIngredientDataSource(get()) as IngredientDataSource }
+    single { RoomIngredientDataSource(get()) as FoostuffDataSource }
     single { KitchenRepository(get()) }
-    single { IngredientRepository(get()) }
+    single { FoodstuffRepository(get()) }
 }
 
 val interactorsModule = module {
@@ -45,6 +46,15 @@ val interactorsModule = module {
             GetKitchenByIdUseCase(get()),
             RemoveKitchenUseCase(get()),
             UpdateKitchenUseCase(get())
+        )
+    }
+
+    factory {
+        FoodstuffInteractors(
+            AddFoodstuffUseCase(get()),
+            GetFoodstuffsUseCase(get()),
+            RemoveFoodstuffUseCase(get()),
+            UpdateFoodstuffUseCase(get())
         )
     }
 }

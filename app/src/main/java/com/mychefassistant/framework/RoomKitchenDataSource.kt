@@ -12,10 +12,8 @@ class RoomKitchenDataSource(private val kitchenDao: KitchenDao) :
         KitchenEntity(title = kitchen.title, icon = kitchen.icon, location = kitchen.location)
     )
 
-    override fun getAll() = kitchenDao.getAll().map {
-        it.map {
-            Kitchen(it.id, it.title, it.icon, it.location)
-        }
+    override fun getAll() = kitchenDao.getAll().map { list ->
+        list.map { Kitchen(it.id, it.title, it.icon, it.location) }
     }
 
     override suspend fun getById(id: Int): Kitchen {
