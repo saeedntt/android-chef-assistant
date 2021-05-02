@@ -10,7 +10,7 @@ class KitchenRepository(private val dataSource: KitchenDataSource) {
 
     suspend fun updateKitchen(kitchen: Kitchen) = dataSource.update(kitchen)
 
-    suspend fun getKitchens() = dataSource.getAll()
+    fun getKitchens() = dataSource.getAll()
 
     suspend fun getKitchenById(id: Int) = dataSource.getById(id)
 

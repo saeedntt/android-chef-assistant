@@ -4,8 +4,6 @@ import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.framework.Interactors
 import com.mychefassistant.utils.Event
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class KitchenInsertViewModel(private val interactors: Interactors) : ChefAssistantViewModel() {
     private suspend fun findKitchen(title: String, icon: Int?, location: Int?): Result<Kitchen> {
@@ -23,10 +21,10 @@ class KitchenInsertViewModel(private val interactors: Interactors) : ChefAssista
         return Result.success(true)
     }
 
-    suspend fun addKitchen(title: String, icon: Int?, location: Int?): Result<Boolean> = run body@{
+    suspend fun addKitchen(title: String, icon: Int?, location: Int?) = run body@{
         validateTitle(title).onFailure {
             setEvent(Event.Error(titleInputError, it))
-            return@body Result.failure(Exception(it.message))
+            return@body
         }
         findKitchen(title, icon, location).onSuccess {
             setEvent(
@@ -40,10 +38,10 @@ class KitchenInsertViewModel(private val interactors: Interactors) : ChefAssista
                     )
                 )
             )
-            return@body Result.failure(Exception("Kitchen existed!"))
+            return@body
         }
         interactors.addKitchen(Kitchen(title = title, icon = icon, location = location))
-        return Result.success(true)
+        setEvent(Event.Info(backFragment))
     }
 
     data class SnackbarBtn(
@@ -56,5 +54,6 @@ class KitchenInsertViewModel(private val interactors: Interactors) : ChefAssista
         const val titleInputError = "titleInputError"
         const val snackBarWithAction = "snackBarWithAction"
         const val routeToIngredient = "routeToIngredient"
+        const val backFragment = "backFragment"
     }
 }

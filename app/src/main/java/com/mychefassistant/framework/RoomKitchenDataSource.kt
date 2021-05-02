@@ -4,6 +4,7 @@ import com.mychefassistant.core.data.datasource.KitchenDataSource
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.framework.db.dao.KitchenDao
 import com.mychefassistant.framework.db.entity.KitchenEntity
+import kotlinx.coroutines.flow.map
 
 class RoomKitchenDataSource(private val kitchenDao: KitchenDao) :
     KitchenDataSource {
@@ -11,8 +12,10 @@ class RoomKitchenDataSource(private val kitchenDao: KitchenDao) :
         KitchenEntity(title = kitchen.title, icon = kitchen.icon, location = kitchen.location)
     )
 
-    override suspend fun getAll(): List<Kitchen> = kitchenDao.getAll().map {
-        Kitchen(it.id, it.title, it.icon, it.location)
+    override fun getAll() = kitchenDao.getAll().map {
+        it.map {
+            Kitchen(it.id, it.title, it.icon, it.location)
+        }
     }
 
     override suspend fun getById(id: Int): Kitchen {

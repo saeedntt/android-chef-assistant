@@ -22,12 +22,12 @@
         android:id="@+id/kitchen_insert"
         android:name="com.mychefassistant.presentation.kitchen.insert.KitchenInsertFragment"
         android:label="@string/kitchen_insert"
-        tools:layout="@layout/fragment_kitchen_insert" >
+        tools:layout="@layout/fragment_kitchen_insert">
         <action
             android:id="@+id/action_kitchen_insert_to_ingredient_manage2"
             app:destination="@id/ingredient_manage"
             app:launchSingleTop="true"
-            app:popUpTo="@id/kitchen_manage"/>
+            app:popUpTo="@id/kitchen_manage" />
     </fragment>
 
     <fragment
