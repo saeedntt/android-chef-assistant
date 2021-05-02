@@ -17,4 +17,5 @@
     <string name="yes">Yes</string>
     <string name="kitchen_exist">Kitchen exist!</string>
     <string name="show_ingredient">Show ingredient</string>
+    <string name="kitchen_insert">Kitchen insert</string>
 </resources>
