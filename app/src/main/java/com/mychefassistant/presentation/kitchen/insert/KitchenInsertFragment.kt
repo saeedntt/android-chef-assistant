@@ -43,7 +43,7 @@ class KitchenInsertFragment : Fragment() {
         titleInputLayout = view.findViewById(R.id.title_layout)
         locationInput = view.findViewById(R.id.location_input)
 
-        view.findViewById<Button>(R.id.button).setOnClickListener body@{
+        view.findViewById<Button>(R.id.button).setOnClickListener {
             GlobalScope.launch {
                 withContext(Dispatchers.IO) {
                     viewModel.addKitchen(
