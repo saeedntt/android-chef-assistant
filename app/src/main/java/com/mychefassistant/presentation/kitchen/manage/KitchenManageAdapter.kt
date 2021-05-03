@@ -13,10 +13,9 @@ import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
 
 class KitchenManageAdapter(
-    private val routeToKitchen: (Int) -> Unit,
-    private val removeKitchen: (Kitchen) -> Unit
+    private val onClick: (Kitchen) -> Unit,
+    private val onMenuSelect: (String, Kitchen) -> Unit
 ) : ListAdapter<Kitchen, KitchenManageAdapter.ViewHolder>(KitchenManageDiffUtil()) {
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val title: TextView = view.findViewById(R.id.title)
         val more: FloatingActionButton = view.findViewById(R.id.more)
@@ -25,24 +24,19 @@ class KitchenManageAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-
-        return ViewHolder(
-            inflater.inflate(R.layout.item_kitchen, parent, false)
-        )
+        return ViewHolder(inflater.inflate(R.layout.item_kitchen, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         holder.title.text = item.title
-        holder.itemView.setOnClickListener {
-            routeToKitchen(item.id)
-        }
+        holder.itemView.setOnClickListener { onClick(item) }
         holder.more.setOnClickListener { it ->
             val popup = PopupMenu(holder.context, it)
             popup.menuInflater.inflate(R.menu.item_kitchen_menu, popup.menu)
             popup.setOnMenuItemClickListener { x ->
                 when (x.itemId) {
-                    R.id.remove -> removeKitchen(item)
+                    R.id.remove -> onMenuSelect(KitchenManageViewModel.onKitchenRemoveRequest, item)
                 }
                 true
             }

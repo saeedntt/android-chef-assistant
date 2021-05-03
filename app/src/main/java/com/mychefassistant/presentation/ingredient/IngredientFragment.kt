@@ -43,8 +43,7 @@ class IngredientFragment : Fragment() {
                 }
             }
         })
-        viewModel.setKitchenId(kitchenId)
-        viewModel.start()
+        viewModel.start(kitchenId)
     }
 
     private fun getArgs() {
