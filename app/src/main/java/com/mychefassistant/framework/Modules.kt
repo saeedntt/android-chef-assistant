@@ -32,7 +32,7 @@ val databaseModule = module {
 
 val roomsModule = module {
     single { RoomKitchenDataSource(get()) as KitchenDataSource }
-    single { RoomIngredientDataSource(get()) as FoostuffDataSource }
+    single { RoomFoodstuffsDataSource(get()) as FoostuffDataSource }
     single { KitchenRepository(get()) }
     single { FoodstuffRepository(get()) }
 }

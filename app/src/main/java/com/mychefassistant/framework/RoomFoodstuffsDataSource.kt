@@ -6,21 +6,21 @@ import com.mychefassistant.framework.db.dao.FoodstuffDao
 import com.mychefassistant.framework.db.entity.FoodstuffEntity
 import kotlinx.coroutines.flow.map
 
-class RoomIngredientDataSource(private val foodstuffDao: FoodstuffDao) :
+class RoomFoodstuffsDataSource(private val foodstuffDao: FoodstuffDao) :
     FoostuffDataSource {
     override suspend fun add(foodstuff: Foodstuff) = foodstuffDao.addIngredient(
-        FoodstuffEntity(name = foodstuff.name)
+        FoodstuffEntity(name = foodstuff.name, unit = foodstuff.unit)
     )
 
     override fun getAll() = foodstuffDao.getAll().map { list ->
-        list.map { Foodstuff(it.id, it.name) }
+        list.map { Foodstuff(it.id, it.name, it.unit) }
     }
 
     override suspend fun remove(foodstuff: Foodstuff) = foodstuffDao.removeIngredient(
-        FoodstuffEntity(foodstuff.id, foodstuff.name)
+        FoodstuffEntity(foodstuff.id, foodstuff.name, foodstuff.unit)
     )
 
     override suspend fun update(foodstuff: Foodstuff) = foodstuffDao.updateIngredient(
-        FoodstuffEntity(foodstuff.id, foodstuff.name)
+        FoodstuffEntity(foodstuff.id, foodstuff.name, foodstuff.unit)
     )
 }
