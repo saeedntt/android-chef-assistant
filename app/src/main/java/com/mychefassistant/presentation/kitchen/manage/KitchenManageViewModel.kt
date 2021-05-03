@@ -1,11 +1,15 @@
 package com.mychefassistant.presentation.kitchen.manage
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.framework.interactors.KitchenInteractors
 import com.mychefassistant.utils.Event
+import kotlinx.coroutines.launch
 
 class KitchenManageViewModel(
     private val application: Application,
@@ -19,25 +23,73 @@ class KitchenManageViewModel(
             kitchens = it.asLiveData()
             setEvent(Event.Info(onReady))
         }.onFailure {
-            setEvent(Event.Error(errorAlert, Exception("Loading kitchens fail. try again..")))
+            setEvent(
+                Event.Error(
+                    errorAlert,
+                    Exception(application.getString(R.string.loading_data_fail))
+                )
+            )
         }
     }
 
-    override fun start() {
+    private suspend fun removeKitchen(item: Kitchen) {
+        kitchenInteractors.removeKitchenUseCase(item).onSuccess {
+            setEvent(
+                Event.Info(
+                    infoAlert,
+                    application.getString(R.string.kitchen_success_removed, item.title)
+                )
+            )
+        }.onFailure {
+            setEvent(
+                Event.Error(
+                    errorAlert,
+                    Exception(application.getString(R.string.kitchen_fail_remove, item.title))
+                )
+            )
+        }
+    }
+
+    private fun createRemoveWarningModal(kitchen: Kitchen) {
+        setEvent(
+            Event.Info(
+                warningAlertModal,
+                ModalModel(
+                    application.getString(R.string.remove_warning),
+                    application.getString(R.string.remove_kitchen_warning_message, kitchen.title),
+                    {},
+                    { viewModelScope.launch { removeKitchen(kitchen) } }
+                )
+            )
+        )
+    }
+
+    fun viewEventListen(info: Event.Info) {
+        when (info.type) {
+            onKitchenClicked -> setEvent(Event.Info(routeToKitchen, (info.data as Kitchen).id))
+            onKitchenRemoveRequest -> createRemoveWarningModal(info.data as Kitchen)
+        }
+    }
+
+    fun start() {
         loadKitchens()
     }
 
-    suspend fun removeKitchen(item: Kitchen) {
-        kitchenInteractors.removeKitchenUseCase(item).onSuccess {
-            setEvent(Event.Info(infoAlert, "${item.title} kitchen removed!"))
-        }.onFailure {
-            setEvent(Event.Error(errorAlert, Exception("Can not remove ${item.title} kitchen!")))
-        }
-    }
+    data class ModalModel(
+        val title: String,
+        val message: String,
+        val onNegative: () -> Unit,
+        val onPositive: () -> Unit
+    )
 
     companion object {
         const val onReady = "onReady"
         const val infoAlert = "infoAlert"
         const val errorAlert = "errorAlert"
+        const val warningAlertModal = "warningAlertModal"
+        const val viewSetEvent = "viewSetEvent"
+        const val onKitchenClicked = "onKitchenClicked"
+        const val onKitchenRemoveRequest = "onKitchenRemoveRequest"
+        const val routeToKitchen = "routeToKitchen"
     }
 }

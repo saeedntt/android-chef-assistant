@@ -12,10 +12,6 @@ class IngredientViewModel(private val kitchenInteractors: KitchenInteractors) :
     private var kitchenId = 0
     lateinit var kitchen: Kitchen
 
-    fun setKitchenId(id: Int) {
-        kitchenId = id
-    }
-
     private suspend fun loadKitchen() {
         kitchenInteractors.getKitchenByIdUseCase(kitchenId).onSuccess {
             kitchen = it
@@ -23,7 +19,8 @@ class IngredientViewModel(private val kitchenInteractors: KitchenInteractors) :
         }
     }
 
-    override fun start() {
+    fun start(id: Int) {
+        kitchenId = id
         viewModelScope.launch {
             loadKitchen()
         }
