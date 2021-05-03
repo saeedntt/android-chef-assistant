@@ -1,16 +1,21 @@
 package com.mychefassistant.presentation.kitchen.insert
 
+import android.app.Application
+import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.framework.interactors.KitchenInteractors
 import com.mychefassistant.utils.Event
 
-class KitchenInsertViewModel(private val kitchenInteractors: KitchenInteractors) :
+class KitchenInsertViewModel(
+    private val application: Application,
+    private val kitchenInteractors: KitchenInteractors
+) :
     ChefAssistantViewModel() {
 
     private fun validateTitle(title: String): Result<Boolean> {
         if (title.isNullOrBlank()) {
-            return Result.failure(Exception("Title can't empty"))
+            return Result.failure(Exception(application.getString(R.string.title_cannot_empty)))
         }
         return Result.success(true)
     }
@@ -27,9 +32,9 @@ class KitchenInsertViewModel(private val kitchenInteractors: KitchenInteractors)
                 setEvent(
                     Event.Error(
                         snackBarWithAction,
-                        Exception("Kitchen existed!"),
+                        Exception(application.getString(R.string.kitchen_exist)),
                         SnackbarBtn(
-                            "Show ingredient",
+                            application.getString(R.string.show_kitchen),
                             routeToIngredient,
                             it[0].id
                         )

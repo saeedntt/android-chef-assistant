@@ -60,7 +60,7 @@ val interactorsModule = module {
 }
 
 val fragmentModule = module {
-    viewModel { KitchenManageViewModel(get()) }
-    viewModel { KitchenInsertViewModel(get()) }
+    viewModel { KitchenManageViewModel(androidApplication(), get()) }
+    viewModel { KitchenInsertViewModel(androidApplication(), get()) }
     viewModel { IngredientViewModel(get()) }
 }
