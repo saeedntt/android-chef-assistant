@@ -7,7 +7,10 @@ import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.framework.interactors.KitchenInteractors
 import com.mychefassistant.utils.Event
 
-class KitchenManageViewModel(private val kitchenInteractors: KitchenInteractors) :
+class KitchenManageViewModel(
+    private val application: Application,
+    private val kitchenInteractors: KitchenInteractors
+) :
     ChefAssistantViewModel() {
     lateinit var kitchens: LiveData<List<Kitchen>>
 

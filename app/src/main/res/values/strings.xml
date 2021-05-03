@@ -11,11 +11,16 @@
     <string name="title">Title</string>
     <string name="kitchen_location">Kitchen location</string>
     <string name="insert">Insert</string>
-    <string name="cant_empty">Can\'t empty</string>
     <string name="remove">Remove</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
-    <string name="kitchen_exist">Kitchen exist!</string>
-    <string name="show_ingredient">Show ingredient</string>
     <string name="kitchen_insert">Kitchen insert</string>
+    <string name="loading_data_fail">Loading data fail. try again..</string>
+    <string name="kitchen_success_removed">(%1$s) kitchen success removed.</string>
+    <string name="kitchen_fail_remove">Can\'t remove (%1$s) kitchen! try again...</string>
+    <string name="title_cannot_empty">Title can\'t empty</string>
+    <string name="kitchen_exist">Kitchen exist!</string>
+    <string name="show_kitchen">Show kitchen</string>
+    <string name="remove_warning">Remove warning</string>
+    <string name="remove_kitchen_warning_message">Are you sure to delete (%1$s) kitchen?</string>
 </resources>
