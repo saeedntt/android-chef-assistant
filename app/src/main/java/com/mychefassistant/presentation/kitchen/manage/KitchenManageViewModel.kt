@@ -50,19 +50,18 @@ class KitchenManageViewModel(
         }
     }
 
-    private fun createRemoveWarningModal(kitchen: Kitchen) {
-        setEvent(
-            Event.Info(
-                warningAlertModal,
-                ModalModel(
-                    application.getString(R.string.remove_warning),
-                    application.getString(R.string.remove_kitchen_warning_message, kitchen.title),
-                    {},
-                    { viewModelScope.launch { removeKitchen(kitchen) } }
-                )
+    private fun createRemoveWarningModal(kitchen: Kitchen) = setEvent(
+        Event.Info(
+            createModal,
+            ModalModel(
+                application.getString(R.string.remove_warning),
+                application.getString(R.string.remove_kitchen_warning_message, kitchen.title),
+                {},
+                { viewModelScope.launch { removeKitchen(kitchen) } }
             )
         )
-    }
+    )
+
 
     fun viewEventListen(info: Event.Info) {
         when (info.type) {
@@ -86,7 +85,7 @@ class KitchenManageViewModel(
         const val onReady = "onReady"
         const val infoAlert = "infoAlert"
         const val errorAlert = "errorAlert"
-        const val warningAlertModal = "warningAlertModal"
+        const val createModal = "createModal"
         const val viewSetEvent = "viewSetEvent"
         const val onKitchenClicked = "onKitchenClicked"
         const val onKitchenRemoveRequest = "onKitchenRemoveRequest"
