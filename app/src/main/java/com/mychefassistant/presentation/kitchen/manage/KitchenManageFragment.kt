@@ -46,7 +46,7 @@ class KitchenManageFragment : Fragment() {
                     KitchenManageViewModel.infoAlert -> showAlert(it.data as String)
                     KitchenManageViewModel.routeToKitchen -> routeToKitchen(it.data as Int)
                     KitchenManageViewModel.viewSetEvent -> viewModel.viewEventListen(it.data as Event.Info)
-                    KitchenManageViewModel.warningAlertModal -> createModal(it.data as KitchenManageViewModel.ModalModel)
+                    KitchenManageViewModel.createModal -> createModal(it.data as KitchenManageViewModel.ModalModel)
                 }
                 is Event.Error -> when (it.type) {
                     KitchenManageViewModel.errorAlert -> it.exception.message?.let { it1 ->
@@ -94,8 +94,8 @@ class KitchenManageFragment : Fragment() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(model.title)
             .setMessage(model.message)
-            .setNegativeButton(context?.getString(R.string.no)) { _, _ -> model.onNegative() }
-            .setPositiveButton(context?.getString(R.string.yes)) { _, _ -> model.onPositive() }
+            .setNegativeButton(getString(R.string.no)) { _, _ -> model.onNegative() }
+            .setPositiveButton(getString(R.string.yes)) { _, _ -> model.onPositive() }
             .show()
     }
 
