@@ -10,7 +10,6 @@ interface GroceryDao {
     @Insert(onConflict = REPLACE)
     suspend fun addGrocery(grocery: GroceryEntity)
 
-    @Transaction
     @Query("SELECT * FROM groceries where kitchen = :kitchenId")
     fun getAll(kitchenId: Int): Flow<List<GroceryEntity>>
 
