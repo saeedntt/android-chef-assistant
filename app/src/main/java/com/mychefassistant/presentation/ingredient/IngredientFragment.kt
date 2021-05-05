@@ -34,22 +34,19 @@ class IngredientFragment : Fragment() {
         getArgs()
         title = view.findViewById(R.id.title)
 
-        viewModel.event.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is Event.Info -> {
-                    when(it.type){
-                        IngredientViewModel.onKitchenLoad -> onKitchenLoad()
-                    }
-                }
+        viewModel.eventListener(viewLifecycleOwner, {
+            when (it.type) {
+                IngredientViewModel.onKitchenLoad -> onKitchenLoad()
             }
         })
+
         viewModel.start(kitchenId)
     }
 
-    private fun getArgs() {
-        arguments?.apply {
-            kitchenId = getInt("id")
-        }
+    override fun onPause() {
+        super.onPause()
+        viewModel.clearEvent()
+    }
     }
 
     private fun onKitchenLoad() {

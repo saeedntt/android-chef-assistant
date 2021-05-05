@@ -53,34 +53,24 @@ class KitchenInsertFragment : Fragment() {
                         icon = iconInput
                     )
                 }
-            }
-        }
 
-        viewModel.event.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is Event.Error -> renderErrorEvents(it)
-                is Event.Info -> renderInfoEvents(it)
+        viewModel.eventListener(viewLifecycleOwner, {
+            when (it.type) {
+                KitchenInsertViewModel.backFragment -> activity?.onBackPressed()
+            }
+        }, {
+            when (it.type) {
+                KitchenInsertViewModel.titleInputError ->
+                    titleInputLayout.error = it.exception.message
+                KitchenInsertViewModel.snackBarWithAction ->
+                    snackBarWithAction(it.data as KitchenInsertViewModel.AlertWithBtn)
             }
         })
     }
 
-    private fun renderErrorEvents(event: Event.Error) {
-        when (event.type) {
-            KitchenInsertViewModel.titleInputError ->
-                titleInputLayout.error = event.exception.message
-            KitchenInsertViewModel.snackBarWithAction ->
-                event.exception.message?.let {
-                    event.data?.let { x ->
-                        snackBarWithAction(it, x as KitchenInsertViewModel.SnackbarBtn)
-                    }
-                }
-        }
-    }
-
-    private fun renderInfoEvents(event: Event.Info) {
-        when (event.type) {
-            KitchenInsertViewModel.backFragment -> activity?.onBackPressed()
-        }
+    override fun onPause() {
+        super.onPause()
+        viewModel.clearEvent()
     }
 
     private fun snackBarWithAction(title: String, btn: KitchenInsertViewModel.SnackbarBtn) {
