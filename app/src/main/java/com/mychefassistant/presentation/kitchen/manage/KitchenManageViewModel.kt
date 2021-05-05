@@ -9,7 +9,6 @@ import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.core.interactors.GetKitchensUseCase
 import com.mychefassistant.core.interactors.RemoveKitchenUseCase
 import com.mychefassistant.framework.ChefAssistantViewModel
-import com.mychefassistant.framework.interactors.KitchenInteractors
 import com.mychefassistant.utils.Event
 import kotlinx.coroutines.launch
 
