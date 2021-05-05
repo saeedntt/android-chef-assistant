@@ -67,12 +67,12 @@ class KitchenInsertFragment : Fragment() {
         Snackbar.make(requireView(), alert.title, Snackbar.LENGTH_LONG)
             .setAction(alert.btnTitle) {
                 when (alert.action) {
-                    KitchenInsertViewModel.routeToIngredient -> routeToIngredient(alert.data as Int)
+                    KitchenInsertViewModel.routeToGrocery -> routeToGrocery(alert.data as Int)
                 }
             }
             .show()
 
-    private fun routeToIngredient(id: Int) = findNavController().navigate(
-        R.id.action_kitchen_insert_to_ingredient_manage2, bundleOf("id" to id)
+    private fun routeToGrocery(id: Int) = findNavController().navigate(
+        R.id.action_kitchen_insert_to_grocery_manage2, bundleOf("id" to id)
     )
 }

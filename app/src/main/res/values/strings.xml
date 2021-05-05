@@ -4,7 +4,6 @@
     <string name="nav_header_subtitle">Kitchen management</string>
     <string name="version">Version</string>
     <string name="kitchen">Kitchen</string>
-    <string name="ingredient">Ingredient</string>
     <string name="setting">Setting</string>
     <string name="about">About us</string>
     <string name="add_kitchen">Add new Kitchen</string>
@@ -23,4 +22,5 @@
     <string name="show_kitchen">Show kitchen</string>
     <string name="remove_warning">Remove warning</string>
     <string name="remove_kitchen_warning_message">Are you sure to delete (%1$s) kitchen?</string>
+    <string name="grocery">Grocery</string>
 </resources>

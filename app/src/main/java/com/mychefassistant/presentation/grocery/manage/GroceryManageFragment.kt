@@ -1,4 +1,4 @@
-package com.mychefassistant.presentation.ingredient
+package com.mychefassistant.presentation.grocery.manage
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import com.mychefassistant.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class IngredientFragment : Fragment() {
-    private val viewModel: IngredientViewModel by viewModel()
+class GroceryManageFragment : Fragment() {
+    private val viewModel: GroceryManageViewModel by viewModel()
     private var kitchenId = 0
     private lateinit var title: TextView
 
@@ -18,7 +18,7 @@ class IngredientFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_ingredient, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_grocery, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,7 +28,7 @@ class IngredientFragment : Fragment() {
         viewModel.eventListener(viewLifecycleOwner)
             .onInfo {
                 when (it.type) {
-                    IngredientViewModel.onKitchenLoad -> onKitchenLoad()
+                    GroceryManageViewModel.onKitchenLoad -> onKitchenLoad()
                 }
             }
 

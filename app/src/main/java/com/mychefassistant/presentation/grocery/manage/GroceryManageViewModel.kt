@@ -1,4 +1,4 @@
-package com.mychefassistant.presentation.ingredient
+package com.mychefassistant.presentation.grocery.manage
 
 import androidx.lifecycle.viewModelScope
 import com.mychefassistant.core.domain.Kitchen
@@ -7,7 +7,7 @@ import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.utils.Event
 import kotlinx.coroutines.launch
 
-class IngredientViewModel(private val getKitchenByIdUseCase: GetKitchenByIdUseCase) :
+class GroceryManageViewModel(private val getKitchenByIdUseCase: GetKitchenByIdUseCase) :
     ChefAssistantViewModel() {
     private var kitchenId = 0
     lateinit var kitchen: Kitchen
