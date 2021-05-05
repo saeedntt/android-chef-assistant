@@ -36,7 +36,7 @@ class KitchenManageAdapter(
             popup.menuInflater.inflate(R.menu.item_kitchen_menu, popup.menu)
             popup.setOnMenuItemClickListener { x ->
                 when (x.itemId) {
-                    R.id.remove -> onMenuSelect(KitchenManageViewModel.onKitchenRemoveRequest, item)
+                    R.id.remove -> onMenuSelect(KitchenManageViewModel.kitchenRemoveRequest, item)
                 }
                 true
             }

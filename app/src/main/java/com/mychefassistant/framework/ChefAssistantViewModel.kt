@@ -8,34 +8,44 @@ import com.mychefassistant.utils.Event
 
 abstract class ChefAssistantViewModel : ViewModel() {
     private val event: MutableLiveData<Event> = MutableLiveData()
-    private var onErrorHandle: (Event.Error) -> Unit = fun(_) {}
-    private var onInfoHandle: (Event.Info) -> Unit = fun(_) {}
+    private var onErrorListener: (Event.Error) -> Unit = fun(_) {}
+    private var onInfoListener: (Event.Info) -> Unit = fun(_) {}
+
+    protected fun setEvent(x: Event) = event.postValue(x)
+
+    open fun onFragmentEventListener(event: Event.Info) {}
 
     fun eventListener(lifecycleOwner: LifecycleOwner): ChefAssistantViewModel {
         event.observe(lifecycleOwner, Observer {
             when (it) {
-                is Event.Error -> onErrorHandle(it)
-                is Event.Info -> onInfoHandle(it)
+                is Event.Error -> onErrorListener(it)
+                is Event.Info -> when(it.type) {
+                    onFragmentEvent -> onFragmentEventListener(it.data as Event.Info)
+                    else -> onInfoListener(it)
+                }
             }
         })
         return this
     }
 
     fun onError(handle: (Event.Error) -> Unit): ChefAssistantViewModel {
-        onErrorHandle = handle
+        onErrorListener = handle
         return this
     }
 
     fun onInfo(handle: (Event.Info) -> Unit): ChefAssistantViewModel {
-        onInfoHandle = handle
+        onInfoListener = handle
         return this
     }
 
-    fun setEvent(x: Event) = event.postValue(x)
+    fun resetEvents() = event.postValue(Event.Info(onResetEvents))
 
-    fun clearEvent() = event.postValue(Event.Info(resetEvents))
+    fun setFragmentEvent(event: Event.Info) {
+        setEvent(Event.Info(onFragmentEvent, event))
+    }
 
     companion object {
-        const val resetEvents = "resetEvents"
+        const val onResetEvents = "onResetEvents"
+        const val onFragmentEvent = "onFragmentEvent"
     }
 }

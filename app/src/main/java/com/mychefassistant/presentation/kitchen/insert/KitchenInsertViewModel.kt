@@ -27,7 +27,7 @@ class KitchenInsertViewModel(
 
     suspend fun addKitchen(title: String, icon: Int?, location: Int?) = run body@{
         validateTitle(title).onFailure {
-            setEvent(Event.Error(titleInputError, it))
+            setEvent(Event.Error(setTitleInputError, it))
             return@body
         }
         findKitchenUseCase(Kitchen(title = title, icon = icon, location = location))
@@ -35,9 +35,9 @@ class KitchenInsertViewModel(
                 if (it.isNotEmpty()) {
                     setEvent(
                         Event.Error(
-                            snackBarWithAction,
+                            createAlertWithButton,
                             Exception(application.getString(R.string.kitchen_exist)),
-                            AlertWithBtn(
+                            AlertButtonModel(
                                 application.getString(R.string.kitchen_exist),
                                 application.getString(R.string.show_kitchen),
                                 routeToGrocery,
@@ -58,7 +58,7 @@ class KitchenInsertViewModel(
         }
     }
 
-    data class AlertWithBtn(
+    data class AlertButtonModel(
         val title: String,
         val btnTitle: String,
         val action: String,
@@ -66,8 +66,8 @@ class KitchenInsertViewModel(
     )
 
     companion object {
-        const val titleInputError = "titleInputError"
-        const val snackBarWithAction = "snackBarWithAction"
+        const val setTitleInputError = "setTitleInputError"
+        const val createAlertWithButton = "createAlertWithButton"
         const val routeToGrocery = "routeToGrocery"
         const val backFragment = "backFragment"
     }

@@ -50,20 +50,20 @@ class KitchenInsertFragment : Fragment() {
             }
             .onError {
                 when (it.type) {
-                    KitchenInsertViewModel.titleInputError ->
+                    KitchenInsertViewModel.setTitleInputError ->
                         titleInputLayout.error = it.exception.message
-                    KitchenInsertViewModel.snackBarWithAction ->
-                        snackBarWithAction(it.data as KitchenInsertViewModel.AlertWithBtn)
+                    KitchenInsertViewModel.createAlertWithButton ->
+                        snackBarWithAction(it.data as KitchenInsertViewModel.AlertButtonModel)
                 }
             }
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel.clearEvent()
+        viewModel.resetEvents()
     }
 
-    private fun snackBarWithAction(alert: KitchenInsertViewModel.AlertWithBtn) =
+    private fun snackBarWithAction(alert: KitchenInsertViewModel.AlertButtonModel) =
         Snackbar.make(requireView(), alert.title, Snackbar.LENGTH_LONG)
             .setAction(alert.btnTitle) {
                 when (alert.action) {

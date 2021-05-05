@@ -38,17 +38,16 @@ class KitchenManageFragment : Fragment() {
         viewModel.eventListener(viewLifecycleOwner)
             .onInfo {
                 when (it.type) {
-                    KitchenManageViewModel.onReady -> setupListView()
-                    KitchenManageViewModel.infoAlert -> showAlert(it.data as String)
-                    KitchenManageViewModel.routeToKitchen -> routeToKitchen(it.data as Int)
-                    KitchenManageViewModel.viewSetEvent -> viewModel.viewEventListener(it.data as Event.Info)
+                    KitchenManageViewModel.onKitchenLoad -> setupListView()
+                    KitchenManageViewModel.createInfoAlert -> showAlert(it.data as String)
                     KitchenManageViewModel.createModal -> createModal(it.data as KitchenManageViewModel.ModalModel)
+                    KitchenManageViewModel.routeToKitchen -> routeToKitchen(it.data as Int)
                 }
             }
             .onError {
                 when (it.type) {
-                    KitchenManageViewModel.errorAlert -> it.exception.message?.let { it1 ->
-                        showAlert(it1, R.color.design_default_color_error)
+                    KitchenManageViewModel.createErrorAlert -> it.exception.message?.let { x ->
+                        showAlert(x, R.color.design_default_color_error)
                     }
                 }
             }
@@ -58,18 +57,15 @@ class KitchenManageFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        viewModel.clearEvent()
+        viewModel.resetEvents()
     }
 
-    private fun onKitchenClick(kitchen: Kitchen) = viewModel.setEvent(
-        Event.Info(
-            KitchenManageViewModel.viewSetEvent,
-            Event.Info(KitchenManageViewModel.onKitchenClicked, kitchen)
-        )
+    private fun onKitchenClick(kitchen: Kitchen) = viewModel.setFragmentEvent(
+        Event.Info(KitchenManageViewModel.onKitchenClicked, kitchen)
     )
 
-    private fun onKitchenMenuSelect(action: String, kitchen: Kitchen) = viewModel.setEvent(
-        Event.Info(KitchenManageViewModel.viewSetEvent, Event.Info(action, kitchen))
+    private fun onKitchenMenuSelect(action: String, kitchen: Kitchen) = viewModel.setFragmentEvent(
+        Event.Info(action, kitchen)
     )
 
     private fun setupListView() {
