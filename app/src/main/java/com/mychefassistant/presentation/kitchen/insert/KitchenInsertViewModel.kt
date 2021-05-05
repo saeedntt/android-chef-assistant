@@ -1,11 +1,15 @@
 package com.mychefassistant.presentation.kitchen.insert
 
 import android.app.Application
+import androidx.lifecycle.viewModelScope
 import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.framework.interactors.KitchenInteractors
 import com.mychefassistant.utils.Event
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class KitchenInsertViewModel(
     private val application: Application,
@@ -33,7 +37,8 @@ class KitchenInsertViewModel(
                     Event.Error(
                         snackBarWithAction,
                         Exception(application.getString(R.string.kitchen_exist)),
-                        SnackbarBtn(
+                        AlertWithBtn(
+                            application.getString(R.string.kitchen_exist),
                             application.getString(R.string.show_kitchen),
                             routeToIngredient,
                             it[0].id
@@ -45,8 +50,12 @@ class KitchenInsertViewModel(
         }
         kitchenInteractors.addKitchenUseCase(
             Kitchen(title = title, icon = icon, location = location)
-        ).onSuccess {
-            setEvent(Event.Info(backFragment))
+        ).onSuccess { setEvent(Event.Info(backFragment)) }
+    }
+
+    fun addKitchenRequest(title: String, icon: Int?, location: Int?) = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            addKitchen(title, icon, location)
         }
     }
 

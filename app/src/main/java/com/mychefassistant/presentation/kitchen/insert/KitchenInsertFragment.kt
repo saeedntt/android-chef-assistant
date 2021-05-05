@@ -44,15 +44,13 @@ class KitchenInsertFragment : Fragment() {
         locationInput = view.findViewById(R.id.location_input)
 
         view.findViewById<Button>(R.id.button).setOnClickListener {
-            GlobalScope.launch {
-                withContext(Dispatchers.IO) {
-                    viewModel.addKitchen(
-                        title = titleInput.text.toString(),
-                        location = if (locationInput.text.isNullOrBlank()) null else locationInput.text.toString()
-                            .toInt(),
-                        icon = iconInput
-                    )
-                }
+            viewModel.addKitchenRequest(
+                title = titleInput.text.toString(),
+                location = if (locationInput.text.isNullOrBlank()) null else locationInput.text.toString()
+                    .toInt(),
+                icon = iconInput
+            )
+        }
 
         viewModel.eventListener(viewLifecycleOwner, {
             when (it.type) {
