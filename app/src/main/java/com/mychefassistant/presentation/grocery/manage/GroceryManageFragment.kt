@@ -37,7 +37,7 @@ class GroceryManageFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        viewModel.clearEvent()
+        viewModel.resetEvents()
     }
 
     private fun getArgs() = arguments?.apply {
