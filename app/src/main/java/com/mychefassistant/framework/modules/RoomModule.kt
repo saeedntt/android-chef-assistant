@@ -4,8 +4,8 @@ import com.mychefassistant.core.data.datasource.GroceryDataSource
 import com.mychefassistant.core.data.datasource.KitchenDataSource
 import com.mychefassistant.core.data.repository.GroceryRepository
 import com.mychefassistant.core.data.repository.KitchenRepository
-import com.mychefassistant.framework.RoomGroceryDataSource
-import com.mychefassistant.framework.RoomKitchenDataSource
+import com.mychefassistant.framework.db.datasource.RoomGroceryDataSource
+import com.mychefassistant.framework.db.datasource.RoomKitchenDataSource
 import org.koin.dsl.module
 
 val roomsModule = module {
