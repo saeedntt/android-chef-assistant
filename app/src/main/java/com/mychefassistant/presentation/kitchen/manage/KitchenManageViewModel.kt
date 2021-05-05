@@ -6,6 +6,8 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
+import com.mychefassistant.core.interactors.GetKitchensUseCase
+import com.mychefassistant.core.interactors.RemoveKitchenUseCase
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.framework.interactors.KitchenInteractors
 import com.mychefassistant.utils.Event
@@ -13,13 +15,14 @@ import kotlinx.coroutines.launch
 
 class KitchenManageViewModel(
     private val application: Application,
-    private val kitchenInteractors: KitchenInteractors
+    private val getKitchensUseCase: GetKitchensUseCase,
+    private val removeKitchenUseCase: RemoveKitchenUseCase
 ) :
     ChefAssistantViewModel() {
     lateinit var kitchens: LiveData<List<Kitchen>>
 
     private fun loadKitchens() {
-        kitchenInteractors.getKitchensUseCase(true).onSuccess {
+        getKitchensUseCase(true).onSuccess {
             kitchens = it.asLiveData()
             setEvent(Event.Info(onReady))
         }.onFailure {
@@ -33,7 +36,7 @@ class KitchenManageViewModel(
     }
 
     private suspend fun removeKitchen(item: Kitchen) {
-        kitchenInteractors.removeKitchenUseCase(item).onSuccess {
+        removeKitchenUseCase(item).onSuccess {
             setEvent(
                 Event.Info(
                     infoAlert,
