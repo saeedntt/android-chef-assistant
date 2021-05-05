@@ -12,12 +12,11 @@ class IngredientViewModel(private val getKitchenByIdUseCase: GetKitchenByIdUseCa
     private var kitchenId = 0
     lateinit var kitchen: Kitchen
 
-    private suspend fun loadKitchen() {
-        getKitchenByIdUseCase(kitchenId).onSuccess {
-            kitchen = it
-            setEvent(Event.Info(onKitchenLoad))
-        }
+    private suspend fun loadKitchen() = getKitchenByIdUseCase(kitchenId).onSuccess {
+        kitchen = it
+        setEvent(Event.Info(onKitchenLoad))
     }
+
 
     fun start(id: Int) {
         kitchenId = id
