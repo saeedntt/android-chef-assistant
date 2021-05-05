@@ -20,36 +20,33 @@ class KitchenManageViewModel(
     ChefAssistantViewModel() {
     lateinit var kitchens: LiveData<List<Kitchen>>
 
-    private fun loadKitchens() {
-        getKitchensUseCase(true).onSuccess {
-            kitchens = it.asLiveData()
-            setEvent(Event.Info(onReady))
-        }.onFailure {
-            setEvent(
-                Event.Error(
-                    errorAlert,
-                    Exception(application.getString(R.string.loading_data_fail))
-                )
+    private fun loadKitchens() = getKitchensUseCase(true).onSuccess {
+        kitchens = it.asLiveData()
+        setEvent(Event.Info(onReady))
+    }.onFailure {
+        setEvent(
+            Event.Error(
+                errorAlert,
+                Exception(application.getString(R.string.loading_data_fail))
             )
-        }
+        )
     }
 
-    private suspend fun removeKitchen(item: Kitchen) {
-        removeKitchenUseCase(item).onSuccess {
-            setEvent(
-                Event.Info(
-                    infoAlert,
-                    application.getString(R.string.kitchen_success_removed, item.title)
-                )
+
+    private suspend fun removeKitchen(item: Kitchen) = removeKitchenUseCase(item).onSuccess {
+        setEvent(
+            Event.Info(
+                infoAlert,
+                application.getString(R.string.kitchen_success_removed, item.title)
             )
-        }.onFailure {
-            setEvent(
-                Event.Error(
-                    errorAlert,
-                    Exception(application.getString(R.string.kitchen_fail_remove, item.title))
-                )
+        )
+    }.onFailure {
+        setEvent(
+            Event.Error(
+                errorAlert,
+                Exception(application.getString(R.string.kitchen_fail_remove, item.title))
             )
-        }
+        )
     }
 
     private fun createRemoveWarningModal(kitchen: Kitchen) = setEvent(
@@ -72,9 +69,8 @@ class KitchenManageViewModel(
         }
     }
 
-    fun start() {
-        loadKitchens()
-    }
+    fun start() = loadKitchens()
+
 
     data class ModalModel(
         val title: String,
