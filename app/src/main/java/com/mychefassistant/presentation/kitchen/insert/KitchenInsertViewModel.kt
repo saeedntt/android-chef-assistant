@@ -40,7 +40,7 @@ class KitchenInsertViewModel(
                             AlertWithBtn(
                                 application.getString(R.string.kitchen_exist),
                                 application.getString(R.string.show_kitchen),
-                                routeToIngredient,
+                                routeToGrocery,
                                 it[0].id
                             )
                         )
@@ -68,7 +68,7 @@ class KitchenInsertViewModel(
     companion object {
         const val titleInputError = "titleInputError"
         const val snackBarWithAction = "snackBarWithAction"
-        const val routeToIngredient = "routeToIngredient"
+        const val routeToGrocery = "routeToGrocery"
         const val backFragment = "backFragment"
     }
 }

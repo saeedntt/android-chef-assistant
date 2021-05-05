@@ -85,7 +85,7 @@ class KitchenManageFragment : Fragment() {
 
 
     private fun routeToKitchen(id: Int) = findNavController().navigate(
-        R.id.action_kitchen_manage_to_ingredient_manage2, bundleOf("id" to id)
+        R.id.action_kitchen_manage_to_grocery_manage2, bundleOf("id" to id)
     )
 
     private fun createModal(model: KitchenManageViewModel.ModalModel) =

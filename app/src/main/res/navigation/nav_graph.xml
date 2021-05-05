@@ -14,8 +14,8 @@
             android:id="@+id/action_kitchen_manage_to_kitchen_insert2"
             app:destination="@id/kitchen_insert" />
         <action
-            android:id="@+id/action_kitchen_manage_to_ingredient_manage2"
-            app:destination="@id/ingredient_manage" />
+            android:id="@+id/action_kitchen_manage_to_grocery_manage2"
+            app:destination="@id/grocery_manage" />
     </fragment>
 
     <fragment
@@ -24,16 +24,16 @@
         android:label="@string/kitchen_insert"
         tools:layout="@layout/fragment_kitchen_insert">
         <action
-            android:id="@+id/action_kitchen_insert_to_ingredient_manage2"
-            app:destination="@id/ingredient_manage"
+            android:id="@+id/action_kitchen_insert_to_grocery_manage2"
+            app:destination="@id/grocery_manage"
             app:launchSingleTop="true"
             app:popUpTo="@id/kitchen_manage" />
     </fragment>
 
     <fragment
-        android:id="@+id/ingredient_manage"
-        android:name="com.mychefassistant.presentation.ingredient.IngredientFragment"
-        android:label="@string/ingredient"
-        tools:layout="@layout/fragment_ingredient" />
+        android:id="@+id/grocery_manage"
+        android:name="com.mychefassistant.presentation.grocery.manage.GroceryManageFragment"
+        android:label="@string/grocery"
+        tools:layout="@layout/fragment_grocery" />
 
 </navigation>
