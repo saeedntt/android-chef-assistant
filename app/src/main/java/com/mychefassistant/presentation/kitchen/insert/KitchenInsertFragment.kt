@@ -42,18 +42,20 @@ class KitchenInsertFragment : Fragment() {
             )
         }
 
-        viewModel.eventListener(viewLifecycleOwner, {
-            when (it.type) {
-                KitchenInsertViewModel.backFragment -> activity?.onBackPressed()
+        viewModel.eventListener(viewLifecycleOwner)
+            .onInfo {
+                when (it.type) {
+                    KitchenInsertViewModel.backFragment -> activity?.onBackPressed()
+                }
             }
-        }, {
-            when (it.type) {
-                KitchenInsertViewModel.titleInputError ->
-                    titleInputLayout.error = it.exception.message
-                KitchenInsertViewModel.snackBarWithAction ->
-                    snackBarWithAction(it.data as KitchenInsertViewModel.AlertWithBtn)
+            .onError {
+                when (it.type) {
+                    KitchenInsertViewModel.titleInputError ->
+                        titleInputLayout.error = it.exception.message
+                    KitchenInsertViewModel.snackBarWithAction ->
+                        snackBarWithAction(it.data as KitchenInsertViewModel.AlertWithBtn)
+                }
             }
-        })
     }
 
     override fun onPause() {

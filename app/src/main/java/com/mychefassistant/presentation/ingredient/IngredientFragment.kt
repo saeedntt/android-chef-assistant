@@ -25,11 +25,12 @@ class IngredientFragment : Fragment() {
         getArgs()
         title = view.findViewById(R.id.title)
 
-        viewModel.eventListener(viewLifecycleOwner, {
-            when (it.type) {
-                IngredientViewModel.onKitchenLoad -> onKitchenLoad()
+        viewModel.eventListener(viewLifecycleOwner)
+            .onInfo {
+                when (it.type) {
+                    IngredientViewModel.onKitchenLoad -> onKitchenLoad()
+                }
             }
-        })
 
         viewModel.start(kitchenId)
     }

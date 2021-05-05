@@ -8,17 +8,28 @@ import com.mychefassistant.utils.Event
 
 abstract class ChefAssistantViewModel : ViewModel() {
     private val event: MutableLiveData<Event> = MutableLiveData()
+    private var onErrorHandle: (Event.Error) -> Unit = fun(_) {}
+    private var onInfoHandle: (Event.Info) -> Unit = fun(_) {}
 
-    fun eventListener(
-        lifecycleOwner: LifecycleOwner,
-        onInfo: (Event.Info) -> Unit = fun(_) {},
-        onError: (Event.Error) -> Unit = fun(_) {}
-    ) = event.observe(lifecycleOwner, Observer {
-        when (it) {
-            is Event.Error -> onError(it)
-            is Event.Info -> onInfo(it)
-        }
-    })
+    fun eventListener(lifecycleOwner: LifecycleOwner): ChefAssistantViewModel {
+        event.observe(lifecycleOwner, Observer {
+            when (it) {
+                is Event.Error -> onErrorHandle(it)
+                is Event.Info -> onInfoHandle(it)
+            }
+        })
+        return this
+    }
+
+    fun onError(handle: (Event.Error) -> Unit): ChefAssistantViewModel {
+        onErrorHandle = handle
+        return this
+    }
+
+    fun onInfo(handle: (Event.Info) -> Unit): ChefAssistantViewModel {
+        onInfoHandle = handle
+        return this
+    }
 
     fun setEvent(x: Event) = event.postValue(x)
 

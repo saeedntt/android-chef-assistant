@@ -35,21 +35,23 @@ class KitchenManageFragment : Fragment() {
         fab = view.findViewById(R.id.fab)
         setupFab()
 
-        viewModel.eventListener(viewLifecycleOwner, {
-            when (it.type) {
-                KitchenManageViewModel.onReady -> setupListView()
-                KitchenManageViewModel.infoAlert -> showAlert(it.data as String)
-                KitchenManageViewModel.routeToKitchen -> routeToKitchen(it.data as Int)
-                KitchenManageViewModel.viewSetEvent -> viewModel.viewEventListener(it.data as Event.Info)
-                KitchenManageViewModel.createModal -> createModal(it.data as KitchenManageViewModel.ModalModel)
-            }
-        }, {
-            when (it.type) {
-                KitchenManageViewModel.errorAlert -> it.exception.message?.let { it1 ->
-                    showAlert(it1, R.color.design_default_color_error)
+        viewModel.eventListener(viewLifecycleOwner)
+            .onInfo {
+                when (it.type) {
+                    KitchenManageViewModel.onReady -> setupListView()
+                    KitchenManageViewModel.infoAlert -> showAlert(it.data as String)
+                    KitchenManageViewModel.routeToKitchen -> routeToKitchen(it.data as Int)
+                    KitchenManageViewModel.viewSetEvent -> viewModel.viewEventListener(it.data as Event.Info)
+                    KitchenManageViewModel.createModal -> createModal(it.data as KitchenManageViewModel.ModalModel)
                 }
             }
-        })
+            .onError {
+                when (it.type) {
+                    KitchenManageViewModel.errorAlert -> it.exception.message?.let { it1 ->
+                        showAlert(it1, R.color.design_default_color_error)
+                    }
+                }
+            }
 
         viewModel.start()
     }
