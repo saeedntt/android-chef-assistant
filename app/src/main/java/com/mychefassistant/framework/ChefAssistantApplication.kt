@@ -1,6 +1,7 @@
 package com.mychefassistant.framework
 
 import android.app.Application
+import com.mychefassistant.framework.modules.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -11,7 +12,7 @@ class ChefAssistantApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@ChefAssistantApplication)
-            modules(databaseModule, roomsModule, interactorsModule, fragmentModule)
+            modules(databaseModule, roomsModule, useCaseModule, viewModelModule)
         }
     }
 }
