@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.core.interactors.GetKitchenByIdUseCase
 import com.mychefassistant.framework.ChefAssistantViewModel
-import com.mychefassistant.framework.interactors.KitchenInteractors
 import com.mychefassistant.utils.Event
 import kotlinx.coroutines.launch
 
