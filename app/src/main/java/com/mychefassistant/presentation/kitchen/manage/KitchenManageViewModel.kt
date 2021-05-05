@@ -63,7 +63,7 @@ class KitchenManageViewModel(
     )
 
 
-    fun viewEventListen(info: Event.Info) {
+    fun viewEventListener(info: Event.Info) {
         when (info.type) {
             onKitchenClicked -> setEvent(Event.Info(routeToKitchen, (info.data as Kitchen).id))
             onKitchenRemoveRequest -> createRemoveWarningModal(info.data as Kitchen)

@@ -6,10 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.mychefassistant.R
-import com.mychefassistant.core.domain.Kitchen
-import com.mychefassistant.utils.Event
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class IngredientFragment : Fragment() {
@@ -21,13 +18,7 @@ class IngredientFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        activity?.applicationContext
-
-        return inflater.inflate(R.layout.fragment_ingredient, container, false)
-    }
-
+    ): View? = inflater.inflate(R.layout.fragment_ingredient, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,6 +38,9 @@ class IngredientFragment : Fragment() {
         super.onPause()
         viewModel.clearEvent()
     }
+
+    private fun getArgs() = arguments?.apply {
+        kitchenId = getInt("id")
     }
 
     private fun onKitchenLoad() {
