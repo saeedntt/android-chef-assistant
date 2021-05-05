@@ -7,17 +7,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.mychefassistant.R
-import com.mychefassistant.utils.Event
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class KitchenInsertFragment : Fragment() {
@@ -31,11 +25,7 @@ class KitchenInsertFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        activity?.applicationContext
-        return inflater.inflate(R.layout.fragment_kitchen_insert, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.fragment_kitchen_insert, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,19 +61,16 @@ class KitchenInsertFragment : Fragment() {
         viewModel.clearEvent()
     }
 
-    private fun snackBarWithAction(title: String, btn: KitchenInsertViewModel.SnackbarBtn) {
-        Snackbar.make(requireView(), title, Snackbar.LENGTH_LONG)
-            .setAction(btn.title) {
-                when (btn.action) {
-                    KitchenInsertViewModel.routeToIngredient -> routeToIngredient(btn.data as Int)
+    private fun snackBarWithAction(alert: KitchenInsertViewModel.AlertWithBtn) =
+        Snackbar.make(requireView(), alert.title, Snackbar.LENGTH_LONG)
+            .setAction(alert.btnTitle) {
+                when (alert.action) {
+                    KitchenInsertViewModel.routeToIngredient -> routeToIngredient(alert.data as Int)
                 }
             }
             .show()
-    }
 
-    private fun routeToIngredient(id: Int) {
-        findNavController().navigate(
-            R.id.action_kitchen_insert_to_ingredient_manage2, bundleOf("id" to id)
-        )
-    }
+    private fun routeToIngredient(id: Int) = findNavController().navigate(
+        R.id.action_kitchen_insert_to_ingredient_manage2, bundleOf("id" to id)
+    )
 }

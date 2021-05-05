@@ -59,8 +59,9 @@ class KitchenInsertViewModel(
         }
     }
 
-    data class SnackbarBtn(
+    data class AlertWithBtn(
         val title: String,
+        val btnTitle: String,
         val action: String,
         val data: Any? = null
     )

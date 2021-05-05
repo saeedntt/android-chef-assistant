@@ -27,11 +27,7 @@ class KitchenManageFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        activity?.applicationContext
-        return inflater.inflate(R.layout.fragment_kitchen, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.fragment_kitchen, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -81,27 +77,23 @@ class KitchenManageFragment : Fragment() {
         viewModel.kitchens.observe(viewLifecycleOwner, Observer { adapter.submitList(it) })
     }
 
-    private fun setupFab() {
-        fab.setOnClickListener {
-            findNavController().navigate(R.id.action_kitchen_manage_to_kitchen_insert2)
-        }
+    private fun setupFab() = fab.setOnClickListener {
+        findNavController().navigate(R.id.action_kitchen_manage_to_kitchen_insert2)
     }
 
-    private fun routeToKitchen(id: Int) {
-        findNavController().navigate(
-            R.id.action_kitchen_manage_to_ingredient_manage2, bundleOf("id" to id)
-        )
-        viewModel.clearEvent()
-    }
 
-    private fun createModal(model: KitchenManageViewModel.ModalModel) {
+    private fun routeToKitchen(id: Int) = findNavController().navigate(
+        R.id.action_kitchen_manage_to_ingredient_manage2, bundleOf("id" to id)
+    )
+
+    private fun createModal(model: KitchenManageViewModel.ModalModel) =
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(model.title)
             .setMessage(model.message)
             .setNegativeButton(getString(R.string.no)) { _, _ -> model.onNegative() }
             .setPositiveButton(getString(R.string.yes)) { _, _ -> model.onPositive() }
             .show()
-    }
+
 
     private fun showAlert(message: String, color: Int? = null) {
         val alert = Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG)
