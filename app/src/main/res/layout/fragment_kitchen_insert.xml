@@ -27,11 +27,15 @@
 
         <ImageButton
             android:id="@+id/fragment_kitchen_insert_icon"
-            android:id="@+id/icon"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:background="@drawable/shape_circle_ripple"
+            android:backgroundTint="@color/secondaryColor"
+            android:scaleType="fitCenter"
+            android:padding="30dp"
             android:src="@drawable/ic_baseline_kitchen_24" />
 
         <com.google.android.material.textfield.TextInputLayout
