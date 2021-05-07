@@ -8,16 +8,15 @@
     tools:context=".presentation.kitchen.manage.KitchenManageFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
+        android:id="@+id/fragment_kitchen_manage_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/item_kitchen" />
+        tools:listitem="@layout/fragment_kitchen_manage_list_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fragment_kitchen_manage_fab"
         android:clickable="true"
-        android:contentDescription="TODO"
         android:focusable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

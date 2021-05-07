@@ -12,18 +12,18 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class GroceryManageFragment : Fragment() {
     private val viewModel: GroceryManageViewModel by viewModel()
     private var kitchenId = 0
-    private lateinit var title: TextView
+    private lateinit var kitchenTitle: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_grocery, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_grocery_manage, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getArgs()
-        title = view.findViewById(R.id.title)
+        kitchenTitle = view.findViewById(R.id.fragment_grocery_manage_kitchen_title)
 
         viewModel.eventListener(viewLifecycleOwner)
             .onInfo {
@@ -45,6 +45,6 @@ class GroceryManageFragment : Fragment() {
     }
 
     private fun onKitchenLoad() {
-        title.text = viewModel.kitchen.title
+        kitchenTitle.text = viewModel.kitchen.title
     }
 }

@@ -7,7 +7,7 @@
     tools:context=".presentation.grocery.manage.GroceryManageFragment">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/fragment_grocery_manage_kitchen_title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:textSize="@dimen/margin_large"

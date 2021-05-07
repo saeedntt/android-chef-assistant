@@ -27,12 +27,12 @@ class KitchenManageFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_kitchen, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_kitchen_manage, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        listView = view.findViewById(R.id.list)
-        fab = view.findViewById(R.id.fab)
+        listView = view.findViewById(R.id.fragment_kitchen_manage_list)
+        fab = view.findViewById(R.id.fragment_kitchen_manage_fab)
         setupFab()
 
         viewModel.eventListener(viewLifecycleOwner)
@@ -76,12 +76,12 @@ class KitchenManageFragment : Fragment() {
     }
 
     private fun setupFab() = fab.setOnClickListener {
-        findNavController().navigate(R.id.action_kitchen_manage_to_kitchen_insert2)
+        findNavController().navigate(R.id.action_fragment_kitchen_manage_to_fragment_kitchen_insert)
     }
 
 
     private fun routeToKitchen(id: Int) = findNavController().navigate(
-        R.id.action_kitchen_manage_to_grocery_manage2, bundleOf("id" to id)
+        R.id.action_fragment_kitchen_manage_to_fragment_grocery_manage, bundleOf("id" to id)
     )
 
     private fun createModal(model: KitchenManageViewModel.ModalModel) =

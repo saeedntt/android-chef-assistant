@@ -29,11 +29,11 @@ class KitchenInsertFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        titleInput = view.findViewById(R.id.title_input)
-        titleInputLayout = view.findViewById(R.id.title_layout)
-        locationInput = view.findViewById(R.id.location_input)
+        titleInput = view.findViewById(R.id.fragment_kitchen_insert_title_layout_input)
+        titleInputLayout = view.findViewById(R.id.fragment_kitchen_insert_title_layout)
+        locationInput = view.findViewById(R.id.fragment_kitchen_insert_location_layout_input)
 
-        view.findViewById<Button>(R.id.button).setOnClickListener {
+        view.findViewById<Button>(R.id.fragment_kitchen_insert_submit).setOnClickListener {
             viewModel.addKitchenRequest(
                 title = titleInput.text.toString(),
                 location = if (locationInput.text.isNullOrBlank()) null else locationInput.text.toString()
@@ -73,6 +73,6 @@ class KitchenInsertFragment : Fragment() {
             .show()
 
     private fun routeToGrocery(id: Int) = findNavController().navigate(
-        R.id.action_kitchen_insert_to_grocery_manage2, bundleOf("id" to id)
+        R.id.action_fragment_kitchen_insert_to_fragment_grocery_manage, bundleOf("id" to id)
     )
 }

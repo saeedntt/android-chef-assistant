@@ -17,7 +17,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -27,6 +26,7 @@
             tools:ignore="MissingConstraints" />
 
         <ImageButton
+            android:id="@+id/fragment_kitchen_insert_icon"
             android:id="@+id/icon"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -35,7 +35,7 @@
             android:src="@drawable/ic_baseline_kitchen_24" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/title_layout"
+            android:id="@+id/fragment_kitchen_insert_title_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:hint="@string/title">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/title_input"
+                android:id="@+id/fragment_kitchen_insert_title_layout_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true" />
@@ -57,14 +57,14 @@
             android:hint="@string/kitchen_location">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/location_input"
+                android:id="@+id/fragment_kitchen_insert_location_layout_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/fragment_kitchen_insert_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

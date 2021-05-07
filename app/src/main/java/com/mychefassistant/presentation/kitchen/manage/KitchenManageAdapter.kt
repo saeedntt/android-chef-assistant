@@ -17,14 +17,21 @@ class KitchenManageAdapter(
     private val onMenuSelect: (String, Kitchen) -> Unit
 ) : ListAdapter<Kitchen, KitchenManageAdapter.ViewHolder>(KitchenManageDiffUtil()) {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val title: TextView = view.findViewById(R.id.title)
-        val more: FloatingActionButton = view.findViewById(R.id.more)
+        val title: TextView = view.findViewById(R.id.fragment_kitchen_manage_list_item_title)
+        val more: FloatingActionButton =
+            view.findViewById(R.id.fragment_kitchen_manage_list_item_menu)
         val context: Context = view.context
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ViewHolder(inflater.inflate(R.layout.item_kitchen, parent, false))
+        return ViewHolder(
+            inflater.inflate(
+                R.layout.fragment_kitchen_manage_list_item,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -33,10 +40,10 @@ class KitchenManageAdapter(
         holder.itemView.setOnClickListener { onClick(item) }
         holder.more.setOnClickListener { it ->
             val popup = PopupMenu(holder.context, it)
-            popup.menuInflater.inflate(R.menu.item_kitchen_menu, popup.menu)
+            popup.menuInflater.inflate(R.menu.fragment_kitchen_manage_list_item_menu, popup.menu)
             popup.setOnMenuItemClickListener { x ->
                 when (x.itemId) {
-                    R.id.remove -> onMenuSelect(KitchenManageViewModel.kitchenRemoveRequest, item)
+                    R.id.fragment_kitchen_manage_list_item_menu_remove -> onMenuSelect(KitchenManageViewModel.kitchenRemoveRequest, item)
                 }
                 true
             }
