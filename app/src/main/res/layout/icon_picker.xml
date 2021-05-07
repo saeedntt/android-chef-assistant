@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:minWidth="300dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margin_large"
+        android:paddingHorizontal="@dimen/margin_medium"
+        android:text="@string/icon_picker_title" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/icon_picker_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/margin_large"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/icon_picker_item"
+        tools:ignore="MissingConstraints" />
+
+</LinearLayout>

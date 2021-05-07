@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -12,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.mychefassistant.R
+import com.mychefassistant.utils.iconpicker.IconPicker
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class KitchenInsertFragment : Fragment() {
@@ -19,7 +21,9 @@ class KitchenInsertFragment : Fragment() {
     private lateinit var titleInput: TextInputEditText
     private lateinit var titleInputLayout: TextInputLayout
     private lateinit var locationInput: TextInputEditText
-    private var iconInput = 1
+    private lateinit var imageButton: ImageButton
+    private lateinit var iconPicker: IconPicker
+    private var iconId: Int = R.drawable.ic_baseline_kitchen_24
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,14 +36,23 @@ class KitchenInsertFragment : Fragment() {
         titleInput = view.findViewById(R.id.fragment_kitchen_insert_title_layout_input)
         titleInputLayout = view.findViewById(R.id.fragment_kitchen_insert_title_layout)
         locationInput = view.findViewById(R.id.fragment_kitchen_insert_location_layout_input)
+        imageButton = view.findViewById(R.id.fragment_kitchen_insert_icon)
+        iconPicker = IconPicker(childFragmentManager).setOnClickListener {
+            iconId = it.icon
+            imageButton.setImageResource(iconId)
+        }
 
         view.findViewById<Button>(R.id.fragment_kitchen_insert_submit).setOnClickListener {
             viewModel.addKitchenRequest(
                 title = titleInput.text.toString(),
                 location = if (locationInput.text.isNullOrBlank()) null else locationInput.text.toString()
                     .toInt(),
-                icon = iconInput
+                icon = 1
             )
+        }
+
+        imageButton.setOnClickListener {
+            iconPicker.show()
         }
 
         viewModel.eventListener(viewLifecycleOwner)

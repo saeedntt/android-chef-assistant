@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="?attr/listPreferredItemPaddingLeft"
+    android:paddingEnd="?attr/listPreferredItemPaddingRight"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackground"
+    tools:ignore="UseCompoundDrawables">
+
+    <ImageView
+        android:id="@+id/icon_picker_list_item_image"
+        android:layout_width="?attr/listPreferredItemHeightSmall"
+        android:layout_height="?attr/listPreferredItemHeightSmall"
+        android:layout_gravity="center"
+        android:background="@drawable/shape_circle"
+        android:backgroundTint="@color/primaryLightColor"
+        android:padding="12dp"
+        app:srcCompat="@drawable/ic_baseline_kitchen_24"
+        android:contentDescription="Icon"
+        app:tint="@color/primaryTextColor" />
+
+    <TextView
+        android:id="@+id/icon_picker_list_item_title"
+        style="?attr/materialAlertDialogBodyTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeight"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/margin_medium"
+        android:text="TextView" />
+
+</LinearLayout>
