@@ -3,6 +3,7 @@ package com.mychefassistant.framework.db.dao
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
 import com.mychefassistant.core.domain.Kitchen
+import com.mychefassistant.core.utils.KitchenIcons
 import com.mychefassistant.framework.db.entity.KitchenEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -18,7 +19,7 @@ interface KitchenDao {
     suspend fun getById(id: Int): List<KitchenEntity>
 
     @Query("select * from kitchens where title = :title and icon is :icon and location is :location")
-    suspend fun findByArgs(title: String, icon: Int?, location: Int?): List<KitchenEntity>
+    suspend fun findByArgs(title: String, icon: KitchenIcons, location: Int?): List<KitchenEntity>
 
     suspend fun find(kitchen: Kitchen): List<KitchenEntity> {
         return findByArgs(kitchen.title, kitchen.icon, kitchen.location)

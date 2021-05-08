@@ -1,6 +1,8 @@
 package com.mychefassistant.utils.iconpicker
 
+import com.mychefassistant.core.utils.KitchenIcons
+
 data class IconModel(
-    val title: String,
+    val label: KitchenIcons,
     val icon: Int
 )

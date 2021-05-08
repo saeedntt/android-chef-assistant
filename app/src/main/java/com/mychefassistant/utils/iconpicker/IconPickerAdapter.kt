@@ -27,7 +27,7 @@ class IconPickerAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = icons[position]
-        holder.title.text = item.title
+        holder.title.text = item.label.toString()
         holder.image.setImageResource(item.icon)
         holder.itemView.setOnClickListener { handle(item) }
     }

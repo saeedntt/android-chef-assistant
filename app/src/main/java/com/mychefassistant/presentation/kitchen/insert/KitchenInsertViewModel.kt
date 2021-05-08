@@ -6,6 +6,7 @@ import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.core.interactors.AddKitchenUseCase
 import com.mychefassistant.core.interactors.FindKitchenUseCase
+import com.mychefassistant.core.utils.KitchenIcons
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.utils.Event
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +26,7 @@ class KitchenInsertViewModel(
         return Result.success(true)
     }
 
-    suspend fun addKitchen(title: String, icon: Int?, location: Int?) = run body@{
+    private suspend fun addKitchen(title: String, icon: KitchenIcons, location: Int?) = run body@{
         validateTitle(title).onFailure {
             setEvent(Event.Error(setTitleInputError, it))
             return@body
@@ -52,7 +53,7 @@ class KitchenInsertViewModel(
             .onSuccess { setEvent(Event.Info(backFragment)) }
     }
 
-    fun addKitchenRequest(title: String, icon: Int?, location: Int?) = viewModelScope.launch {
+    fun addKitchenRequest(title: String, icon: KitchenIcons, location: Int?) = viewModelScope.launch {
         withContext(Dispatchers.IO) {
             addKitchen(title, icon, location)
         }

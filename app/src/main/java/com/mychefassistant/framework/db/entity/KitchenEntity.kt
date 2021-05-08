@@ -2,6 +2,7 @@ package com.mychefassistant.framework.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.mychefassistant.core.utils.KitchenIcons
 
 @Entity(tableName = "kitchens")
 data class KitchenEntity(
@@ -10,7 +11,7 @@ data class KitchenEntity(
 
     val title: String,
 
-    val icon: Int? = null,
+    val icon: KitchenIcons,
 
     val location: Int? = null
 )

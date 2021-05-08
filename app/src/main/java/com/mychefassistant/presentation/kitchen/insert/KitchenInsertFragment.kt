@@ -13,17 +13,19 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.mychefassistant.R
+import com.mychefassistant.core.utils.KitchenIcons
+import com.mychefassistant.utils.iconpicker.IconModel
 import com.mychefassistant.utils.iconpicker.IconPicker
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class KitchenInsertFragment : Fragment() {
     private val viewModel: KitchenInsertViewModel by viewModel()
+    private var icon = KitchenIcons.Kitchen
     private lateinit var titleInput: TextInputEditText
     private lateinit var titleInputLayout: TextInputLayout
     private lateinit var locationInput: TextInputEditText
     private lateinit var imageButton: ImageButton
     private lateinit var iconPicker: IconPicker
-    private var iconId: Int = R.drawable.ic_baseline_kitchen_24
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,9 +39,9 @@ class KitchenInsertFragment : Fragment() {
         titleInputLayout = view.findViewById(R.id.fragment_kitchen_insert_title_layout)
         locationInput = view.findViewById(R.id.fragment_kitchen_insert_location_layout_input)
         imageButton = view.findViewById(R.id.fragment_kitchen_insert_icon)
-        iconPicker = IconPicker(childFragmentManager).setOnClickListener {
-            iconId = it.icon
-            imageButton.setImageResource(iconId)
+        iconPicker = IconPicker(childFragmentManager, icons).setOnClickListener {
+            icon = it.label
+            imageButton.setImageResource(it.icon)
         }
 
         view.findViewById<Button>(R.id.fragment_kitchen_insert_submit).setOnClickListener {
@@ -47,7 +49,7 @@ class KitchenInsertFragment : Fragment() {
                 title = titleInput.text.toString(),
                 location = if (locationInput.text.isNullOrBlank()) null else locationInput.text.toString()
                     .toInt(),
-                icon = 1
+                icon = icon
             )
         }
 
@@ -88,4 +90,14 @@ class KitchenInsertFragment : Fragment() {
     private fun routeToGrocery(id: Int) = findNavController().navigate(
         R.id.action_fragment_kitchen_insert_to_fragment_grocery_manage, bundleOf("id" to id)
     )
+
+    companion object {
+        val icons = arrayOf(
+            IconModel(KitchenIcons.Kitchen, R.drawable.ic_baseline_kitchen_24),
+            IconModel(KitchenIcons.Apartment, R.drawable.ic_baseline_apartment_24),
+            IconModel(KitchenIcons.Beach, R.drawable.ic_baseline_beach_access_24),
+            IconModel(KitchenIcons.House, R.drawable.ic_baseline_house_24),
+            IconModel(KitchenIcons.Jungle, R.drawable.ic_baseline_grass_24)
+        )
+    }
 }

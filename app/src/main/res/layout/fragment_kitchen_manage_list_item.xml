@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginStart="@dimen/margin_small"
-    android:layout_marginTop="@dimen/margin_tiny"
-    android:layout_marginEnd="@dimen/margin_small"
-    android:layout_marginBottom="@dimen/margin_tiny"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/fragment_kitchen_manage_list_item_icon"
+        android:layout_width="?attr/listPreferredItemHeightSmall"
+        android:layout_height="?attr/listPreferredItemHeightSmall"
+        android:layout_gravity="center"
+        android:background="@drawable/shape_circle"
+        android:backgroundTint="@color/primaryLightColor"
+        android:padding="12dp"
+        android:layout_marginStart="@dimen/margin_medium"
+        app:srcCompat="@drawable/ic_baseline_kitchen_24"
+        android:contentDescription="Icon"
+        app:tint="@color/primaryTextColor" />
 
     <TextView
         android:id="@+id/fragment_kitchen_manage_list_item_title"
@@ -27,9 +36,9 @@
         app:fabSize="mini"
         android:background="@color/primaryLightColor"
         android:layout_gravity="center|end"
-        android:layout_marginEnd="@dimen/margin_tiny"
+        android:layout_marginEnd="@dimen/margin_medium"
         app:backgroundTint="@color/primaryTextColor"
         app:elevation="0dp"
         app:srcCompat="@drawable/ic_baseline_more_vert_24" />
 
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>

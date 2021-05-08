@@ -23,15 +23,6 @@ class IconPicker(
     ): View? = inflater.inflate(R.layout.icon_picker, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (icons.isEmpty()) {
-            icons = arrayOf(
-                IconModel("Kitchen", R.drawable.ic_baseline_kitchen_24),
-                IconModel("Apartment", R.drawable.ic_baseline_apartment_24),
-                IconModel("Beach", R.drawable.ic_baseline_beach_access_24),
-                IconModel("House", R.drawable.ic_baseline_house_24),
-                IconModel("Jungle", R.drawable.ic_baseline_grass_24)
-            )
-        }
         view.findViewById<RecyclerView>(R.id.icon_picker_list).adapter =
             IconPickerAdapter(icons, ::adapterOnClickHandle)
     }

@@ -10,7 +10,7 @@ val databaseModule = module {
         Room.databaseBuilder(
             androidApplication(),
             ChefAssistantDatabase::class.java,
-            "ca_v4.db"
+            "ca_v5.db"
         )
             .fallbackToDestructiveMigration()
             .build()
