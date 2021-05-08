@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="?attr/listPreferredItemPaddingLeft"
-    android:paddingEnd="?attr/listPreferredItemPaddingRight"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?selectableItemBackground"
-    tools:ignore="UseCompoundDrawables">
+    android:paddingStart="?attr/listPreferredItemPaddingLeft"
+    android:paddingEnd="?attr/listPreferredItemPaddingRight">
 
     <ImageView
         android:id="@+id/icon_picker_list_item_image"
@@ -19,17 +17,24 @@
         android:background="@drawable/shape_circle"
         android:backgroundTint="@color/primaryLightColor"
         android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/icon_picker_list_item_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_kitchen_24"
-        android:contentDescription="Icon"
         app:tint="@color/primaryTextColor" />
 
     <TextView
         android:id="@+id/icon_picker_list_item_title"
         style="?attr/materialAlertDialogBodyTextStyle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="?attr/listPreferredItemHeight"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/margin_medium"
-        android:text="TextView" />
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/icon_picker_list_item_image"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

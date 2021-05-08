@@ -1,18 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
     tools:context=".presentation.grocery.manage.GroceryManageFragment">
 
     <TextView
         android:id="@+id/fragment_grocery_manage_kitchen_title"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:textSize="@dimen/margin_large"
-        android:text="items!"
-        android:textAlignment="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        tools:ignore="MissingConstraints"/>
+        android:paddingTop="@dimen/margin_large"
+        android:textSize="@dimen/margin_large"
+        app:layout_constraintBottom_toTopOf="@id/fragment_grocery_manage_kitchen_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fragment_grocery_manage_kitchen_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_large"
+        android:background="@drawable/shape_circle"
+        android:backgroundTint="@color/secondaryColor"
+        android:padding="30dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_baseline_kitchen_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_grocery_manage_kitchen_title" />
 </androidx.constraintlayout.widget.ConstraintLayout>
