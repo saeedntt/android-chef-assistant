@@ -34,6 +34,10 @@
         android:id="@+id/nav_fragment_grocery_manage"
         android:name="com.mychefassistant.presentation.grocery.manage.GroceryManageFragment"
         android:label="@string/grocery"
-        tools:layout="@layout/fragment_grocery_manage" />
+        tools:layout="@layout/fragment_grocery_manage">
+        <argument
+            android:name="kitchenId"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

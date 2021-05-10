@@ -76,7 +76,7 @@ class KitchenManageFragment : Fragment() {
     }
 
     private fun setupFab() = fab.setOnClickListener {
-        findNavController().navigate(R.id.action_fragment_kitchen_manage_to_fragment_kitchen_insert)
+        findNavController().navigate(KitchenManageFragmentDirections.actionFragmentKitchenManageToFragmentKitchenInsert())
     }
 
 

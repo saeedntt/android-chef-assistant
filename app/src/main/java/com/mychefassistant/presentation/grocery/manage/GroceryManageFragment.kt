@@ -7,13 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.mychefassistant.R
 import com.mychefassistant.presentation.kitchen.insert.KitchenInsertFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GroceryManageFragment : Fragment() {
     private val viewModel: GroceryManageViewModel by viewModel()
-    private var kitchenId = 0
+    private val args: GroceryManageFragmentArgs by navArgs()
+    private val kitchenId by lazy { args.kitchenId }
     private lateinit var kitchenTitle: TextView
     private lateinit var kitchenIcon: ImageView
 
@@ -25,7 +27,6 @@ class GroceryManageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getArgs()
         kitchenTitle = view.findViewById(R.id.fragment_grocery_manage_kitchen_title)
         kitchenIcon = view.findViewById(R.id.fragment_grocery_manage_kitchen_icon)
 
@@ -42,10 +43,6 @@ class GroceryManageFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         viewModel.resetEvents()
-    }
-
-    private fun getArgs() = arguments?.apply {
-        kitchenId = getInt("id")
     }
 
     private fun onKitchenLoad() {
