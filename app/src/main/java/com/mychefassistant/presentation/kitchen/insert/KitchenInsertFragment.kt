@@ -1,5 +1,6 @@
 package com.mychefassistant.presentation.kitchen.insert
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialElevationScale
 import com.mychefassistant.R
 import com.mychefassistant.core.utils.KitchenIcons
 import com.mychefassistant.utils.iconpicker.IconModel
@@ -26,6 +29,16 @@ class KitchenInsertFragment : Fragment() {
     private lateinit var locationInput: TextInputEditText
     private lateinit var imageButton: ImageButton
     private lateinit var iconPicker: IconPicker
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            drawingViewId = R.id.nav_host_fragment
+            duration = 1000
+            scrimColor = Color.TRANSPARENT
+            setAllContainerColors(resources.getColor(R.color.secondaryColor))
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

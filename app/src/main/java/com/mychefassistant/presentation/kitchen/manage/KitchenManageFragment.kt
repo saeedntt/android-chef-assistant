@@ -95,7 +95,10 @@ class KitchenManageFragment : Fragment() {
     }
 
     private fun setupFab() = fab.setOnClickListener {
-        findNavController().navigate(KitchenManageFragmentDirections.actionFragmentKitchenManageToFragmentKitchenInsert())
+        val extras = FragmentNavigatorExtras(fab to "kitchenInsert")
+        val direction =
+            KitchenManageFragmentDirections.actionFragmentKitchenManageToFragmentKitchenInsert()
+        findNavController().navigate(direction, extras)
     }
 
     private fun routeToKitchen(data: Pair<Kitchen, View>) {
