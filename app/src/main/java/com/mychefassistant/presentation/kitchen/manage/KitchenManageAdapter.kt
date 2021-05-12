@@ -13,7 +13,7 @@ import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.databinding.FragmentKitchenManageListItemBinding
 
 class KitchenManageAdapter(
-    private val onClick: (Kitchen) -> Unit,
+    private val onClick: (Kitchen, View) -> Unit,
     private val onMenuSelect: (String, Kitchen) -> Unit
 ) : ListAdapter<Kitchen, KitchenManageAdapter.ViewHolder>(KitchenManageDiffUtil()) {
     class ViewHolder(val binding: FragmentKitchenManageListItemBinding) :
@@ -34,11 +34,7 @@ class KitchenManageAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         holder.binding.kitchen = item
-        KitchenInsertFragment.icons.find { it.label == item.icon }.let {
-            if (it != null) holder.icon.setImageResource(it.icon)
-        }
-        holder.title.text = item.title
-        holder.itemView.setOnClickListener { onClick(item) }
+        holder.itemView.setOnClickListener { onClick(item, it) }
         holder.more.setOnClickListener {
             val popup = PopupMenu(holder.context, it)
             popup.menuInflater.inflate(R.menu.fragment_kitchen_manage_list_item_menu, popup.menu)

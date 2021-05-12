@@ -1,11 +1,13 @@
 package com.mychefassistant.presentation.grocery.manage
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.transition.MaterialContainerTransform
 import com.mychefassistant.R
 import com.mychefassistant.databinding.FragmentGroceryManageBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -15,8 +17,16 @@ class GroceryManageFragment : Fragment() {
     private val args: GroceryManageFragmentArgs by navArgs()
     private val kitchenId by lazy { args.kitchenId }
     private lateinit var binding: FragmentGroceryManageBinding
-    private lateinit var kitchenTitle: TextView
-    private lateinit var kitchenIcon: ImageView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            drawingViewId = R.id.nav_host_fragment
+            duration = 1000
+            scrimColor = Color.TRANSPARENT
+            setAllContainerColors(resources.getColor(R.color.primaryTextColor))
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,8 +39,8 @@ class GroceryManageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        kitchenTitle = view.findViewById(R.id.fragment_grocery_manage_kitchen_title)
-        kitchenIcon = view.findViewById(R.id.fragment_grocery_manage_kitchen_icon)
+
+        postponeEnterTransition()
 
         viewModel.eventListener(viewLifecycleOwner)
             .onInfo {
@@ -51,5 +61,6 @@ class GroceryManageFragment : Fragment() {
         binding.run {
             kitchen = viewModel.kitchen
         }
+        startPostponedEnterTransition()
     }
 }

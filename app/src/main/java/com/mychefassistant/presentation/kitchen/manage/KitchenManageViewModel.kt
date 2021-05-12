@@ -66,7 +66,7 @@ class KitchenManageViewModel(
 
     override fun onFragmentEventListener(event: Event.Info) {
         when (event.type) {
-            onKitchenClicked -> setEvent(Event.Info(routeToKitchen, (event.data as Kitchen).id))
+            onKitchenClicked -> setEvent(Event.Info(routeToKitchen, event.data))
             kitchenRemoveRequest -> createRemoveWarningModal(event.data as Kitchen)
         }
     }
