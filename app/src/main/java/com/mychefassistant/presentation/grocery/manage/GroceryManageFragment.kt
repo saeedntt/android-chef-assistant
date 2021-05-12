@@ -4,18 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.mychefassistant.R
-import com.mychefassistant.presentation.kitchen.insert.KitchenInsertFragment
+import com.mychefassistant.databinding.FragmentGroceryManageBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GroceryManageFragment : Fragment() {
     private val viewModel: GroceryManageViewModel by viewModel()
     private val args: GroceryManageFragmentArgs by navArgs()
     private val kitchenId by lazy { args.kitchenId }
+    private lateinit var binding: FragmentGroceryManageBinding
     private lateinit var kitchenTitle: TextView
     private lateinit var kitchenIcon: ImageView
 
@@ -23,7 +22,10 @@ class GroceryManageFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_grocery_manage, container, false)
+    ): View? {
+        binding = FragmentGroceryManageBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,9 +48,8 @@ class GroceryManageFragment : Fragment() {
     }
 
     private fun onKitchenLoad() {
-        kitchenTitle.text = viewModel.kitchen.title
-        KitchenInsertFragment.icons.find { it.label == viewModel.kitchen.icon }.let {
-            if (it != null) kitchenIcon.setImageResource(it.icon)
+        binding.run {
+            kitchen = viewModel.kitchen
         }
     }
 }
