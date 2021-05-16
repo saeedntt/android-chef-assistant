@@ -12,10 +12,10 @@ import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.databinding.FragmentKitchenManageListItemBinding
 
-class KitchenManageAdapter(
+class KitchenManageListAdapter(
     private val onClick: (Kitchen, View) -> Unit,
     private val onMenuSelect: (String, Kitchen) -> Unit
-) : ListAdapter<Kitchen, KitchenManageAdapter.ViewHolder>(KitchenManageDiffUtil()) {
+) : ListAdapter<Kitchen, KitchenManageListAdapter.ViewHolder>(KitchenManageDiffUtil()) {
     class ViewHolder(val binding: FragmentKitchenManageListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val view = binding.root

@@ -82,7 +82,7 @@ class KitchenManageFragment : Fragment() {
     )
 
     private fun setupListView() {
-        val adapter = KitchenManageAdapter(::onKitchenClick, ::onKitchenMenuSelect)
+        val adapter = KitchenManageListAdapter(::onKitchenClick, ::onKitchenMenuSelect)
         listView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         listView.adapter = adapter
         viewModel.kitchens.observe(viewLifecycleOwner, Observer {
