@@ -13,8 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.google.android.material.transition.MaterialContainerTransform
-import com.google.android.material.transition.MaterialElevationScale
+import com.google.android.material.transition.MaterialSharedAxis
 import com.mychefassistant.R
 import com.mychefassistant.core.utils.KitchenIcons
 import com.mychefassistant.utils.iconpicker.IconModel
@@ -32,12 +31,10 @@ class KitchenInsertFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = MaterialContainerTransform().apply {
-            drawingViewId = R.id.nav_host_fragment
-            duration = 1000
-            scrimColor = Color.TRANSPARENT
-            setAllContainerColors(resources.getColor(R.color.secondaryColor))
-        }
+        enterTransition =
+            MaterialSharedAxis(MaterialSharedAxis.Z, true).apply { duration = 1000 }
+        returnTransition =
+            MaterialSharedAxis(MaterialSharedAxis.Z, false).apply { duration = 1000 }
     }
 
     override fun onCreateView(

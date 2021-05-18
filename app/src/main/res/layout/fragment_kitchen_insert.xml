@@ -10,7 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_horizontal_margin"
-    android:transitionName="kitchenInsert"
     android:background="@color/primaryTextColor"
     tools:context=".presentation.kitchen.insert.KitchenInsertFragment">
 

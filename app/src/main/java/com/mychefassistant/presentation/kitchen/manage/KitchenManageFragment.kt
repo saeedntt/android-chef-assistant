@@ -16,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.MaterialSharedAxis
 import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.utils.Event
@@ -29,8 +30,6 @@ class KitchenManageFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         enterTransition = MaterialFadeThrough().apply { duration = 1000 }
-        reenterTransition = MaterialElevationScale(true).apply { duration = 1000 }
-        exitTransition = MaterialElevationScale(false).apply { duration = 1000 }
     }
 
     override fun onCreateView(
@@ -95,13 +94,18 @@ class KitchenManageFragment : Fragment() {
     }
 
     private fun setupFab() = fab.setOnClickListener {
-        val extras = FragmentNavigatorExtras(fab to "kitchenInsert")
+        exitTransition =
+            MaterialSharedAxis(MaterialSharedAxis.Z, true).apply { duration = 1000 }
+        reenterTransition =
+            MaterialSharedAxis(MaterialSharedAxis.Z, false).apply { duration = 1000 }
         val direction =
             KitchenManageFragmentDirections.actionFragmentKitchenManageToFragmentKitchenInsert()
-        findNavController().navigate(direction, extras)
+        findNavController().navigate(direction)
     }
 
     private fun routeToKitchen(data: Pair<Kitchen, View>) {
+        reenterTransition = MaterialElevationScale(true).apply { duration = 1000 }
+        exitTransition = MaterialElevationScale(false).apply { duration = 1000 }
         val extras = FragmentNavigatorExtras(data.second to "kitchenManage")
         val direction =
             KitchenManageFragmentDirections.actionFragmentKitchenManageToFragmentGroceryManage(data.first.id)
