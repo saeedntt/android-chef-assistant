@@ -12,20 +12,19 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
 import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
+import com.mychefassistant.databinding.FragmentKitchenManageBinding
 import com.mychefassistant.utils.Event
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class KitchenManageFragment : Fragment() {
     private val viewModel: KitchenManageViewModel by viewModel()
-    private lateinit var listView: RecyclerView
-    private lateinit var fab: FloatingActionButton
+    private lateinit var binding: FragmentKitchenManageBinding
 
     override fun onStart() {
         super.onStart()
@@ -36,15 +35,15 @@ class KitchenManageFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_kitchen_manage, container, false)
+    ): View? {
+        binding = FragmentKitchenManageBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         postponeEnterTransition()
-
-        listView = view.findViewById(R.id.fragment_kitchen_manage_list)
-        fab = view.findViewById(R.id.fragment_kitchen_manage_fab)
         setupFab()
 
         viewModel.eventListener(viewLifecycleOwner)
@@ -82,8 +81,9 @@ class KitchenManageFragment : Fragment() {
 
     private fun setupListView() {
         val adapter = KitchenManageListAdapter(::onKitchenClick, ::onKitchenMenuSelect)
-        listView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        listView.adapter = adapter
+        binding.fragmentKitchenManageList.layoutManager =
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        binding.fragmentKitchenManageList.adapter = adapter
         viewModel.kitchens.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
 
@@ -93,7 +93,7 @@ class KitchenManageFragment : Fragment() {
         })
     }
 
-    private fun setupFab() = fab.setOnClickListener {
+    private fun setupFab() = binding.fragmentKitchenManageFab.setOnClickListener {
         exitTransition =
             MaterialSharedAxis(MaterialSharedAxis.Z, true).apply { duration = 1000 }
         reenterTransition =

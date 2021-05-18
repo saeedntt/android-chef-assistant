@@ -14,12 +14,12 @@ class KitchenManageListAdapter(
     private val onMenuSelect: (String, Kitchen) -> Unit
 ) : ListAdapter<Kitchen, KitchenManageListViewHolder>(KitchenManageDiffUtil()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KitchenManageListViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return KitchenManageListViewHolder(
-            FragmentKitchenManageListItemBinding.inflate(inflater, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KitchenManageListViewHolder =
+        KitchenManageListViewHolder(
+            FragmentKitchenManageListItemBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
         )
-    }
 
     override fun onBindViewHolder(holder: KitchenManageListViewHolder, position: Int) {
         val item = getItem(position)

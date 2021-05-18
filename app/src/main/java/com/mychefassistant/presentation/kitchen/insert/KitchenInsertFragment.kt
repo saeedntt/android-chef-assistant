@@ -42,7 +42,7 @@ class KitchenInsertFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<Button>(R.id.fragment_kitchen_insert_submit).setOnClickListener {
+        binding.fragmentKitchenInsertSubmit.setOnClickListener {
             val title = binding.fragmentKitchenInsertTitle.editText?.text.toString()
             val locationText = binding.fragmentKitchenInsertLocation.editText?.text
             val location =

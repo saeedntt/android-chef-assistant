@@ -6,25 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.RecyclerView
-import com.mychefassistant.R
+import com.mychefassistant.databinding.IconPickerBinding
 
 class IconPicker(
     private val targetFragmentManager: FragmentManager,
     private var icons: Array<IconModel> = arrayOf()
 ) : AppCompatDialogFragment() {
-
+    private lateinit var binding: IconPickerBinding
     private lateinit var iconOnClickListener: (iconModel: IconModel) -> Unit
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.icon_picker, container, false)
+    ): View? {
+        binding = IconPickerBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        view.findViewById<RecyclerView>(R.id.icon_picker_list).adapter =
-            IconPickerAdapter(icons, ::adapterOnClickHandle)
+        binding.iconPickerList.adapter = IconPickerListAdapter(icons, ::adapterOnClickHandle)
     }
 
     private fun adapterOnClickHandle(iconModel: IconModel) {
