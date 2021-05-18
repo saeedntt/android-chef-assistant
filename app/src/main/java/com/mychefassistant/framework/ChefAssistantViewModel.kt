@@ -19,7 +19,7 @@ abstract class ChefAssistantViewModel : ViewModel() {
         event.observe(lifecycleOwner, Observer {
             when (it) {
                 is Event.Error -> onErrorListener(it)
-                is Event.Info -> when(it.type) {
+                is Event.Info -> when (it.type) {
                     onFragmentEvent -> onFragmentEventListener(it.data as Event.Info)
                     else -> onInfoListener(it)
                 }

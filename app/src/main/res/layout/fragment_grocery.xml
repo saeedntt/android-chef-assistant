@@ -10,9 +10,9 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:textSize="@dimen/margin_large"
+        android:gravity="center"
         android:text="items!"
         android:textAlignment="center"
-        android:gravity="center"
-        tools:ignore="MissingConstraints"/>
+        android:textSize="@dimen/margin_large"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
