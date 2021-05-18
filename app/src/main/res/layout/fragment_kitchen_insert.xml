@@ -1,95 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_horizontal_margin"
-    android:background="@color/primaryTextColor"
-    tools:context=".presentation.kitchen.insert.KitchenInsertFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/fragment_kitchen_insert_header"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="@dimen/margin_large"
-        android:text="@string/add_kitchen"
-        android:textSize="@dimen/margin_large"
-        app:layout_constraintBottom_toTopOf="@id/fragment_kitchen_insert_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primaryTextColor"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        tools:context=".presentation.kitchen.insert.KitchenInsertFragment">
 
-    <ImageButton
-        android:id="@+id/fragment_kitchen_insert_icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/margin_large"
-        android:layout_marginBottom="@dimen/margin_small"
-        android:background="@drawable/shape_circle_ripple"
-        android:backgroundTint="@color/secondaryColor"
-        android:padding="30dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_baseline_kitchen_24"
-        app:layout_constraintBottom_toTopOf="@id/fragment_kitchen_insert_title_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_kitchen_insert_header" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fragment_kitchen_insert_title_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:hint="@string/title"
-        app:layout_constraintBottom_toTopOf="@id/fragment_kitchen_insert_location_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_kitchen_insert_icon">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/fragment_kitchen_insert_title_layout_input"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/fragment_kitchen_insert_header"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:gravity="center"
+            android:paddingTop="@dimen/margin_large"
+            android:text="@string/add_kitchen"
+            android:textSize="@dimen/margin_large"
+            app:layout_constraintBottom_toTopOf="@id/fragment_kitchen_insert_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fragment_kitchen_insert_location_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
-        android:hint="@string/kitchen_location"
-        app:layout_constraintBottom_toTopOf="@id/fragment_kitchen_insert_submit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_kitchen_insert_title_layout">
+        <ImageButton
+            android:id="@+id/fragment_kitchen_insert_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:background="@drawable/shape_circle_ripple"
+            android:backgroundTint="@color/secondaryColor"
+            android:padding="30dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_kitchen_24"
+            app:layout_constraintBottom_toTopOf="@id/fragment_kitchen_insert_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_kitchen_insert_header" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/fragment_kitchen_insert_location_layout_input"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fragment_kitchen_insert_title"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="@dimen/margin_medium"
+            android:hint="@string/title"
+            app:layout_constraintBottom_toTopOf="@id/fragment_kitchen_insert_location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_kitchen_insert_icon">
 
-    <Button
-        android:id="@+id/fragment_kitchen_insert_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/margin_large"
-        android:text="@string/insert"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_kitchen_insert_location_layout" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fragment_kitchen_insert_location"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:hint="@string/kitchen_location"
+            app:layout_constraintBottom_toTopOf="@id/fragment_kitchen_insert_submit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_kitchen_insert_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/fragment_kitchen_insert_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/insert"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_kitchen_insert_location" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

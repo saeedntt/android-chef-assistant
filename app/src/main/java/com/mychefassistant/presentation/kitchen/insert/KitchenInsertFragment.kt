@@ -1,21 +1,18 @@
 package com.mychefassistant.presentation.kitchen.insert
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.transition.MaterialSharedAxis
 import com.mychefassistant.R
 import com.mychefassistant.core.utils.KitchenIcons
+import com.mychefassistant.databinding.FragmentKitchenInsertBinding
 import com.mychefassistant.utils.iconpicker.IconModel
 import com.mychefassistant.utils.iconpicker.IconPicker
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,10 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class KitchenInsertFragment : Fragment() {
     private val viewModel: KitchenInsertViewModel by viewModel()
     private var icon = KitchenIcons.Kitchen
-    private lateinit var titleInput: TextInputEditText
-    private lateinit var titleInputLayout: TextInputLayout
-    private lateinit var locationInput: TextInputEditText
-    private lateinit var imageButton: ImageButton
+    private lateinit var binding: FragmentKitchenInsertBinding
     private lateinit var iconPicker: IconPicker
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,30 +35,28 @@ class KitchenInsertFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_kitchen_insert, container, false)
+    ): View? {
+        binding = FragmentKitchenInsertBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        titleInput = view.findViewById(R.id.fragment_kitchen_insert_title_layout_input)
-        titleInputLayout = view.findViewById(R.id.fragment_kitchen_insert_title_layout)
-        locationInput = view.findViewById(R.id.fragment_kitchen_insert_location_layout_input)
-        imageButton = view.findViewById(R.id.fragment_kitchen_insert_icon)
+        view.findViewById<Button>(R.id.fragment_kitchen_insert_submit).setOnClickListener {
+            val title = binding.fragmentKitchenInsertTitle.editText?.text.toString()
+            val locationText = binding.fragmentKitchenInsertLocation.editText?.text
+            val location =
+                if (locationText.isNullOrBlank()) null else locationText.toString().toInt()
+            viewModel.addKitchenRequest(title, icon, location)
+        }
+
+        binding.fragmentKitchenInsertIcon.setOnClickListener {
+            iconPicker.show()
+        }
+
         iconPicker = IconPicker(childFragmentManager, icons).setOnClickListener {
             icon = it.label
-            imageButton.setImageResource(it.icon)
-        }
-
-        view.findViewById<Button>(R.id.fragment_kitchen_insert_submit).setOnClickListener {
-            viewModel.addKitchenRequest(
-                title = titleInput.text.toString(),
-                location = if (locationInput.text.isNullOrBlank()) null else locationInput.text.toString()
-                    .toInt(),
-                icon = icon
-            )
-        }
-
-        imageButton.setOnClickListener {
-            iconPicker.show()
+            binding.fragmentKitchenInsertIcon.setImageResource(it.icon)
         }
 
         viewModel.eventListener(viewLifecycleOwner)
@@ -76,7 +68,7 @@ class KitchenInsertFragment : Fragment() {
             .onError {
                 when (it.type) {
                     KitchenInsertViewModel.setTitleInputError ->
-                        titleInputLayout.error = it.exception.message
+                        binding.fragmentKitchenInsertTitle.error = it.exception.message
                     KitchenInsertViewModel.createAlertWithButton ->
                         snackBarWithAction(it.data as KitchenInsertViewModel.AlertButtonModel)
                 }
