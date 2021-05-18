@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialSharedAxis
 import com.mychefassistant.R
 import com.mychefassistant.databinding.FragmentGroceryManageBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -26,6 +27,10 @@ class GroceryManageFragment : Fragment() {
             scrimColor = Color.TRANSPARENT
             setAllContainerColors(resources.getColor(R.color.primaryTextColor))
         }
+        enterTransition =
+            MaterialSharedAxis(MaterialSharedAxis.Z, true).apply { duration = 1000 }
+        exitTransition =
+            MaterialSharedAxis(MaterialSharedAxis.Z, false).apply { duration = 1000 }
     }
 
     override fun onCreateView(

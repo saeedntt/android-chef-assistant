@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import com.mychefassistant.R
+import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.core.utils.KitchenIcons
 import com.mychefassistant.databinding.FragmentKitchenInsertBinding
 import com.mychefassistant.utils.iconpicker.IconModel
@@ -62,6 +62,7 @@ class KitchenInsertFragment : Fragment() {
         viewModel.eventListener(viewLifecycleOwner)
             .onInfo {
                 when (it.type) {
+                    KitchenInsertViewModel.routeToGrocery -> routeToGrocery(it.data as Kitchen)
                     KitchenInsertViewModel.backFragment -> activity?.onBackPressed()
                 }
             }
@@ -82,16 +83,16 @@ class KitchenInsertFragment : Fragment() {
 
     private fun snackBarWithAction(alert: KitchenInsertViewModel.AlertButtonModel) =
         Snackbar.make(requireView(), alert.title, Snackbar.LENGTH_LONG)
-            .setAction(alert.btnTitle) {
-                when (alert.action) {
-                    KitchenInsertViewModel.routeToGrocery -> routeToGrocery(alert.data as Int)
-                }
-            }
+            .setAction(alert.btnTitle) { alert.action() }
             .show()
 
-    private fun routeToGrocery(id: Int) = findNavController().navigate(
-        R.id.action_fragment_kitchen_insert_to_fragment_grocery_manage, bundleOf("id" to id)
-    )
+    private fun routeToGrocery(kitchen: Kitchen) {
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply { duration = 1000 }
+        findNavController().navigate(
+            KitchenInsertFragmentDirections
+                .actionFragmentKitchenInsertToFragmentGroceryManage(kitchen.id)
+        )
+    }
 
     companion object {
         val icons = arrayOf(

@@ -40,10 +40,8 @@ class KitchenInsertViewModel(
                             Exception(application.getString(R.string.kitchen_exist)),
                             AlertButtonModel(
                                 application.getString(R.string.kitchen_exist),
-                                application.getString(R.string.show_kitchen),
-                                routeToGrocery,
-                                it[0].id
-                            )
+                                application.getString(R.string.show_kitchen)
+                            ) { setEvent(Event.Info(routeToGrocery, it[0])) }
                         )
                     )
                     return@body
@@ -53,17 +51,17 @@ class KitchenInsertViewModel(
             .onSuccess { setEvent(Event.Info(backFragment)) }
     }
 
-    fun addKitchenRequest(title: String, icon: KitchenIcons, location: Int?) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            addKitchen(title, icon, location)
+    fun addKitchenRequest(title: String, icon: KitchenIcons, location: Int?) =
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                addKitchen(title, icon, location)
+            }
         }
-    }
 
     data class AlertButtonModel(
         val title: String,
         val btnTitle: String,
-        val action: String,
-        val data: Any? = null
+        val action: () -> Unit
     )
 
     companion object {
