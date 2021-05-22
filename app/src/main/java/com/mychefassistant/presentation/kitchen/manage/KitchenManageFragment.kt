@@ -52,8 +52,7 @@ class KitchenManageFragment : Fragment() {
                     KitchenManageViewModel.onKitchenLoad -> setupListView()
                     KitchenManageViewModel.createInfoAlert -> showAlert(it.data as String)
                     KitchenManageViewModel.createModal -> createModal(it.data as KitchenManageViewModel.ModalModel)
-                    KitchenManageViewModel.routeToKitchen ->
-                        (it.data as Pair<Kitchen, View>)
+                    KitchenManageViewModel.routeToKitchen -> routeToKitchen(it.data as Pair<Kitchen, View>)
                 }
             }
             .onError {
