@@ -17,7 +17,7 @@ class GroceryManageFragment : Fragment() {
     private val viewModel: GroceryManageViewModel by viewModel()
     private val args: GroceryManageFragmentArgs by navArgs()
     private val kitchenId by lazy { args.kitchenId }
-    private lateinit var binding: FragmentGroceryManageBinding
+    private var binding: FragmentGroceryManageBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +39,7 @@ class GroceryManageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentGroceryManageBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,7 +63,7 @@ class GroceryManageFragment : Fragment() {
     }
 
     private fun onKitchenLoad() {
-        binding.run {
+        binding?.run {
             kitchen = viewModel.kitchen
         }
         startPostponedEnterTransition()

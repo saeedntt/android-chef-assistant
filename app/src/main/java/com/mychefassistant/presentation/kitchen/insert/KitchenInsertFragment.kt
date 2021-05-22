@@ -19,8 +19,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class KitchenInsertFragment : Fragment() {
     private val viewModel: KitchenInsertViewModel by viewModel()
     private var icon = KitchenIcons.Kitchen
-    private lateinit var binding: FragmentKitchenInsertBinding
-    private lateinit var iconPicker: IconPicker
+    private var binding: FragmentKitchenInsertBinding? = null
+    private var iconPicker: IconPicker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,43 +36,45 @@ class KitchenInsertFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentKitchenInsertBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.fragmentKitchenInsertSubmit.setOnClickListener {
-            val title = binding.fragmentKitchenInsertTitle.editText?.text.toString()
-            val locationText = binding.fragmentKitchenInsertLocation.editText?.text
-            val location =
-                if (locationText.isNullOrBlank()) null else locationText.toString().toInt()
-            viewModel.addKitchenRequest(title, icon, location)
-        }
-
-        binding.fragmentKitchenInsertIcon.setOnClickListener {
-            iconPicker.show()
-        }
-
-        iconPicker = IconPicker(childFragmentManager, icons).setOnClickListener {
-            icon = it.label
-            binding.fragmentKitchenInsertIcon.setImageResource(it.icon)
-        }
-
-        viewModel.eventListener(viewLifecycleOwner)
-            .onInfo {
-                when (it.type) {
-                    KitchenInsertViewModel.routeToGrocery -> routeToGrocery(it.data as Kitchen)
-                    KitchenInsertViewModel.backFragment -> activity?.onBackPressed()
-                }
+        binding?.let { binding ->
+            iconPicker = IconPicker(childFragmentManager, icons).setOnClickListener {
+                icon = it.label
+                binding.fragmentKitchenInsertIcon.setImageResource(it.icon)
             }
-            .onError {
-                when (it.type) {
-                    KitchenInsertViewModel.setTitleInputError ->
-                        binding.fragmentKitchenInsertTitle.error = it.exception.message
-                    KitchenInsertViewModel.createAlertWithButton ->
-                        snackBarWithAction(it.data as KitchenInsertViewModel.AlertButtonModel)
-                }
+
+            binding.fragmentKitchenInsertIcon.setOnClickListener {
+                iconPicker?.show()
             }
+
+            binding.fragmentKitchenInsertSubmit.setOnClickListener {
+                val title = binding.fragmentKitchenInsertTitle.editText?.text.toString()
+                val locationText = binding.fragmentKitchenInsertLocation.editText?.text
+                val location =
+                    if (locationText.isNullOrBlank()) null else locationText.toString().toInt()
+                viewModel.addKitchenRequest(title, icon, location)
+            }
+
+            viewModel.eventListener(viewLifecycleOwner)
+                .onInfo {
+                    when (it.type) {
+                        KitchenInsertViewModel.routeToGrocery -> routeToGrocery(it.data as Kitchen)
+                        KitchenInsertViewModel.backFragment -> activity?.onBackPressed()
+                    }
+                }
+                .onError {
+                    when (it.type) {
+                        KitchenInsertViewModel.setTitleInputError ->
+                            binding.fragmentKitchenInsertTitle.error = it.exception.message
+                        KitchenInsertViewModel.createAlertWithButton ->
+                            snackBarWithAction(it.data as KitchenInsertViewModel.AlertButtonModel)
+                    }
+                }
+        }
     }
 
     override fun onPause() {

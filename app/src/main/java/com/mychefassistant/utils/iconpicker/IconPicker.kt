@@ -12,8 +12,8 @@ class IconPicker(
     private val targetFragmentManager: FragmentManager,
     private var icons: Array<IconModel> = arrayOf()
 ) : AppCompatDialogFragment() {
-    private lateinit var binding: IconPickerBinding
-    private lateinit var iconOnClickListener: (iconModel: IconModel) -> Unit
+    private var binding: IconPickerBinding? = null
+    private var iconOnClickListener: ((IconModel) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,15 +21,17 @@ class IconPicker(
         savedInstanceState: Bundle?
     ): View? {
         binding = IconPickerBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.iconPickerList.adapter = IconPickerListAdapter(icons, ::adapterOnClickHandle)
+        binding?.let {
+            it.iconPickerList.adapter = IconPickerListAdapter(icons, ::adapterOnClickHandle)
+        }
     }
 
     private fun adapterOnClickHandle(iconModel: IconModel) {
-        iconOnClickListener(iconModel)
+        iconOnClickListener?.let { it(iconModel) }
         dismiss()
     }
 

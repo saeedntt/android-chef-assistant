@@ -24,7 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class KitchenManageFragment : Fragment() {
     private val viewModel: KitchenManageViewModel by viewModel()
-    private lateinit var binding: FragmentKitchenManageBinding
+    private var binding: FragmentKitchenManageBinding? = null
 
     override fun onStart() {
         super.onStart()
@@ -37,7 +37,7 @@ class KitchenManageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentKitchenManageBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,7 +52,8 @@ class KitchenManageFragment : Fragment() {
                     KitchenManageViewModel.onKitchenLoad -> setupListView()
                     KitchenManageViewModel.createInfoAlert -> showAlert(it.data as String)
                     KitchenManageViewModel.createModal -> createModal(it.data as KitchenManageViewModel.ModalModel)
-                    KitchenManageViewModel.routeToKitchen -> routeToKitchen(it.data as Pair<Kitchen, View>)
+                    KitchenManageViewModel.routeToKitchen ->
+                        (it.data as Pair<Kitchen, View>)
                 }
             }
             .onError {
@@ -81,19 +82,21 @@ class KitchenManageFragment : Fragment() {
 
     private fun setupListView() {
         val adapter = KitchenManageListAdapter(::onKitchenClick, ::onKitchenMenuSelect)
-        binding.fragmentKitchenManageList.layoutManager =
-            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        binding.fragmentKitchenManageList.adapter = adapter
-        viewModel.kitchens.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
+        binding?.let { binding ->
+            binding.fragmentKitchenManageList.layoutManager =
+                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            binding.fragmentKitchenManageList.adapter = adapter
+            viewModel.kitchens?.observe(viewLifecycleOwner, Observer {
+                adapter.submitList(it)
 
-            (view?.parent as? ViewGroup)?.doOnPreDraw {
-                startPostponedEnterTransition()
-            }
-        })
+                (view?.parent as? ViewGroup)?.doOnPreDraw {
+                    startPostponedEnterTransition()
+                }
+            })
+        }
     }
 
-    private fun setupFab() = binding.fragmentKitchenManageFab.setOnClickListener {
+    private fun setupFab() = binding!!.fragmentKitchenManageFab.setOnClickListener {
         exitTransition =
             MaterialSharedAxis(MaterialSharedAxis.Z, true).apply { duration = 1000 }
         reenterTransition =

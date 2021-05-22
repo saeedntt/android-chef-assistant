@@ -2,6 +2,7 @@ package com.mychefassistant.presentation.kitchen.manage
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.mychefassistant.R
@@ -18,7 +19,7 @@ class KitchenManageViewModel(
     private val removeKitchenUseCase: RemoveKitchenUseCase
 ) :
     ChefAssistantViewModel() {
-    lateinit var kitchens: LiveData<List<Kitchen>>
+    var kitchens: LiveData<List<Kitchen>>? = null
 
     private fun loadKitchens() = getKitchensUseCase(true)
         .onSuccess {

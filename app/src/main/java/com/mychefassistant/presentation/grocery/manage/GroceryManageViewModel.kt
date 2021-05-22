@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 class GroceryManageViewModel(private val getKitchenByIdUseCase: GetKitchenByIdUseCase) :
     ChefAssistantViewModel() {
     private var kitchenId = 0
-    lateinit var kitchen: Kitchen
+    var kitchen: Kitchen? = null
 
     private suspend fun loadKitchen() = getKitchenByIdUseCase(kitchenId).onSuccess {
         kitchen = it
