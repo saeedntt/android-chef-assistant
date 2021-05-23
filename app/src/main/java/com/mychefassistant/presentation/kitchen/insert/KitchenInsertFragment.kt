@@ -42,7 +42,7 @@ class KitchenInsertFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.let { binding ->
-            iconPicker = IconPicker(childFragmentManager, icons).setOnClickListener {
+            iconPicker = IconPicker(childFragmentManager, KitchenInsertIcons.list).setOnClickListener {
                 icon = it.label
                 binding.fragmentKitchenInsertIcon.setImageResource(it.icon)
             }
@@ -92,16 +92,6 @@ class KitchenInsertFragment : Fragment() {
         findNavController().navigate(
             KitchenInsertFragmentDirections
                 .actionFragmentKitchenInsertToFragmentGroceryManage(kitchen.id)
-        )
-    }
-
-    companion object {
-        val icons = arrayOf(
-            IconModel(KitchenIcons.Kitchen, R.drawable.ic_baseline_kitchen_24),
-            IconModel(KitchenIcons.Apartment, R.drawable.ic_baseline_apartment_24),
-            IconModel(KitchenIcons.Beach, R.drawable.ic_baseline_beach_access_24),
-            IconModel(KitchenIcons.House, R.drawable.ic_baseline_house_24),
-            IconModel(KitchenIcons.Jungle, R.drawable.ic_baseline_grass_24)
         )
     }
 }
