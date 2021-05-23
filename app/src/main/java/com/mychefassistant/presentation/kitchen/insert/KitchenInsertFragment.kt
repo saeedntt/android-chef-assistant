@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
-import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.core.utils.KitchenIcons
 import com.mychefassistant.databinding.FragmentKitchenInsertBinding
-import com.mychefassistant.utils.iconpicker.IconModel
 import com.mychefassistant.utils.iconpicker.IconPicker
+import com.mychefassistant.utils.snackbar.SnackBarModel
+import com.mychefassistant.utils.snackbar.snackBarModelPort
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class KitchenInsertFragment : Fragment() {
@@ -42,10 +41,11 @@ class KitchenInsertFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.let { binding ->
-            iconPicker = IconPicker(childFragmentManager, KitchenInsertIcons.list).setOnClickListener {
-                icon = it.label
-                binding.fragmentKitchenInsertIcon.setImageResource(it.icon)
-            }
+            iconPicker =
+                IconPicker(childFragmentManager, KitchenInsertIcons.list).setOnClickListener {
+                    icon = it.label
+                    binding.fragmentKitchenInsertIcon.setImageResource(it.icon)
+                }
 
             binding.fragmentKitchenInsertIcon.setOnClickListener {
                 iconPicker?.show()
@@ -70,8 +70,8 @@ class KitchenInsertFragment : Fragment() {
                     when (it.type) {
                         KitchenInsertViewModel.setTitleInputError ->
                             binding.fragmentKitchenInsertTitle.error = it.exception.message
-                        KitchenInsertViewModel.createAlertWithButton ->
-                            snackBarWithAction(it.data as KitchenInsertViewModel.AlertButtonModel)
+                        KitchenInsertViewModel.createSnackBar ->
+                            snackBarModelPort(requireView(), it.data as SnackBarModel)
                     }
                 }
         }
@@ -81,11 +81,6 @@ class KitchenInsertFragment : Fragment() {
         super.onPause()
         viewModel.resetEvents()
     }
-
-    private fun snackBarWithAction(alert: KitchenInsertViewModel.AlertButtonModel) =
-        Snackbar.make(requireView(), alert.title, Snackbar.LENGTH_LONG)
-            .setAction(alert.btnTitle) { alert.action() }
-            .show()
 
     private fun routeToGrocery(kitchen: Kitchen) {
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply { duration = 1000 }

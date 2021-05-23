@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
@@ -20,6 +19,8 @@ import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.databinding.FragmentKitchenManageBinding
 import com.mychefassistant.utils.Event
+import com.mychefassistant.utils.snackbar.SnackBarModel
+import com.mychefassistant.utils.snackbar.snackBarModelPort
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class KitchenManageFragment : Fragment() {
@@ -50,15 +51,16 @@ class KitchenManageFragment : Fragment() {
             .onInfo {
                 when (it.type) {
                     KitchenManageViewModel.onKitchenLoad -> setupListView()
-                    KitchenManageViewModel.createInfoAlert -> showAlert(it.data as String)
                     KitchenManageViewModel.createModal -> createModal(it.data as KitchenManageViewModel.ModalModel)
                     KitchenManageViewModel.routeToKitchen -> routeToKitchen(it.data as Pair<Kitchen, View>)
+                    KitchenManageViewModel.createSnackBar ->
+                        snackBarModelPort(requireView(), it.data as SnackBarModel)
                 }
             }
             .onError {
                 when (it.type) {
                     KitchenManageViewModel.createErrorAlert -> it.exception.message?.let { x ->
-                        showAlert(x, R.color.design_default_color_error)
+                        snackBarModelPort(requireView(), SnackBarModel(x))
                     }
                 }
             }
@@ -121,13 +123,4 @@ class KitchenManageFragment : Fragment() {
             .setNegativeButton(getString(R.string.no)) { _, _ -> model.onNegative() }
             .setPositiveButton(getString(R.string.yes)) { _, _ -> model.onPositive() }
             .show()
-
-
-    private fun showAlert(message: String, color: Int? = null) {
-        val alert = Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG)
-        if (color != null) {
-            alert.setBackgroundTint(color)
-        }
-        alert.show()
-    }
 }

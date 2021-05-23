@@ -2,7 +2,6 @@ package com.mychefassistant.presentation.kitchen.manage
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.mychefassistant.R
@@ -11,6 +10,7 @@ import com.mychefassistant.core.interactors.GetKitchensUseCase
 import com.mychefassistant.core.interactors.RemoveKitchenUseCase
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.utils.Event
+import com.mychefassistant.utils.snackbar.SnackBarModel
 import kotlinx.coroutines.launch
 
 class KitchenManageViewModel(
@@ -39,8 +39,10 @@ class KitchenManageViewModel(
         .onSuccess {
             setEvent(
                 Event.Info(
-                    createInfoAlert,
-                    application.getString(R.string.kitchen_success_removed, item.title)
+                    createSnackBar,
+                    SnackBarModel(
+                        application.getString(R.string.kitchen_success_removed, item.title)
+                    )
                 )
             )
         }
@@ -84,7 +86,7 @@ class KitchenManageViewModel(
     companion object {
         const val onKitchenLoad = "onKitchenLoad"
         const val createModal = "createModal"
-        const val createInfoAlert = "createInfoAlert"
+        const val createSnackBar = "createSnackBar"
         const val createErrorAlert = "createErrorAlert"
         const val kitchenRemoveRequest = "kitchenRemoveRequest"
         const val onKitchenClicked = "onKitchenClicked"
