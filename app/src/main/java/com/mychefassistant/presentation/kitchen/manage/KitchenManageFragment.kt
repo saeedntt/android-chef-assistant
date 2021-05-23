@@ -55,13 +55,13 @@ class KitchenManageFragment : Fragment() {
                     KitchenManageViewModel.createModal ->
                         modalAlertModelPort(requireContext(), it.data as ModalAlertModel)
                     KitchenManageViewModel.createSnackBar ->
-                        snackBarModelPort(requireView(), it.data as SnackBarModel)
+                        snackBarModelPort(view, it.data as SnackBarModel)
                 }
             }
             .onError {
                 when (it.type) {
                     KitchenManageViewModel.createErrorAlert -> it.exception.message?.let { x ->
-                        snackBarModelPort(requireView(), SnackBarModel(x))
+                        snackBarModelPort(view, SnackBarModel(x))
                     }
                 }
             }

@@ -71,7 +71,7 @@ class KitchenInsertFragment : Fragment() {
                         KitchenInsertViewModel.setTitleInputError ->
                             binding.fragmentKitchenInsertTitle.error = it.exception.message
                         KitchenInsertViewModel.createSnackBar ->
-                            snackBarModelPort(requireView(), it.data as SnackBarModel)
+                            snackBarModelPort(view, it.data as SnackBarModel)
                     }
                 }
         }

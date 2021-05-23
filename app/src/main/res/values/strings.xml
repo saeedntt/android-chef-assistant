@@ -17,6 +17,8 @@
     <string name="loading_data_fail">Loading data fail. try again..</string>
     <string name="kitchen_success_removed">(%1$s) kitchen success removed.</string>
     <string name="kitchen_fail_remove">Can\'t remove (%1$s) kitchen! try again...</string>
+    <string name="kitchen_success_create">(%1$s) kitchen success create.</string>
+    <string name="kitchen_fail_create">Can\'t create (%1$s) kitchen! try again...</string>
     <string name="title_cannot_empty">Title can\'t empty</string>
     <string name="kitchen_exist">Kitchen exist!</string>
     <string name="show_kitchen">Show kitchen</string>
@@ -24,4 +26,7 @@
     <string name="remove_kitchen_warning_message">Are you sure to delete (%1$s) kitchen?</string>
     <string name="grocery">Grocery</string>
     <string name="icon_picker_title">Choice your icon</string>
+    <string name="add_new_grocery">Add new Grocery</string>
+    <string name="grocery_title">Grocery title</string>
+    <string name="grocery_value">Grocery value</string>
 </resources>
