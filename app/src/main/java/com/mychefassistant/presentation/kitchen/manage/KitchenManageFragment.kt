@@ -11,14 +11,14 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
-import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.databinding.FragmentKitchenManageBinding
 import com.mychefassistant.utils.Event
+import com.mychefassistant.utils.modalalert.ModalAlertModel
+import com.mychefassistant.utils.modalalert.modalAlertModelPort
 import com.mychefassistant.utils.snackbar.SnackBarModel
 import com.mychefassistant.utils.snackbar.snackBarModelPort
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -51,8 +51,9 @@ class KitchenManageFragment : Fragment() {
             .onInfo {
                 when (it.type) {
                     KitchenManageViewModel.onKitchenLoad -> setupListView()
-                    KitchenManageViewModel.createModal -> createModal(it.data as KitchenManageViewModel.ModalModel)
                     KitchenManageViewModel.routeToKitchen -> routeToKitchen(it.data as Pair<Kitchen, View>)
+                    KitchenManageViewModel.createModal ->
+                        modalAlertModelPort(requireContext(), it.data as ModalAlertModel)
                     KitchenManageViewModel.createSnackBar ->
                         snackBarModelPort(requireView(), it.data as SnackBarModel)
                 }
@@ -115,12 +116,4 @@ class KitchenManageFragment : Fragment() {
             KitchenManageFragmentDirections.actionFragmentKitchenManageToFragmentGroceryManage(data.first.id)
         findNavController().navigate(direction, extras)
     }
-
-    private fun createModal(model: KitchenManageViewModel.ModalModel) =
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(model.title)
-            .setMessage(model.message)
-            .setNegativeButton(getString(R.string.no)) { _, _ -> model.onNegative() }
-            .setPositiveButton(getString(R.string.yes)) { _, _ -> model.onPositive() }
-            .show()
 }

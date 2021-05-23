@@ -10,6 +10,7 @@ import com.mychefassistant.core.interactors.GetKitchensUseCase
 import com.mychefassistant.core.interactors.RemoveKitchenUseCase
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.utils.Event
+import com.mychefassistant.utils.modalalert.ModalAlertModel
 import com.mychefassistant.utils.snackbar.SnackBarModel
 import kotlinx.coroutines.launch
 
@@ -58,7 +59,7 @@ class KitchenManageViewModel(
     private fun createRemoveWarningModal(kitchen: Kitchen) = setEvent(
         Event.Info(
             createModal,
-            ModalModel(
+            ModalAlertModel(
                 application.getString(R.string.remove_warning),
                 application.getString(R.string.remove_kitchen_warning_message, kitchen.title),
                 {},
@@ -75,13 +76,6 @@ class KitchenManageViewModel(
     }
 
     fun start() = loadKitchens()
-
-    data class ModalModel(
-        val title: String,
-        val message: String,
-        val onNegative: () -> Unit,
-        val onPositive: () -> Unit
-    )
 
     companion object {
         const val onKitchenLoad = "onKitchenLoad"
