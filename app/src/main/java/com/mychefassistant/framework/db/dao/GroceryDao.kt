@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface GroceryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addGrocery(grocery: GroceryEntity)
+    suspend fun addGrocery(grocery: GroceryEntity): Long
 
     @Query("SELECT * FROM groceries where kitchen = :kitchenId")
     fun getAll(kitchenId: Int): Flow<List<GroceryEntity>>

@@ -13,7 +13,7 @@ abstract class ChefAssistantViewModel : ViewModel() {
     private var onInfoListener: (Event.Info) -> Unit = fun(_) {}
     val history = CommandHistory()
 
-    protected fun setEvent(x: Event) = event.postValue(x)
+    protected fun setEvent(x: Event) { event.value = x }
 
     open fun onFragmentEventListener(event: Event.Info) {}
 

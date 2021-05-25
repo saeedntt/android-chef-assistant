@@ -13,45 +13,78 @@
             type="com.mychefassistant.core.domain.Kitchen" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/primaryLightColor"
         android:fitsSystemWindows="true"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingBottom="@dimen/activity_horizontal_margin"
         android:transitionName="kitchenManage"
         tools:context=".presentation.grocery.manage.GroceryManageFragment">
 
-        <ImageView
-            android:id="@+id/fragment_grocery_manage_kitchen_icon"
-            kitchen_icon="@{kitchen.icon}"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/margin_large"
-            android:background="@drawable/shape_circle"
-            android:backgroundTint="@color/secondaryColor"
-            android:padding="30dp"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toTopOf="@id/fragment_grocery_manage_kitchen_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/activity_vertical_margin">
 
-        <TextView
-            android:id="@+id/fragment_grocery_manage_kitchen_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            android:gravity="center"
-            android:text="@{kitchen.title}"
-            android:textSize="@dimen/margin_large"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_grocery_manage_kitchen_icon" />
+            <ImageView
+                android:id="@+id/fragment_grocery_manage_kitchen_icon"
+                kitchen_icon="@{kitchen.icon}"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_large"
+                android:background="@drawable/shape_circle"
+                android:backgroundTint="@color/secondaryColor"
+                android:padding="30dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toTopOf="@id/fragment_grocery_manage_kitchen_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/fragment_grocery_manage_kitchen_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+                android:gravity="center"
+                android:text="@{kitchen.title}"
+                android:textSize="@dimen/margin_large"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_grocery_manage_kitchen_icon"
+                app:layout_constraintBottom_toTopOf="@id/fragment_grocery_manage_list"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fragment_grocery_manage_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:transitionGroup="true"
+                android:background="@drawable/shape_corner_10"
+                android:backgroundTint="@color/primaryTextColor"
+                android:layout_marginTop="@dimen/margin_large"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_medium"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/fragment_grocery_manage_kitchen_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:listitem="@layout/fragment_grocery_manage_list_item" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fragment_grocery_manage_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_baseline_add_24" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

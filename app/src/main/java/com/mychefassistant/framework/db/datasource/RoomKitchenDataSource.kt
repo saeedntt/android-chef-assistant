@@ -7,7 +7,7 @@ import com.mychefassistant.framework.db.entity.KitchenEntity
 import kotlinx.coroutines.flow.map
 
 class RoomKitchenDataSource(private val kitchenDao: KitchenDao) : KitchenDataSource {
-    override suspend fun add(kitchen: Kitchen) = kitchenDao.addKitchen(toEntity(kitchen))
+    override suspend fun add(kitchen: Kitchen) = kitchenDao.addKitchen(toEntity(kitchen)).toInt()
 
     override fun getAll() = kitchenDao.getAll().map { list -> list.map { toDomain(it) } }
 

@@ -6,8 +6,8 @@ import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.core.utils.BaseSuspendUseCase
 
 class AddGroceryUseCase(private val groceryRepository: GroceryRepository) :
-    BaseSuspendUseCase<Pair<Kitchen, Grocery>, Unit>() {
-    override suspend fun execute(parameter: Pair<Kitchen, Grocery>): Result<Unit> {
+    BaseSuspendUseCase<Pair<Kitchen, Grocery>, Int>() {
+    override suspend fun execute(parameter: Pair<Kitchen, Grocery>): Result<Int> {
         return Result.success(groceryRepository.addGrocery(parameter.first, parameter.second))
     }
 }

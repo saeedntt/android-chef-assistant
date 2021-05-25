@@ -13,12 +13,14 @@
     <string name="remove">Remove</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="redo">Redo</string>
+    <string name="undo">Undo</string>
     <string name="kitchen_insert">Kitchen insert</string>
     <string name="loading_data_fail">Loading data fail. try again..</string>
     <string name="kitchen_success_removed">(%1$s) kitchen success removed.</string>
-    <string name="kitchen_fail_remove">Can\'t remove (%1$s) kitchen! try again...</string>
-    <string name="kitchen_success_create">(%1$s) kitchen success create.</string>
-    <string name="kitchen_fail_create">Can\'t create (%1$s) kitchen! try again...</string>
+    <string name="kitchen_fail_remove">Can\'t remove (%1$s) kitchen! try again…</string>
+    <string name="kitchen_success_create">(%1$s) kitchen success create</string>
+    <string name="kitchen_fail_create">Can\'t create (%1$s) kitchen! try again…</string>
     <string name="title_cannot_empty">Title can\'t empty</string>
     <string name="kitchen_exist">Kitchen exist!</string>
     <string name="show_kitchen">Show kitchen</string>
@@ -29,4 +31,12 @@
     <string name="add_new_grocery">Add new Grocery</string>
     <string name="grocery_title">Grocery title</string>
     <string name="grocery_value">Grocery value</string>
+    <string name="grocery_exist">Grocery exist</string>
+    <string name="ask_update_grocery_value">(%1$s) exist in (%2$s) kitchen. Do you want be update this grocery?</string>
+    <string name="grocery_success_update">(%1$s) grocery success update</string>
+    <string name="grocery_fail_update">(%1$s) grocery fail update</string>
+    <string name="grocery_success_create">(%1$s) grocery success create</string>
+    <string name="grocery_fail_create">(%1$s) grocery fail create</string>
+    <string name="grocery_success_remove">(%1$s) grocery success remove</string>
+    <string name="grocery_fail_remove">(%1$s) grocery fail remove</string>
 </resources>

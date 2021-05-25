@@ -8,9 +8,8 @@ import com.mychefassistant.framework.db.entity.GroceryEntity
 import kotlinx.coroutines.flow.map
 
 class RoomGroceryDataSource(private val groceryDao: GroceryDao) : GroceryDataSource {
-    override suspend fun add(kitchen: Kitchen, grocery: Grocery) = groceryDao.addGrocery(
-        toEntity(kitchen, grocery)
-    )
+    override suspend fun add(kitchen: Kitchen, grocery: Grocery) =
+        groceryDao.addGrocery(toEntity(kitchen, grocery)).toInt()
 
     override fun getAll(kitchen: Kitchen) = groceryDao.getAll(kitchen.id).map { list ->
         list.map { toDomain(kitchen, it) }
@@ -29,16 +28,14 @@ class RoomGroceryDataSource(private val groceryDao: GroceryDao) : GroceryDataSou
             groceryEntity.id,
             kitchen.id,
             groceryEntity.title,
-            groceryEntity.value,
-            groceryEntity.status
+            groceryEntity.value
         )
 
         fun toEntity(kitchen: Kitchen, grocery: Grocery) = GroceryEntity(
             grocery.id,
             kitchen.id,
             grocery.title,
-            grocery.value,
-            grocery.status
+            grocery.value
         )
     }
 }

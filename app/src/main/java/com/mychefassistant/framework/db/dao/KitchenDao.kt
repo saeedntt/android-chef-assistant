@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface KitchenDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addKitchen(kitchen: KitchenEntity)
+    suspend fun addKitchen(kitchen: KitchenEntity): Long
 
     @Query("select * from kitchens")
     fun getAll(): Flow<List<KitchenEntity>>

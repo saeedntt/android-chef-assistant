@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.android.material.snackbar.Snackbar
 import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.core.interactors.AddKitchenUseCase
@@ -25,19 +24,10 @@ class KitchenManageViewModel(
 ) : ChefAssistantViewModel() {
     var kitchens: LiveData<List<Kitchen>>? = null
 
-    private fun loadKitchens() = getKitchensUseCase(true)
-        .onSuccess {
-            kitchens = it.asLiveData()
-            setEvent(Event.Info(onKitchenLoad))
-        }
-        .onFailure {
-            setEvent(
-                Event.Error(
-                    createErrorAlert,
-                    Exception(application.getString(R.string.loading_data_fail))
-                )
-            )
-        }
+    private fun loadKitchens() = getKitchensUseCase(true).onSuccess {
+        kitchens = it.asLiveData()
+        setEvent(Event.Info(onKitchenLoad))
+    }
 
     private suspend fun removeKitchen(item: Kitchen) = removeKitchenUseCase(item)
         .onSuccess {
@@ -46,8 +36,7 @@ class KitchenManageViewModel(
                     createSnackBar,
                     SnackBarModel(
                         application.getString(R.string.kitchen_success_removed, item.title),
-                        "Undo",
-                        Snackbar.LENGTH_LONG,
+                        application.getString(R.string.undo)
                     ) { history.undo() }
                 )
             )
@@ -61,45 +50,33 @@ class KitchenManageViewModel(
             )
         }
 
-    private suspend fun createKitchen(item: Kitchen) = addKitchenUseCase(item)
-        .onSuccess {
-            setEvent(
-                Event.Info(
-                    createSnackBar,
-                    SnackBarModel(
-                        application.getString(R.string.kitchen_success_create, item.title),
-                        "Redo",
-                        Snackbar.LENGTH_LONG,
-                    ) { history.redo() }
-                )
+    private suspend fun createKitchen(item: Kitchen) = addKitchenUseCase(item).onSuccess {
+        setEvent(
+            Event.Info(
+                createSnackBar,
+                SnackBarModel(
+                    application.getString(R.string.kitchen_success_create, item.title),
+                    application.getString(R.string.redo)
+                ) { history.redo() }
             )
-        }
-        .onFailure {
-            setEvent(
-                Event.Error(
-                    createErrorAlert,
-                    Exception(application.getString(R.string.kitchen_fail_create, item.title))
-                )
-            )
-        }
+        )
+    }
 
     private fun createRemoveWarningModal(kitchen: Kitchen) = setEvent(
         Event.Info(
             createModal,
             ModalAlertModel(
                 application.getString(R.string.remove_warning),
-                application.getString(R.string.remove_kitchen_warning_message, kitchen.title),
-                {},
-                {
-                    history.run(Command({
-                        viewModelScope.launch { removeKitchen(kitchen) }
-                    }, {
-                        viewModelScope.launch { createKitchen(kitchen) }
-                    }))
-                }
-            )
+                application.getString(R.string.remove_kitchen_warning_message, kitchen.title)
+            ) {
+                history.run(Command(
+                    execute = { viewModelScope.launch { removeKitchen(kitchen) } },
+                    unExecute = { viewModelScope.launch { createKitchen(kitchen) } }
+                ))
+            }
         )
     )
+
 
     override fun onFragmentEventListener(event: Event.Info) {
         when (event.type) {

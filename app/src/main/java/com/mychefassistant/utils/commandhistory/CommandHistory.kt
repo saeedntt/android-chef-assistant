@@ -9,8 +9,8 @@ class CommandHistory {
         command.execute()
     }
 
-    fun undo(){
-        if (topList.isNotEmpty())        {
+    fun undo() {
+        if (topList.isNotEmpty()) {
             val last = topList.last()
             topList.remove(last)
             bottomList.add(last)
@@ -18,12 +18,18 @@ class CommandHistory {
         }
     }
 
-    fun redo(){
-        if (bottomList.isNotEmpty()){
+    fun redo() {
+        if (bottomList.isNotEmpty()) {
             val last = bottomList.last()
             bottomList.remove(last)
             topList.add(last)
             last.execute()
+        }
+    }
+
+    fun retry() {
+        if (topList.isNotEmpty()) {
+            topList.last().execute()
         }
     }
 }

@@ -12,7 +12,5 @@ data class GroceryEntity(
 
     val title: String,
 
-    val value: String = "",
-
-    val status: Boolean = false
+    val value: String? = null
 )
