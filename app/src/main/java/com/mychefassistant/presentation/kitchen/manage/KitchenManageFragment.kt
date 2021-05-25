@@ -67,7 +67,7 @@ class KitchenManageFragment : Fragment() {
         Event.Info(KitchenManageViewModel.onKitchenClicked, kitchen to view)
     )
 
-    private fun onKitchenMenuSelect(action: String, kitchen: Kitchen) = viewModel.setFragmentEvent(
+    private fun onKitchenMenuSelect(action: Int, kitchen: Kitchen) = viewModel.setFragmentEvent(
         Event.Info(action, kitchen)
     )
 

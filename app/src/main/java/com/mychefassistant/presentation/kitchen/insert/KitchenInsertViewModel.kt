@@ -6,7 +6,6 @@ import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.core.interactors.AddKitchenUseCase
 import com.mychefassistant.core.interactors.FindKitchenUseCase
-import com.mychefassistant.core.utils.KitchenIcons
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.commandhistory.CommandHistory
@@ -49,15 +48,21 @@ class KitchenInsertViewModel(
         addKitchenUseCase(kitchen).onSuccess { setEvent(Event.Info(backFragment)) }
     }
 
-    fun addKitchenRequest(title: String, icon: KitchenIcons, location: Int?) =
-        viewModelScope.launch {
-            addKitchen(Kitchen(title = title, icon = icon, location = location))
+    fun addKitchenRequest(kitchen: Kitchen) = viewModelScope.launch {
+        addKitchen(kitchen)
+    }
+
+    override fun onFragmentEventListener(event: Event.Info) {
+        when (event.type) {
+            requestAddKitchen -> addKitchenRequest(event.data as Kitchen)
         }
+    }
 
     companion object {
-        const val setTitleInputError = "setTitleInputError"
-        const val createSnackBar = "createSnackBar"
-        const val routeToGrocery = "routeToGrocery"
-        const val backFragment = "backFragment"
+        const val setTitleInputError = 0
+        const val createSnackBar = 1
+        const val routeToGrocery = 2
+        const val backFragment = 3
+        const val requestAddKitchen = 4
     }
 }

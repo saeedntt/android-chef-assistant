@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.core.utils.KitchenIcons
 import com.mychefassistant.databinding.FragmentKitchenInsertBinding
+import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.iconpicker.IconPicker
 import com.mychefassistant.utils.snackbar.SnackBarModel
 import com.mychefassistant.utils.snackbar.snackBarModelPort
@@ -43,11 +44,18 @@ class KitchenInsertFragment : Fragment() {
         }
 
         binding.fragmentKitchenInsertSubmit.setOnClickListener {
-            val title = binding.fragmentKitchenInsertTitle.editText?.text.toString()
             val locationText = binding.fragmentKitchenInsertLocation.editText?.text
-            val location =
-                if (locationText.isNullOrBlank()) null else locationText.toString().toInt()
-            viewModel.addKitchenRequest(title, icon, location)
+            viewModel.setFragmentEvent(
+                Event.Info(
+                    KitchenInsertViewModel.requestAddKitchen,
+                    Kitchen(
+                        title = binding.fragmentKitchenInsertTitle.editText?.text.toString(),
+                        icon = icon,
+                        location = if (locationText.isNullOrBlank()) null else locationText.toString()
+                            .toInt()
+                    )
+                )
+            )
         }
 
         viewModel.eventListener(viewLifecycleOwner)

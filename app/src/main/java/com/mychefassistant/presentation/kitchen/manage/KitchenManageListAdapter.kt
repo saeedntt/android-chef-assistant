@@ -11,7 +11,7 @@ import com.mychefassistant.databinding.FragmentKitchenManageListItemBinding
 
 class KitchenManageListAdapter(
     private val onClick: (Kitchen, View) -> Unit,
-    private val onMenuSelect: (String, Kitchen) -> Unit
+    private val onMenuSelect: (Int, Kitchen) -> Unit
 ) : ListAdapter<Kitchen, KitchenManageListViewHolder>(KitchenManageListDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KitchenManageListViewHolder =

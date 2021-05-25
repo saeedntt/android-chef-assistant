@@ -90,12 +90,12 @@ class KitchenManageViewModel(
     fun start() = loadKitchens()
 
     companion object {
-        const val onKitchenLoad = "onKitchenLoad"
-        const val createModal = "createModal"
-        const val createSnackBar = "createSnackBar"
-        const val createErrorAlert = "createErrorAlert"
-        const val kitchenRemoveRequest = "kitchenRemoveRequest"
-        const val onKitchenClicked = "onKitchenClicked"
-        const val routeToKitchen = "routeToKitchen"
+        const val onKitchenLoad = 0
+        const val createModal = 1
+        const val createSnackBar = 2
+        const val createErrorAlert = 3
+        const val kitchenRemoveRequest = 4
+        const val onKitchenClicked = 5
+        const val routeToKitchen = 6
     }
 }

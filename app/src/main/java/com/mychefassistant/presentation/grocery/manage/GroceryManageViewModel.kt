@@ -179,15 +179,15 @@ class GroceryManageViewModel(
     }
 
     companion object {
-        const val onKitchenLoad = "onKitchenLoad"
-        const val requestShowInsertModal = "requestShowInsertModal"
-        const val showInsertModal = "showInsertModal"
-        const val closeInsertModal = "closeInsertModal"
-        const val modalEvent = "modalEvent"
-        const val setTitleInputError = "setTitleInputError"
-        const val createModal = "createModal"
-        const val createSnackBar = "createSnackBar"
-        const val createErrorAlert = "createErrorAlert"
-        const val onGroceriesLoad = "onGroceriesLoad"
+        const val onKitchenLoad = 0
+        const val requestShowInsertModal = 1
+        const val showInsertModal = 2
+        const val closeInsertModal = 3
+        const val modalEvent = 4
+        const val setTitleInputError = 5
+        const val createModal = 6
+        const val createSnackBar = 7
+        const val createErrorAlert = 8
+        const val onGroceriesLoad = 9
     }
 }
