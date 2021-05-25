@@ -18,7 +18,6 @@
         android:layout_height="match_parent"
         android:background="@color/primaryLightColor"
         android:fitsSystemWindows="true"
-        android:transitionName="kitchenManage"
         tools:context=".presentation.grocery.manage.GroceryManageFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout

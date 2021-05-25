@@ -36,12 +36,11 @@ class GroceryManageViewModel(
         setEvent(Event.Info(onKitchenLoad))
     }
 
-    private suspend fun loadGroceries() = kitchen?.let { kitchen ->
-        getGroceriesUseCase(kitchen).onSuccess {
-            groceries = it.asLiveData()
-            setEvent(Event.Info(onGroceriesLoad))
-        }
+    private suspend fun loadGroceries() = getGroceriesUseCase(kitchen!!).onSuccess {
+        groceries = it.asLiveData()
+        setEvent(Event.Info(onGroceriesLoad))
     }
+
 
     fun start(id: Int) {
         kitchenId = id
@@ -52,86 +51,78 @@ class GroceryManageViewModel(
     }
 
     private fun validateTitle(title: String): Result<Boolean> {
-        if (title.isNullOrBlank()) {
+        if (title.isBlank()) {
             return Result.failure(Exception(application.getString(R.string.title_cannot_empty)))
         }
         return Result.success(true)
     }
 
     private suspend fun findGrocery(title: String): Result<Grocery> = run body@{
-        kitchen?.let { kitchen ->
-            getGroceriesUseCase(kitchen).onSuccess {
-                it.first().find { item -> item.title == title }?.let { item ->
-                    return@body Result.success(item)
-                }
+        getGroceriesUseCase(kitchen!!).onSuccess {
+            it.first().find { item -> item.title == title }?.let { item ->
+                return@body Result.success(item)
             }
         }
         return Result.failure(Exception())
     }
 
     private suspend fun updateGrocery(grocery: Grocery, historyAction: Int) =
-        kitchen?.let { kitchen ->
-            updateGroceryUseCase(kitchen to grocery).onSuccess {
-                setEvent(
-                    Event.Info(
-                        createSnackBar,
-                        SnackBarModel(
-                            application.getString(R.string.grocery_success_update, grocery.title),
-                            application.getString(if (historyAction > 0) R.string.undo else R.string.redo)
-                        ) { if (historyAction > 0) history.undo() else history.redo() }
-                    )
+        updateGroceryUseCase(kitchen!! to grocery).onSuccess {
+            setEvent(
+                Event.Info(
+                    createSnackBar,
+                    SnackBarModel(
+                        application.getString(R.string.grocery_success_update, grocery.title),
+                        application.getString(if (historyAction > 0) R.string.undo else R.string.redo)
+                    ) { if (historyAction > 0) history.undo() else history.redo() }
                 )
-            }.onFailure {
-                setEvent(
-                    Event.Error(
-                        createErrorAlert,
-                        Exception(
-                            application.getString(
-                                R.string.grocery_fail_update,
-                                grocery.title
-                            )
+            )
+        }.onFailure {
+            setEvent(
+                Event.Error(
+                    createErrorAlert,
+                    Exception(
+                        application.getString(
+                            R.string.grocery_fail_update,
+                            grocery.title
                         )
                     )
                 )
-            }
+            )
         }
 
     private suspend fun addGrocery(grocery: Grocery, historyAction: Int) = run body@{
-        kitchen?.let { kitchen ->
-            addGroceryUseCase(kitchen to grocery).onSuccess {
+        addGroceryUseCase(kitchen!! to grocery).onSuccess {
+            setEvent(
+                Event.Info(
+                    createSnackBar,
+                    SnackBarModel(
+                        application.getString(
+                            R.string.grocery_success_create,
+                            grocery.title
+                        ),
+                        application.getString(if (historyAction > 0) R.string.undo else R.string.redo)
+                    ) { if (historyAction > 0) history.undo() else history.redo() }
+                )
+            )
+        }
+    }
+
+    private suspend fun removeGroceryByTitle(title: String, historyAction: Int) = findGrocery(title)
+        .onSuccess { grocery ->
+            removeGroceryUseCase(kitchen!! to grocery).onSuccess {
                 setEvent(
                     Event.Info(
                         createSnackBar,
                         SnackBarModel(
                             application.getString(
-                                R.string.grocery_success_create,
+                                R.string.grocery_success_remove,
                                 grocery.title
                             ),
                             application.getString(if (historyAction > 0) R.string.undo else R.string.redo)
                         ) { if (historyAction > 0) history.undo() else history.redo() }
                     )
                 )
-            }
-        }
-    }
-
-    private suspend fun removeGroceryByTitle(title: String, historyAction: Int) =
-        kitchen?.let { kitchen ->
-            findGrocery(title).onSuccess { grocery ->
-                removeGroceryUseCase(kitchen to grocery).onSuccess {
-                    setEvent(
-                        Event.Info(
-                            createSnackBar,
-                            SnackBarModel(
-                                application.getString(
-                                    R.string.grocery_success_remove,
-                                    grocery.title
-                                ),
-                                application.getString(if (historyAction > 0) R.string.undo else R.string.redo)
-                            ) { if (historyAction > 0) history.undo() else history.redo() }
-                        )
-                    )
-                }
             }
         }
 

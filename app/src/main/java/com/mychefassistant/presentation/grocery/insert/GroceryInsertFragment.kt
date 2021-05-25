@@ -28,14 +28,13 @@ class GroceryInsertFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val binding = requireNotNull(binding)
 
-        binding?.let { binding ->
-            binding.fragmentGroceryInsertSubmit.setOnClickListener {
-                val title = binding.fragmentGroceryInsertTitle.editText?.text.toString()
-                val valueInput = binding.fragmentGroceryInsertValue.editText?.text
-                val value = if (valueInput.isNullOrBlank()) null else valueInput.toString()
-                sendParentEvent(Event.Info(requestAddGrocery, title to value))
-            }
+        binding.fragmentGroceryInsertSubmit.setOnClickListener {
+            val title = binding.fragmentGroceryInsertTitle.editText?.text.toString()
+            val valueInput = binding.fragmentGroceryInsertValue.editText?.text
+            val value = if (valueInput.isNullOrBlank()) null else valueInput.toString()
+            sendParentEvent(Event.Info(requestAddGrocery, title to value))
         }
     }
 
@@ -43,9 +42,10 @@ class GroceryInsertFragment(
         when (event) {
             is Event.Error -> when (event.type) {
                 GroceryManageViewModel.setTitleInputError ->
-                    event.exception.message?.let { binding?.fragmentGroceryInsertTitle?.error = it }
+                    event.exception.message?.let { binding!!.fragmentGroceryInsertTitle.error = it }
             }
-            is Event.Info -> {}
+            is Event.Info -> {
+            }
         }
     }
 

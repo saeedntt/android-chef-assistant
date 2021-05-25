@@ -17,8 +17,7 @@
         android:layout_height="?android:attr/listPreferredItemHeight"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="?selectableItemBackground"
-        android:transitionName='@{"kitchenManage_" + kitchen.id}'>
+        android:foreground="?selectableItemBackground">
 
         <ImageView
             android:id="@+id/fragment_kitchen_manage_list_item_icon"

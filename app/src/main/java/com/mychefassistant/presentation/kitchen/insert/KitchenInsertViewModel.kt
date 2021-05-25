@@ -11,9 +11,7 @@ import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.commandhistory.CommandHistory
 import com.mychefassistant.utils.snackbar.SnackBarModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class KitchenInsertViewModel(
     commandHistory: CommandHistory,
@@ -53,9 +51,7 @@ class KitchenInsertViewModel(
 
     fun addKitchenRequest(title: String, icon: KitchenIcons, location: Int?) =
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                addKitchen(Kitchen(title = title, icon = icon, location = location))
-            }
+            addKitchen(Kitchen(title = title, icon = icon, location = location))
         }
 
     companion object {
