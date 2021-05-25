@@ -12,16 +12,18 @@ import com.mychefassistant.core.interactors.RemoveKitchenUseCase
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.commandhistory.Command
+import com.mychefassistant.utils.commandhistory.CommandHistory
 import com.mychefassistant.utils.modalalert.ModalAlertModel
 import com.mychefassistant.utils.snackbar.SnackBarModel
 import kotlinx.coroutines.launch
 
 class KitchenManageViewModel(
+    commandHistory: CommandHistory,
     private val application: Application,
     private val getKitchensUseCase: GetKitchensUseCase,
     private val removeKitchenUseCase: RemoveKitchenUseCase,
     private val addKitchenUseCase: AddKitchenUseCase
-) : ChefAssistantViewModel() {
+) : ChefAssistantViewModel(commandHistory) {
     var kitchens: LiveData<List<Kitchen>>? = null
 
     private fun loadKitchens() = getKitchensUseCase(true).onSuccess {

@@ -9,17 +9,18 @@ import com.mychefassistant.core.interactors.FindKitchenUseCase
 import com.mychefassistant.core.utils.KitchenIcons
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.utils.Event
+import com.mychefassistant.utils.commandhistory.CommandHistory
 import com.mychefassistant.utils.snackbar.SnackBarModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class KitchenInsertViewModel(
+    commandHistory: CommandHistory,
     private val application: Application,
     private val findKitchenUseCase: FindKitchenUseCase,
     private val addKitchenUseCase: AddKitchenUseCase
-) :
-    ChefAssistantViewModel() {
+) : ChefAssistantViewModel(commandHistory) {
     private fun validateTitle(title: String): Result<Boolean> {
         if (title.isBlank()) {
             return Result.failure(Exception(application.getString(R.string.title_cannot_empty)))

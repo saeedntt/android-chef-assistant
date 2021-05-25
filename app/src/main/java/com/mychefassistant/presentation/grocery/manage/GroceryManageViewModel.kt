@@ -12,19 +12,21 @@ import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.presentation.grocery.insert.GroceryInsertFragment
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.commandhistory.Command
+import com.mychefassistant.utils.commandhistory.CommandHistory
 import com.mychefassistant.utils.modalalert.ModalAlertModel
 import com.mychefassistant.utils.snackbar.SnackBarModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class GroceryManageViewModel(
+    commandHistory: CommandHistory,
     private val application: Application,
     private val getKitchenByIdUseCase: GetKitchenByIdUseCase,
     private val getGroceriesUseCase: GetGroceriesUseCase,
     private val addGroceryUseCase: AddGroceryUseCase,
     private val updateGroceryUseCase: UpdateGroceryUseCase,
     private val removeGroceryUseCase: RemoveGroceryUseCase
-) : ChefAssistantViewModel() {
+) : ChefAssistantViewModel(commandHistory) {
     private var kitchenId = 0
     var kitchen: Kitchen? = null
     var groceries: LiveData<List<Grocery>>? = null

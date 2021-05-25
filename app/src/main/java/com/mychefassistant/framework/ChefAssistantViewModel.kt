@@ -7,11 +7,10 @@ import androidx.lifecycle.ViewModel
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.commandhistory.CommandHistory
 
-abstract class ChefAssistantViewModel : ViewModel() {
+abstract class ChefAssistantViewModel(val history: CommandHistory) : ViewModel() {
     private val event: MutableLiveData<Event> = MutableLiveData()
     private var onErrorListener: (Event.Error) -> Unit = fun(_) {}
     private var onInfoListener: (Event.Info) -> Unit = fun(_) {}
-    val history = CommandHistory()
 
     protected fun setEvent(x: Event) { event.value = x }
 
