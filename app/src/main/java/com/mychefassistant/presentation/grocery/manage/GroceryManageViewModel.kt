@@ -168,10 +168,12 @@ class GroceryManageViewModel(
         ))
     }
 
-    override suspend fun onFragmentEventListener(event: Event.Info) {
-        when (event.type) {
-            requestShowInsertModal -> setEvent(Event.Info(showInsertModal))
-            GroceryInsertFragment.requestAddGrocery -> requestAddGrocery(event.data as Pair<String, String?>)
+    override suspend fun viewEventListener(event: Event) {
+        when (event) {
+            is Event.Info -> when (event.type) {
+                requestShowInsertModal -> setEvent(Event.Info(showInsertModal))
+                GroceryInsertFragment.requestAddGrocery -> requestAddGrocery(event.data as Pair<String, String?>)
+            }
         }
     }
 

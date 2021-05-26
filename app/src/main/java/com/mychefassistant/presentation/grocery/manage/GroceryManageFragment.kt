@@ -42,7 +42,7 @@ class GroceryManageFragment : Fragment() {
         val binding = requireNotNull(binding)
 
         binding.fragmentGroceryManageFab.setOnClickListener {
-            viewModel.setFragmentEvent(Event.Info(GroceryManageViewModel.requestShowInsertModal))
+            viewModel.setViewEvent(Event.Info(GroceryManageViewModel.requestShowInsertModal))
         }
 
         viewModel
@@ -88,7 +88,7 @@ class GroceryManageFragment : Fragment() {
     }
 
     private fun showInsertModal() {
-        modal = GroceryInsertFragment(childFragmentManager) { viewModel.setFragmentEvent(it) }
+        modal = GroceryInsertFragment(childFragmentManager) { viewModel.setViewEvent(it) }
         modal?.show()
     }
 }

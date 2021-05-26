@@ -54,9 +54,11 @@ class KitchenInsertViewModel(
         addKitchen(kitchen)
     }
 
-    override suspend fun onFragmentEventListener(event: Event.Info) {
-        when (event.type) {
-            requestAddKitchen -> addKitchenRequest(event.data as Kitchen)
+    override suspend fun viewEventListener(event: Event) {
+        when (event) {
+            is Event.Info -> when (event.type) {
+                requestAddKitchen -> addKitchenRequest(event.data as Kitchen)
+            }
         }
     }
 

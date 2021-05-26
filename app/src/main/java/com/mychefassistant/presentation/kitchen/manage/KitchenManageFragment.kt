@@ -66,11 +66,11 @@ class KitchenManageFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch { viewModel.resetEvents() }
     }
 
-    private fun onKitchenClick(kitchen: Kitchen, view: View) = viewModel.setFragmentEvent(
+    private fun onKitchenClick(kitchen: Kitchen, view: View) = viewModel.setViewEvent(
         Event.Info(KitchenManageViewModel.onKitchenClicked, kitchen to view)
     )
 
-    private fun onKitchenMenuSelect(action: Int, kitchen: Kitchen) = viewModel.setFragmentEvent(
+    private fun onKitchenMenuSelect(action: Int, kitchen: Kitchen) = viewModel.setViewEvent(
         Event.Info(action, kitchen)
     )
 

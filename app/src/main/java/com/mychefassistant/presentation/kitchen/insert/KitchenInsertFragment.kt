@@ -47,7 +47,7 @@ class KitchenInsertFragment : Fragment() {
 
         binding.fragmentKitchenInsertSubmit.setOnClickListener {
             val locationText = binding.fragmentKitchenInsertLocation.editText?.text
-            viewModel.setFragmentEvent(
+            viewModel.setViewEvent(
                 Event.Info(
                     KitchenInsertViewModel.requestAddKitchen,
                     Kitchen(

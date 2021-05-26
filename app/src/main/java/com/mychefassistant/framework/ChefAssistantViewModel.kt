@@ -21,9 +21,12 @@ abstract class ChefAssistantViewModel(protected val history: CommandHistory) : V
     suspend fun eventListener(): ChefAssistantViewModel {
         event.collect {
             when (it) {
-                is Event.Error -> onErrorListener(it)
+                is Event.Error -> when (it.type) {
+                    onViewEvent -> viewEventListener(it.data as Event.Error)
+                    else -> onErrorListener(it)
+                }
                 is Event.Info -> when (it.type) {
-                    onFragmentEvent -> onFragmentEventListener(it.data as Event.Info)
+                    onViewEvent -> viewEventListener(it.data as Event.Info)
                     else -> onInfoListener(it)
                 }
             }
@@ -41,14 +44,14 @@ abstract class ChefAssistantViewModel(protected val history: CommandHistory) : V
         return this
     }
 
-    fun setFragmentEvent(event: Event.Info) {
-        viewModelScope.launch { setEvent(Event.Info(onFragmentEvent, event)) }
+    fun setViewEvent(event: Event.Info) {
+        viewModelScope.launch { setEvent(Event.Info(onViewEvent, event)) }
     }
 
-    open suspend fun onFragmentEventListener(event: Event.Info) {}
+    open suspend fun viewEventListener(event: Event) {}
 
     companion object {
         const val onResetEvents = -1
-        const val onFragmentEvent = 0
+        const val onViewEvent = 0
     }
 }
