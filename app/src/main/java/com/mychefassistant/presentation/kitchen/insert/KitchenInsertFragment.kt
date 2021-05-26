@@ -76,7 +76,7 @@ class KitchenInsertFragment : Fragment() {
                 }
             }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated { viewModel.eventListener() }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted { viewModel.eventListener() }
     }
 
     override fun onPause() {

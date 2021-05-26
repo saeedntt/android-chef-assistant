@@ -27,7 +27,6 @@ class GroceryManageFragment : Fragment() {
     private var binding: FragmentGroceryManageBinding? = null
     private var modal: GroceryInsertFragment? = null
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -67,7 +66,7 @@ class GroceryManageFragment : Fragment() {
                 }
             }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated { viewModel.eventListener() }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted { viewModel.eventListener() }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted { viewModel.start(kitchenId) }
     }
 

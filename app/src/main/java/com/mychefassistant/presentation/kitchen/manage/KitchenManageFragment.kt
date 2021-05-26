@@ -57,7 +57,7 @@ class KitchenManageFragment : Fragment() {
                 }
             }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated { viewModel.eventListener() }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted { viewModel.eventListener() }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted { viewModel.start() }
     }
 
