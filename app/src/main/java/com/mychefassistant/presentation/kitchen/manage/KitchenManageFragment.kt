@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import com.mychefassistant.utils.modalalert.ModalAlertModel
 import com.mychefassistant.utils.modalalert.modalAlertModelPort
 import com.mychefassistant.utils.snackbar.SnackBarModel
 import com.mychefassistant.utils.snackbar.snackBarModelPort
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class KitchenManageFragment : Fragment() {
@@ -36,7 +38,7 @@ class KitchenManageFragment : Fragment() {
 
         setupFab()
 
-        viewModel.eventListener(viewLifecycleOwner)
+        viewModel
             .onInfo {
                 when (it.type) {
                     KitchenManageViewModel.onKitchenLoad -> setupListView()
@@ -55,12 +57,13 @@ class KitchenManageFragment : Fragment() {
                 }
             }
 
-        viewModel.start()
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated { viewModel.eventListener() }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted { viewModel.start() }
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel.resetEvents()
+        viewLifecycleOwner.lifecycleScope.launch { viewModel.resetEvents() }
     }
 
     private fun onKitchenClick(kitchen: Kitchen, view: View) = viewModel.setFragmentEvent(

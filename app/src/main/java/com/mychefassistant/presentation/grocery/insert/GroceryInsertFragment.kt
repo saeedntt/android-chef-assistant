@@ -52,6 +52,6 @@ class GroceryInsertFragment(
     fun show() = show(targetFragmentManager, "insertGrocery")
 
     companion object {
-        const val requestAddGrocery = 0
+        const val requestAddGrocery = 100
     }
 }

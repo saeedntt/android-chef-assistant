@@ -26,7 +26,7 @@ class KitchenManageViewModel(
 ) : ChefAssistantViewModel(commandHistory) {
     var kitchens: LiveData<List<Kitchen>>? = null
 
-    private fun loadKitchens() = getKitchensUseCase(true).onSuccess {
+    private suspend fun loadKitchens() = getKitchensUseCase(true).onSuccess {
         kitchens = it.asLiveData()
         setEvent(Event.Info(onKitchenLoad))
     }
@@ -64,7 +64,7 @@ class KitchenManageViewModel(
         )
     }
 
-    private fun createRemoveWarningModal(kitchen: Kitchen) = setEvent(
+    private suspend fun createRemoveWarningModal(kitchen: Kitchen) = setEvent(
         Event.Info(
             createModal,
             ModalAlertModel(
@@ -80,22 +80,22 @@ class KitchenManageViewModel(
     )
 
 
-    override fun onFragmentEventListener(event: Event.Info) {
+    override suspend fun onFragmentEventListener(event: Event.Info) {
         when (event.type) {
             onKitchenClicked -> setEvent(Event.Info(routeToKitchen, event.data))
             kitchenRemoveRequest -> createRemoveWarningModal(event.data as Kitchen)
         }
     }
 
-    fun start() = loadKitchens()
+    suspend fun start() = loadKitchens()
 
     companion object {
-        const val onKitchenLoad = 0
-        const val createModal = 1
-        const val createSnackBar = 2
-        const val createErrorAlert = 3
-        const val kitchenRemoveRequest = 4
-        const val onKitchenClicked = 5
-        const val routeToKitchen = 6
+        const val onKitchenLoad = 1
+        const val createModal = 2
+        const val createSnackBar = 3
+        const val createErrorAlert = 4
+        const val kitchenRemoveRequest = 5
+        const val onKitchenClicked = 6
+        const val routeToKitchen = 7
     }
 }

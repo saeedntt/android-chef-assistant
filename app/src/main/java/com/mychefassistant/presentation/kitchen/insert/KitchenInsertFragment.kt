@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.core.utils.KitchenIcons
@@ -13,6 +14,7 @@ import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.iconpicker.IconPicker
 import com.mychefassistant.utils.snackbar.SnackBarModel
 import com.mychefassistant.utils.snackbar.snackBarModelPort
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class KitchenInsertFragment : Fragment() {
@@ -58,7 +60,7 @@ class KitchenInsertFragment : Fragment() {
             )
         }
 
-        viewModel.eventListener(viewLifecycleOwner)
+        viewModel
             .onInfo {
                 when (it.type) {
                     KitchenInsertViewModel.routeToGrocery -> routeToGrocery(it.data as Kitchen)
@@ -73,11 +75,13 @@ class KitchenInsertFragment : Fragment() {
                         snackBarModelPort(view, it.data as SnackBarModel)
                 }
             }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated { viewModel.eventListener() }
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel.resetEvents()
+        viewLifecycleOwner.lifecycleScope.launch { viewModel.resetEvents() }
     }
 
     private fun routeToGrocery(kitchen: Kitchen) = findNavController().navigate(

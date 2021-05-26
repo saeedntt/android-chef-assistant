@@ -41,13 +41,10 @@ class GroceryManageViewModel(
         setEvent(Event.Info(onGroceriesLoad))
     }
 
-
-    fun start(id: Int) {
+    suspend fun start(id: Int) {
         kitchenId = id
-        viewModelScope.launch {
-            loadKitchen()
-            loadGroceries()
-        }
+        loadKitchen()
+        loadGroceries()
     }
 
     private fun validateTitle(title: String): Result<Boolean> {
@@ -126,7 +123,7 @@ class GroceryManageViewModel(
             }
         }
 
-    private fun createUpdateGroceryValueEvent(grocery: Grocery, newGrocery: Grocery) =
+    private suspend fun createUpdateGroceryValueEvent(grocery: Grocery, newGrocery: Grocery) =
         setEvent(
             Event.Info(createModal, ModalAlertModel(
                 application.getString(R.string.grocery_exist),
@@ -171,7 +168,7 @@ class GroceryManageViewModel(
         ))
     }
 
-    override fun onFragmentEventListener(event: Event.Info) {
+    override suspend fun onFragmentEventListener(event: Event.Info) {
         when (event.type) {
             requestShowInsertModal -> setEvent(Event.Info(showInsertModal))
             GroceryInsertFragment.requestAddGrocery -> requestAddGrocery(event.data as Pair<String, String?>)
@@ -179,15 +176,15 @@ class GroceryManageViewModel(
     }
 
     companion object {
-        const val onKitchenLoad = 0
-        const val requestShowInsertModal = 1
-        const val showInsertModal = 2
-        const val closeInsertModal = 3
-        const val modalEvent = 4
-        const val setTitleInputError = 5
-        const val createModal = 6
-        const val createSnackBar = 7
-        const val createErrorAlert = 8
-        const val onGroceriesLoad = 9
+        const val onKitchenLoad = 1
+        const val requestShowInsertModal = 2
+        const val showInsertModal = 3
+        const val closeInsertModal = 4
+        const val modalEvent = 5
+        const val setTitleInputError = 6
+        const val createModal = 7
+        const val createSnackBar = 8
+        const val createErrorAlert = 9
+        const val onGroceriesLoad = 10
     }
 }
