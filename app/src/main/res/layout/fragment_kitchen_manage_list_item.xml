@@ -12,54 +12,99 @@
             type="com.mychefassistant.core.domain.Kitchen" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/fragment_kitchen_manage_list_view"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeight"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?selectableItemBackground">
+        app:layoutDescription="@xml/fragment_kitchen_manage_list_item_scene">
 
-        <ImageView
-            android:id="@+id/fragment_kitchen_manage_list_item_icon"
-            kitchen_icon="@{kitchen.icon}"
-            android:layout_width="?attr/listPreferredItemHeightSmall"
-            android:layout_height="?attr/listPreferredItemHeightSmall"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:background="@drawable/shape_circle"
-            android:backgroundTint="@color/primaryLightColor"
-            android:padding="12dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/fragment_kitchen_manage_list_item_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/primaryTextColor" />
-
-        <TextView
-            android:id="@+id/fragment_kitchen_manage_list_item_title"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/margin_medium"
-            android:text="@{kitchen.title}"
-            app:layout_constraintEnd_toStartOf="@id/fragment_kitchen_manage_list_item_menu"
-            app:layout_constraintStart_toEndOf="@id/fragment_kitchen_manage_list_item_icon" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fragment_kitchen_manage_list_item_menu"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_kitchen_manage_list_menu_start"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|end"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:background="@color/primaryLightColor"
-            app:backgroundTint="@color/primaryTextColor"
-            app:elevation="0dp"
-            app:fabSize="mini"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/fragment_kitchen_manage_list_item_title"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_more_vert_24" />
+            android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/fragment_kitchen_manage_list_item_archive"
+                android:layout_width="?android:attr/listPreferredItemHeight"
+                android:layout_height="match_parent"
+                android:background="@color/cardview_dark_background"
+                android:foreground="?selectableItemBackground"
+                android:padding="20dp"
+                android:src="@drawable/ic_baseline_archive_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/primaryTextColor" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_kitchen_manage_list_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/fragment_kitchen_manage_list_item_icon"
+                kitchen_icon="@{kitchen.icon}"
+                android:layout_width="?attr/listPreferredItemHeightSmall"
+                android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:background="@drawable/shape_circle"
+                android:backgroundTint="@color/primaryLightColor"
+                android:padding="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/fragment_kitchen_manage_list_item_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/primaryTextColor" />
+
+            <TextView
+                android:id="@+id/fragment_kitchen_manage_list_item_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:paddingHorizontal="@dimen/margin_medium"
+                android:text="@{kitchen.title}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fragment_kitchen_manage_list_item_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_kitchen_manage_list_menu_end"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/fragment_kitchen_manage_list_item_delete"
+                android:layout_width="?android:attr/listPreferredItemHeight"
+                android:layout_height="match_parent"
+                android:background="@color/primaryDarkColor"
+                android:foreground="?selectableItemBackground"
+                android:padding="20dp"
+                android:src="@drawable/ic_baseline_delete_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fragment_kitchen_manage_list_item_edit"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/primaryTextColor" />
+
+            <ImageView
+                android:id="@+id/fragment_kitchen_manage_list_item_edit"
+                android:layout_width="?android:attr/listPreferredItemHeight"
+                android:layout_height="match_parent"
+                android:background="@color/secondaryDarkColor"
+                android:foreground="?selectableItemBackground"
+                android:padding="20dp"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/fragment_kitchen_manage_list_item_delete"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/primaryTextColor" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

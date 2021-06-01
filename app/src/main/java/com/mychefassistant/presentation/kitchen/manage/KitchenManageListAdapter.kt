@@ -1,13 +1,14 @@
 package com.mychefassistant.presentation.kitchen.manage
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.ListAdapter
 import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.databinding.FragmentKitchenManageListItemBinding
+import com.mychefassistant.utils.listitem.SwapItemAdapterHelper
 
 class KitchenManageListAdapter(
     private val onClick: (Kitchen, View) -> Unit,
@@ -24,20 +25,29 @@ class KitchenManageListAdapter(
     override fun onBindViewHolder(holder: KitchenManageListViewHolder, position: Int) {
         val item = getItem(position)
         holder.binding.kitchen = item
-        holder.itemView.setOnClickListener { onClick(item, it) }
-        holder.more.setOnClickListener {
-            val popup = PopupMenu(holder.context, it)
-            popup.menuInflater.inflate(R.menu.fragment_kitchen_manage_list_item_menu, popup.menu)
-            popup.setOnMenuItemClickListener { x ->
-                when (x.itemId) {
-                    R.id.fragment_kitchen_manage_list_item_menu_remove -> onMenuSelect(
-                        KitchenManageViewModel.kitchenRemoveRequest,
-                        item
-                    )
-                }
-                true
-            }
-            popup.show()
+
+        val motion = holder.binding.fragmentKitchenManageListView
+        holder.binding.fragmentKitchenManageListItemArchive.setOnClickListener {
+            motion.transitionToStart()
+            Log.d("console.debug", "onBindViewHolder: archive")
         }
+        holder.binding.fragmentKitchenManageListItemDelete.setOnClickListener {
+            motion.transitionToStart()
+            onMenuSelect(KitchenManageViewModel.kitchenRemoveRequest, item)
+        }
+        holder.binding.fragmentKitchenManageListItemEdit.setOnClickListener {
+            motion.transitionToStart()
+            Log.d("console.debug", "onBindViewHolder: edit")
+        }
+
+        SwapItemAdapterHelper(
+            motion,
+            holder.binding.fragmentKitchenManageListItem,
+            R.id.fragment_kitchen_manage_list_initial_state,
+            holder.binding.fragmentKitchenManageListMenuStart,
+            R.id.fragment_kitchen_manage_list_show_start_menu,
+            holder.binding.fragmentKitchenManageListMenuEnd,
+            R.id.fragment_kitchen_manage_list_show_end_menu
+        ) { onClick(item, it) }
     }
 }
