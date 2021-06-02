@@ -43,7 +43,7 @@ class KitchenManageFragment : Fragment() {
             .onInfo {
                 when (it.type) {
                     KitchenManageViewModel.onKitchenLoad -> setupListView()
-                    KitchenManageViewModel.routeToKitchen -> routeToKitchen(it.data as Pair<Kitchen, View>)
+                    KitchenManageViewModel.routeToKitchen -> routeToKitchen(it.data as Kitchen)
                     KitchenManageViewModel.createModal ->
                         modalAlertModelPort(requireContext(), it.data as ModalAlertModel)
                     KitchenManageViewModel.createSnackBar ->
@@ -67,8 +67,8 @@ class KitchenManageFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch { viewModel.resetEvents() }
     }
 
-    private fun onKitchenClick(kitchen: Kitchen, view: View) = viewModel.setViewEvent(
-        Event.Info(KitchenManageViewModel.onKitchenClicked, kitchen to view)
+    private fun onKitchenClick(kitchen: Kitchen) = viewModel.setViewEvent(
+        Event.Info(KitchenManageViewModel.onKitchenClicked, kitchen)
     )
 
     private fun onKitchenMenuSelect(action: Int, kitchen: Kitchen) = viewModel.setViewEvent(
@@ -90,7 +90,7 @@ class KitchenManageFragment : Fragment() {
         )
     }
 
-    private fun routeToKitchen(data: Pair<Kitchen, View>) = findNavController().navigate(
-        KitchenManageFragmentDirections.actionFragmentKitchenManageToFragmentGroceryManage(data.first.id)
+    private fun routeToKitchen(kitchen: Kitchen) = findNavController().navigate(
+        KitchenManageFragmentDirections.actionFragmentKitchenManageToFragmentGroceryManage(kitchen.id)
     )
 }

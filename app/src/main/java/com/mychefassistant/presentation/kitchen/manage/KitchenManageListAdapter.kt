@@ -11,7 +11,7 @@ import com.mychefassistant.databinding.FragmentKitchenManageListItemBinding
 import com.mychefassistant.utils.listitem.SwapItemAdapterHelper
 
 class KitchenManageListAdapter(
-    private val onClick: (Kitchen, View) -> Unit,
+    private val onClick: (Kitchen) -> Unit,
     private val onMenuSelect: (Int, Kitchen) -> Unit
 ) : ListAdapter<Kitchen, KitchenManageListViewHolder>(KitchenManageListDiffUtil()) {
 
@@ -48,6 +48,6 @@ class KitchenManageListAdapter(
             R.id.fragment_kitchen_manage_list_show_start_menu,
             holder.binding.fragmentKitchenManageListMenuEnd,
             R.id.fragment_kitchen_manage_list_show_end_menu
-        ) { onClick(item, it) }
+        ) { onClick(item) }
     }
 }

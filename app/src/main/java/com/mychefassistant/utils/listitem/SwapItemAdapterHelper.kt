@@ -12,25 +12,35 @@ class SwapItemAdapterHelper(
     motionLayout: MotionLayout,
     itemView: ConstraintLayout,
     initialState: Int,
-    startMenu: ConstraintLayout,
-    startMenuState: Int,
-    endMenu: ConstraintLayout,
-    endMenuState: Int,
-    onClick: (View) -> Unit = {}
+    startMenu: ConstraintLayout?,
+    startMenuState: Int?,
+    endMenu: ConstraintLayout?,
+    endMenuState: Int?,
+    onClick: () -> Unit = {}
 ) {
+    private val isRTL =
+        View.LAYOUT_DIRECTION_RTL == motionLayout.resources.configuration.layoutDirection
+
     init {
-        var startMenuWidth = calcWidth(startMenu)
-        var endMenuWidth = -calcWidth(endMenu)
-        if (View.LAYOUT_DIRECTION_RTL == motionLayout.resources.configuration.layoutDirection) {
-            startMenuWidth = -startMenuWidth
-            endMenuWidth = -endMenuWidth
+        startMenu?.let {
+            requireNotNull(startMenuState)
+            var startMenuWidth = calcWidth(it)
+            if (isRTL) startMenuWidth = -startMenuWidth
+            motionLayout.getConstraintSet(startMenuState)
+                .setTranslationX(itemView.id, startMenuWidth)
         }
-        motionLayout.getConstraintSet(endMenuState).setTranslationX(itemView.id, endMenuWidth)
-        motionLayout.getConstraintSet(startMenuState).setTranslationX(itemView.id, startMenuWidth)
-        motionLayout.setOnTouchListener { v, event ->
+
+        endMenu?.let {
+            requireNotNull(endMenuState)
+            var endMenuWidth = -calcWidth(endMenu)
+            if (isRTL) endMenuWidth = -endMenuWidth
+            motionLayout.getConstraintSet(endMenuState).setTranslationX(itemView.id, endMenuWidth)
+        }
+
+        motionLayout.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_UP -> if (motionLayout.progress == 0.0F && motionLayout.currentState == initialState)
-                    onClick(v)
+                    onClick()
                 MotionEvent.ACTION_CANCEL -> motionLayout.transitionToStart()
             }
             false
