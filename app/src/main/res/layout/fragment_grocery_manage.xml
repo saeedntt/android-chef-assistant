@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_large"
                 android:gravity="center"
-                android:text="@{kitchen.title}"
+                android:text="@{kitchen.title, default=Title}"
                 android:textSize="@dimen/margin_large"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
