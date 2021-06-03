@@ -85,6 +85,7 @@ class KitchenManageViewModel(
             is Event.Info -> when (event.type) {
                 onKitchenClicked -> setEvent(Event.Info(routeToKitchen, event.data))
                 kitchenRemoveRequest -> createRemoveWarningModal(event.data as Kitchen)
+                kitchenSettingRequest -> setEvent(Event.Info(routeToKitchenSetting, event.data))
             }
         }
     }
@@ -99,5 +100,7 @@ class KitchenManageViewModel(
         const val kitchenRemoveRequest = 5
         const val onKitchenClicked = 6
         const val routeToKitchen = 7
+        const val kitchenSettingRequest = 8
+        const val routeToKitchenSetting = 9
     }
 }

@@ -23,6 +23,10 @@
         android:name="com.mychefassistant.presentation.kitchen.insert.KitchenInsertFragment"
         android:label="@string/kitchen_insert"
         tools:layout="@layout/fragment_kitchen_insert">
+        <argument
+            android:name="kitchenId"
+            android:defaultValue="-1"
+            app:argType="integer" />
         <action
             android:id="@+id/action_fragment_kitchen_insert_to_fragment_grocery_manage"
             app:destination="@id/nav_fragment_grocery_manage"

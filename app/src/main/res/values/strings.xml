@@ -7,9 +7,11 @@
     <string name="setting">Setting</string>
     <string name="about">About us</string>
     <string name="add_kitchen">Add new Kitchen</string>
+    <string name="edit_kitchen">Edit Kitchen</string>
     <string name="title">Title</string>
     <string name="kitchen_location">Kitchen location</string>
     <string name="insert">Insert</string>
+    <string name="save">Save</string>
     <string name="remove">Remove</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>

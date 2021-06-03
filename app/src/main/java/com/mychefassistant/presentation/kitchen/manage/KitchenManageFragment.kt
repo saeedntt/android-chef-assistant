@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mychefassistant.core.domain.Kitchen
@@ -44,6 +43,7 @@ class KitchenManageFragment : Fragment() {
                 when (it.type) {
                     KitchenManageViewModel.onKitchenLoad -> setupListView()
                     KitchenManageViewModel.routeToKitchen -> routeToKitchen(it.data as Kitchen)
+                    KitchenManageViewModel.routeToKitchenSetting -> routeToKitchenSetting(it.data as? Kitchen)
                     KitchenManageViewModel.createModal ->
                         modalAlertModelPort(requireContext(), it.data as ModalAlertModel)
                     KitchenManageViewModel.createSnackBar ->
@@ -71,12 +71,12 @@ class KitchenManageFragment : Fragment() {
         Event.Info(KitchenManageViewModel.onKitchenClicked, kitchen)
     )
 
-    private fun onKitchenMenuSelect(action: Int, kitchen: Kitchen) = viewModel.setViewEvent(
+    private fun onKitchenActionRequest(action: Int, kitchen: Kitchen) = viewModel.setViewEvent(
         Event.Info(action, kitchen)
     )
 
     private fun setupListView() {
-        val adapter = KitchenManageListAdapter(::onKitchenClick, ::onKitchenMenuSelect)
+        val adapter = KitchenManageListAdapter(::onKitchenClick, ::onKitchenActionRequest)
         val binding = requireNotNull(binding)
         binding.fragmentKitchenManageList.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -85,12 +85,16 @@ class KitchenManageFragment : Fragment() {
     }
 
     private fun setupFab() = binding!!.fragmentKitchenManageFab.setOnClickListener {
-        findNavController().navigate(
-            KitchenManageFragmentDirections.actionFragmentKitchenManageToFragmentKitchenInsert()
-        )
+        viewModel.setViewEvent(Event.Info(KitchenManageViewModel.kitchenSettingRequest))
     }
 
     private fun routeToKitchen(kitchen: Kitchen) = findNavController().navigate(
         KitchenManageFragmentDirections.actionFragmentKitchenManageToFragmentGroceryManage(kitchen.id)
+    )
+
+    private fun routeToKitchenSetting(kitchen: Kitchen?) = findNavController().navigate(
+        KitchenManageFragmentDirections.actionFragmentKitchenManageToFragmentKitchenInsert(
+            kitchen?.id ?: -1
+        )
     )
 }

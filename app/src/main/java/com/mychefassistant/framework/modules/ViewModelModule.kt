@@ -9,7 +9,7 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel { KitchenManageViewModel(get(), androidApplication(), get(), get(), get()) }
-    viewModel { KitchenInsertViewModel(get(), androidApplication(), get(), get()) }
+    viewModel { KitchenInsertViewModel(get(), androidApplication(), get(), get(), get(), get()) }
     viewModel {
         GroceryManageViewModel(get(), androidApplication(), get(), get(), get(), get(), get())
     }

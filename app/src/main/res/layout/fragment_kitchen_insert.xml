@@ -3,6 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="com.mychefassistant.presentation.kitchen.insert.KitchenInsertIcons" />
+
+        <variable
+            name="kitchen"
+            type="com.mychefassistant.core.domain.Kitchen" />
+
+        <variable
+            name="kitchenIcons"
+            type="com.mychefassistant.core.utils.KitchenIcons" />
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingTop="@dimen/margin_large"
-                android:text="@string/add_kitchen"
+                android:text="@{kitchen.id >= 0 ? @string/edit_kitchen : @string/add_kitchen}"
                 android:textSize="@dimen/margin_large"
                 app:layout_constraintBottom_toTopOf="@id/fragment_kitchen_insert_icon"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -34,6 +47,7 @@
 
             <ImageButton
                 android:id="@+id/fragment_kitchen_insert_icon"
+                kitchen_icon='@{kitchen.icon}'
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
@@ -43,7 +57,6 @@
                 android:backgroundTint="@color/secondaryColor"
                 android:padding="30dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_baseline_kitchen_24"
                 app:layout_constraintBottom_toTopOf="@id/fragment_kitchen_insert_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +77,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:text="@{kitchen.title}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -82,7 +96,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:text='@{kitchen.location.toString() ?? ""}' />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -91,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/margin_large"
-                android:text="@string/insert"
+                android:text="@{kitchen.id >= 0 ? @string/save : @string/insert}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/fragment_kitchen_insert_location" />

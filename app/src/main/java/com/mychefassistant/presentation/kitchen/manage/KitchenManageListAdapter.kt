@@ -2,7 +2,6 @@ package com.mychefassistant.presentation.kitchen.manage
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.mychefassistant.R
@@ -12,7 +11,7 @@ import com.mychefassistant.utils.listitem.SwapItemAdapterHelper
 
 class KitchenManageListAdapter(
     private val onClick: (Kitchen) -> Unit,
-    private val onMenuSelect: (Int, Kitchen) -> Unit
+    private val itemActionRequest: (Int, Kitchen) -> Unit
 ) : ListAdapter<Kitchen, KitchenManageListViewHolder>(KitchenManageListDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KitchenManageListViewHolder =
@@ -33,11 +32,11 @@ class KitchenManageListAdapter(
         }
         holder.binding.fragmentKitchenManageListItemDelete.setOnClickListener {
             motion.transitionToStart()
-            onMenuSelect(KitchenManageViewModel.kitchenRemoveRequest, item)
+            itemActionRequest(KitchenManageViewModel.kitchenRemoveRequest, item)
         }
         holder.binding.fragmentKitchenManageListItemEdit.setOnClickListener {
             motion.transitionToStart()
-            Log.d("console.debug", "onBindViewHolder: edit")
+            itemActionRequest(KitchenManageViewModel.kitchenSettingRequest, item)
         }
 
         SwapItemAdapterHelper(
