@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mychefassistant.core.domain.Grocery
 import com.mychefassistant.databinding.FragmentGroceryManageBinding
 import com.mychefassistant.presentation.grocery.insert.GroceryInsertFragment
 import com.mychefassistant.utils.Event
@@ -49,7 +50,7 @@ class GroceryManageFragment : Fragment() {
                 when (it.type) {
                     GroceryManageViewModel.onKitchenLoad -> binding.kitchen = viewModel.kitchen
                     GroceryManageViewModel.onGroceriesLoad -> setupListView()
-                    GroceryManageViewModel.showInsertModal -> showInsertModal()
+                    GroceryManageViewModel.showInsertModal -> showInsertModal(it.data as? Grocery)
                     GroceryManageViewModel.closeInsertModal -> modal?.dismiss()
                     GroceryManageViewModel.modalEvent -> modal?.onParentEventListener(it.data as Event)
                     GroceryManageViewModel.createModal ->
@@ -75,9 +76,13 @@ class GroceryManageFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch { viewModel.resetEvents() }
     }
 
+    private fun onGroceryActionRequest(action: Int, grocery: Grocery) = viewModel.setViewEvent(
+        Event.Info(action, grocery)
+    )
+
     private fun setupListView() {
         val binding = requireNotNull(binding)
-        val adapter = GroceryManageListAdapter()
+        val adapter = GroceryManageListAdapter(::onGroceryActionRequest)
         binding.fragmentGroceryManageList.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         binding.fragmentGroceryManageList.adapter = adapter
@@ -86,8 +91,8 @@ class GroceryManageFragment : Fragment() {
         })
     }
 
-    private fun showInsertModal() {
-        modal = GroceryInsertFragment(childFragmentManager) { viewModel.setViewEvent(it) }
+    private fun showInsertModal(grocery: Grocery?) {
+        modal = GroceryInsertFragment(childFragmentManager, grocery) { viewModel.setViewEvent(it) }
         modal?.show()
     }
 }

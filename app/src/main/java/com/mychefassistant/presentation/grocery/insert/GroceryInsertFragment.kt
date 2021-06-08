@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mychefassistant.core.domain.Grocery
 import com.mychefassistant.databinding.FragmentGroceryInsertBinding
 import com.mychefassistant.presentation.grocery.manage.GroceryManageViewModel
 import com.mychefassistant.utils.Event
 
 class GroceryInsertFragment(
     private val targetFragmentManager: FragmentManager,
+    private val editGrocery: Grocery? = null,
     private val sendParentEvent: (Event.Info) -> Unit
 ) :
     BottomSheetDialogFragment() {
@@ -29,12 +31,22 @@ class GroceryInsertFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = requireNotNull(binding)
+        binding.grocery = editGrocery ?: Grocery(-1, -1, "", "")
 
         binding.fragmentGroceryInsertSubmit.setOnClickListener {
             val title = binding.fragmentGroceryInsertTitle.editText?.text.toString()
             val valueInput = binding.fragmentGroceryInsertValue.editText?.text
             val value = if (valueInput.isNullOrBlank()) null else valueInput.toString()
-            sendParentEvent(Event.Info(requestAddGrocery, title to value))
+            if (editGrocery == null) {
+                sendParentEvent(Event.Info(requestAddGrocery, Grocery(-1, -1, title, value)))
+            } else {
+                sendParentEvent(
+                    Event.Info(
+                        requestUpdateGrocery,
+                        Grocery(editGrocery.id, editGrocery.kitchen, title, value) to editGrocery
+                    )
+                )
+            }
         }
     }
 
@@ -53,5 +65,6 @@ class GroceryInsertFragment(
 
     companion object {
         const val requestAddGrocery = 100
+        const val requestUpdateGrocery = 101
     }
 }

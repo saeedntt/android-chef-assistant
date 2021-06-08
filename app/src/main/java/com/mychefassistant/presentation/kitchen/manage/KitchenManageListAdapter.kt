@@ -39,14 +39,20 @@ class KitchenManageListAdapter(
             itemActionRequest(KitchenManageViewModel.kitchenSettingRequest, item)
         }
 
-        SwapItemAdapterHelper(
+        val swapHelper = SwapItemAdapterHelper(
             motion,
             holder.binding.fragmentKitchenManageListItem,
             R.id.fragment_kitchen_manage_list_initial_state,
+        ) { onClick(item) }
+
+        swapHelper.setupStartMenu(
             holder.binding.fragmentKitchenManageListMenuStart,
-            R.id.fragment_kitchen_manage_list_show_start_menu,
+            R.id.fragment_kitchen_manage_list_show_start_menu
+        )
+
+        swapHelper.setupEndMenu(
             holder.binding.fragmentKitchenManageListMenuEnd,
             R.id.fragment_kitchen_manage_list_show_end_menu
-        ) { onClick(item) }
+        )
     }
 }

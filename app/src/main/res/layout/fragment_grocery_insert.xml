@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="grocery"
+            type="com.mychefassistant.core.domain.Grocery" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,7 +19,7 @@
             android:id="@+id/fragment_grocery_insert_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_new_grocery"
+            android:text="@{grocery.id >= 0 ? @string/edit_grocery : @string/add_grocery}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -24,15 +31,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
             android:hint="@string/grocery_title"
+            app:layout_constraintBottom_toTopOf="@id/fragment_grocery_insert_value"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/fragment_grocery_insert_value"
             app:layout_constraintTop_toBottomOf="@id/fragment_grocery_insert_header">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:text="@{grocery.title}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -49,7 +57,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:text="@{grocery.value}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -58,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/margin_large"
-            android:text="@string/insert"
+            android:text="@{grocery.id >= 0 ? @string/save : @string/insert}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_grocery_insert_value" />

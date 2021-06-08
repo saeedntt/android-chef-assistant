@@ -30,7 +30,8 @@
     <string name="remove_kitchen_warning_message">Are you sure to delete (%1$s) kitchen?</string>
     <string name="grocery">Grocery</string>
     <string name="icon_picker_title">Choice your icon</string>
-    <string name="add_new_grocery">Add new Grocery</string>
+    <string name="add_grocery">Add new Grocery</string>
+    <string name="edit_grocery">Edit Grocery</string>
     <string name="grocery_title">Grocery title</string>
     <string name="grocery_value">Grocery value</string>
     <string name="grocery_exist">Grocery exist</string>

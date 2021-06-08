@@ -151,20 +151,36 @@ class GroceryManageViewModel(
             })
         )
 
-    private fun requestAddGrocery(params: Pair<String, String?>) = viewModelScope.launch body@{
-        val grocery = Grocery(kitchen = kitchenId, title = params.first, value = params.second)
-        validateTitle(grocery.title).onFailure {
+    private fun requestAddGrocery(grocery: Grocery) = viewModelScope.launch body@{
+        val model = Grocery(kitchen = kitchenId, title = grocery.title, value = grocery.value)
+        validateTitle(model.title).onFailure {
             setEvent(Event.Info(modalEvent, Event.Error(setTitleInputError, it)))
             return@body
         }
         setEvent(Event.Info(closeInsertModal))
-        findGrocery(grocery.title).onSuccess {
-            createUpdateGroceryValueEvent(it, grocery)
+        findGrocery(model.title).onSuccess {
+            createUpdateGroceryValueEvent(it, model)
             return@body
         }
         history.run(Command(
-            execute = { viewModelScope.launch { addGrocery(grocery, 1) } },
-            unExecute = { viewModelScope.launch { removeGroceryByTitle(grocery.title, -1) } }
+            execute = { viewModelScope.launch { addGrocery(model, 1) } },
+            unExecute = { viewModelScope.launch { removeGroceryByTitle(model.title, -1) } }
+        ))
+    }
+
+    private fun requestUpdateGrocery(grocery: Pair<Grocery, Grocery>) = viewModelScope.launch body@{
+        validateTitle(grocery.first.title).onFailure {
+            setEvent(Event.Info(modalEvent, Event.Error(setTitleInputError, it)))
+            return@body
+        }
+        setEvent(Event.Info(closeInsertModal))
+        if (
+            grocery.first.id == grocery.second.id && grocery.first.kitchen == grocery.second.kitchen &&
+            grocery.first.title == grocery.second.title && grocery.first.value == grocery.second.value
+        ) return@body
+        history.run(Command(
+            execute = { viewModelScope.launch { updateGrocery(grocery.first, 1) } },
+            unExecute = { viewModelScope.launch { updateGrocery(grocery.second, -1) } }
         ))
     }
 
@@ -172,7 +188,9 @@ class GroceryManageViewModel(
         when (event) {
             is Event.Info -> when (event.type) {
                 requestShowInsertModal -> setEvent(Event.Info(showInsertModal))
-                GroceryInsertFragment.requestAddGrocery -> requestAddGrocery(event.data as Pair<String, String?>)
+                groceryUpdateRequest -> setEvent(Event.Info(showInsertModal, event.data))
+                GroceryInsertFragment.requestAddGrocery -> requestAddGrocery(event.data as Grocery)
+                GroceryInsertFragment.requestUpdateGrocery -> requestUpdateGrocery(event.data as Pair<Grocery, Grocery>)
             }
         }
     }
@@ -188,5 +206,6 @@ class GroceryManageViewModel(
         const val createSnackBar = 8
         const val createErrorAlert = 9
         const val onGroceriesLoad = 10
+        const val groceryUpdateRequest = 11
     }
 }
