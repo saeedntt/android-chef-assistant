@@ -7,13 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.databinding.FragmentKitchenManageListItemBinding
+import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.listitem.SwapItemAdapterHelper
 
-class KitchenManageListAdapter(
-    private val onClick: (Kitchen) -> Unit,
-    private val itemActionRequest: (Int, Kitchen) -> Unit
-) : ListAdapter<Kitchen, KitchenManageListViewHolder>(KitchenManageListDiffUtil()) {
-
+class KitchenManageListAdapter(private val eventGate: (Event.Info) -> Unit) :
+    ListAdapter<Kitchen, KitchenManageListViewHolder>(KitchenManageListDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KitchenManageListViewHolder =
         KitchenManageListViewHolder(
             FragmentKitchenManageListItemBinding.inflate(
@@ -32,18 +30,18 @@ class KitchenManageListAdapter(
         }
         holder.binding.fragmentKitchenManageListItemDelete.setOnClickListener {
             motion.transitionToStart()
-            itemActionRequest(KitchenManageViewModel.kitchenRemoveRequest, item)
+            eventGate(Event.Info(KitchenManageViewModel.kitchenRemoveRequest, item))
         }
         holder.binding.fragmentKitchenManageListItemEdit.setOnClickListener {
             motion.transitionToStart()
-            itemActionRequest(KitchenManageViewModel.kitchenSettingRequest, item)
+            eventGate(Event.Info(KitchenManageViewModel.kitchenSettingRequest, item))
         }
 
         val swapHelper = SwapItemAdapterHelper(
             motion,
             holder.binding.fragmentKitchenManageListItem,
             R.id.fragment_kitchen_manage_list_initial_state,
-        ) { onClick(item) }
+        ) { eventGate(Event.Info(KitchenManageViewModel.kitchenRouteRequest, item)) }
 
         swapHelper.setupStartMenu(
             holder.binding.fragmentKitchenManageListMenuStart,

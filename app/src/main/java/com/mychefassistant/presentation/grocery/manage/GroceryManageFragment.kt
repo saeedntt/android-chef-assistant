@@ -76,13 +76,9 @@ class GroceryManageFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch { viewModel.resetEvents() }
     }
 
-    private fun onGroceryActionRequest(action: Int, grocery: Grocery) = viewModel.setViewEvent(
-        Event.Info(action, grocery)
-    )
-
     private fun setupListView() {
         val binding = requireNotNull(binding)
-        val adapter = GroceryManageListAdapter(::onGroceryActionRequest)
+        val adapter = GroceryManageListAdapter { viewModel.setViewEvent(it) }
         binding.fragmentGroceryManageList.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         binding.fragmentGroceryManageList.adapter = adapter

@@ -7,7 +7,7 @@ import com.mychefassistant.databinding.IconPickerItemBinding
 
 class IconPickerListAdapter(
     private val icons: Array<IconModel>,
-    private val handle: (iconModel: IconModel) -> Unit
+    private val selectIcon: (iconModel: IconModel) -> Unit
 ) : RecyclerView.Adapter<IconPickerListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IconPickerListViewHolder =
@@ -21,7 +21,7 @@ class IconPickerListAdapter(
         val item = icons[position]
         holder.title.text = item.label.toString()
         holder.image.setImageResource(item.icon)
-        holder.itemView.setOnClickListener { handle(item) }
+        holder.itemView.setOnClickListener { selectIcon(item) }
     }
 
     override fun getItemCount(): Int = icons.size

@@ -38,7 +38,7 @@ class KitchenInsertFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val binding = requireNotNull(binding)
 
-        iconPicker = IconPicker(childFragmentManager, KitchenInsertIcons.list).setOnClickListener {
+        iconPicker = IconPicker(childFragmentManager, KitchenInsertIcons.list) {
             val lastKitchen = getLastKitchen()
             viewModel.setViewEvent(
                 Event.Info(

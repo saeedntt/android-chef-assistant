@@ -10,10 +10,10 @@ import com.mychefassistant.databinding.IconPickerBinding
 
 class IconPicker(
     private val targetFragmentManager: FragmentManager,
-    private var icons: Array<IconModel> = arrayOf()
+    private var icons: Array<IconModel> = arrayOf(),
+    private val iconOnClickListener: ((IconModel) -> Unit)
 ) : AppCompatDialogFragment() {
     private var binding: IconPickerBinding? = null
-    private var iconOnClickListener: ((IconModel) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,19 +25,10 @@ class IconPicker(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding?.let {
-            it.iconPickerList.adapter = IconPickerListAdapter(icons, ::adapterOnClickHandle)
+        binding?.iconPickerList?.adapter = IconPickerListAdapter(icons) {
+            iconOnClickListener(it)
+            dismiss()
         }
-    }
-
-    private fun adapterOnClickHandle(iconModel: IconModel) {
-        iconOnClickListener?.let { it(iconModel) }
-        dismiss()
-    }
-
-    fun setOnClickListener(listener: (iconModel: IconModel) -> Unit): IconPicker {
-        iconOnClickListener = listener
-        return this
     }
 
     fun show() = show(targetFragmentManager, "iconPicker")

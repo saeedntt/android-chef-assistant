@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.mychefassistant.core.domain.Grocery
 import com.mychefassistant.databinding.FragmentGroceryManageListItemBinding
+import com.mychefassistant.utils.Event
 
-class GroceryManageListAdapter(private val itemActionRequest: (Int, Grocery) -> Unit) :
+class GroceryManageListAdapter(private val eventGate: (Event.Info) -> Unit) :
     ListAdapter<Grocery, GroceryManageListViewHolder>(GroceryManageListDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroceryManageListViewHolder =
         GroceryManageListViewHolder(
@@ -20,7 +21,7 @@ class GroceryManageListAdapter(private val itemActionRequest: (Int, Grocery) -> 
         holder.binding.grocery = item
 
         holder.itemView.setOnClickListener {
-            itemActionRequest(GroceryManageViewModel.groceryUpdateRequest, item)
+            eventGate(Event.Info(GroceryManageViewModel.groceryUpdateRequest, item))
         }
     }
 }

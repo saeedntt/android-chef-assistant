@@ -36,7 +36,9 @@ class KitchenManageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupFab()
+        binding?.fragmentKitchenManageFab?.setOnClickListener {
+            viewModel.setViewEvent(Event.Info(KitchenManageViewModel.kitchenSettingRequest))
+        }
 
         viewModel
             .onInfo {
@@ -67,25 +69,13 @@ class KitchenManageFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch { viewModel.resetEvents() }
     }
 
-    private fun onKitchenClick(kitchen: Kitchen) = viewModel.setViewEvent(
-        Event.Info(KitchenManageViewModel.onKitchenClicked, kitchen)
-    )
-
-    private fun onKitchenActionRequest(action: Int, kitchen: Kitchen) = viewModel.setViewEvent(
-        Event.Info(action, kitchen)
-    )
-
     private fun setupListView() {
-        val adapter = KitchenManageListAdapter(::onKitchenClick, ::onKitchenActionRequest)
+        val adapter = KitchenManageListAdapter { viewModel.setViewEvent(it) }
         val binding = requireNotNull(binding)
         binding.fragmentKitchenManageList.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         binding.fragmentKitchenManageList.adapter = adapter
         viewModel.kitchens?.observe(viewLifecycleOwner, Observer { adapter.submitList(it) })
-    }
-
-    private fun setupFab() = binding!!.fragmentKitchenManageFab.setOnClickListener {
-        viewModel.setViewEvent(Event.Info(KitchenManageViewModel.kitchenSettingRequest))
     }
 
     private fun routeToKitchen(kitchen: Kitchen) = findNavController().navigate(

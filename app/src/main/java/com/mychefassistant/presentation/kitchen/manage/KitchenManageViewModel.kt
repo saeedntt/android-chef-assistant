@@ -83,7 +83,7 @@ class KitchenManageViewModel(
     override suspend fun viewEventListener(event: Event) {
         when (event) {
             is Event.Info -> when (event.type) {
-                onKitchenClicked -> setEvent(Event.Info(routeToKitchen, event.data))
+                kitchenRouteRequest -> setEvent(Event.Info(routeToKitchen, event.data))
                 kitchenRemoveRequest -> createRemoveWarningModal(event.data as Kitchen)
                 kitchenSettingRequest -> setEvent(Event.Info(routeToKitchenSetting, event.data))
             }
@@ -98,7 +98,7 @@ class KitchenManageViewModel(
         const val createSnackBar = 3
         const val createErrorAlert = 4
         const val kitchenRemoveRequest = 5
-        const val onKitchenClicked = 6
+        const val kitchenRouteRequest = 6
         const val routeToKitchen = 7
         const val kitchenSettingRequest = 8
         const val routeToKitchenSetting = 9
