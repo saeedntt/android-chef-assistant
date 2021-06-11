@@ -11,7 +11,7 @@ import com.mychefassistant.databinding.IconPickerBinding
 class IconPicker(
     private val targetFragmentManager: FragmentManager,
     private var icons: Array<IconModel> = arrayOf(),
-    private val iconOnClickListener: ((IconModel) -> Unit)
+    private val iconOnClickListener: (IconModel) -> Unit
 ) : AppCompatDialogFragment() {
     private var binding: IconPickerBinding? = null
 
