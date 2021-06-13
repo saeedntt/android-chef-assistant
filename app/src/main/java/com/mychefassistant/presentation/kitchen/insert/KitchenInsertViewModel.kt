@@ -5,20 +5,21 @@ import androidx.lifecycle.viewModelScope
 import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.core.interactors.AddKitchenUseCase
-import com.mychefassistant.core.interactors.FindKitchenUseCase
 import com.mychefassistant.core.interactors.GetKitchenByIdUseCase
+import com.mychefassistant.core.interactors.GetKitchensUseCase
 import com.mychefassistant.core.interactors.UpdateKitchenUseCase
 import com.mychefassistant.core.utils.KitchenIcons
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.commandhistory.CommandHistory
 import com.mychefassistant.utils.snackbar.SnackBarModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class KitchenInsertViewModel(
     commandHistory: CommandHistory,
     private val application: Application,
-    private val findKitchenUseCase: FindKitchenUseCase,
+    private val getKitchensUseCase: GetKitchensUseCase,
     private val findKitchenByIdUseCase: GetKitchenByIdUseCase,
     private val addKitchenUseCase: AddKitchenUseCase,
     private val updateKitchenUseCase: UpdateKitchenUseCase
@@ -37,22 +38,24 @@ class KitchenInsertViewModel(
             setEvent(Event.Error(setTitleInputError, it))
             return@body
         }
-        findKitchenUseCase(kitchen).onSuccess {
-            if (it.isNotEmpty()) {
-                setEvent(
-                    Event.Error(
-                        createSnackBar,
-                        Exception(application.getString(R.string.kitchen_exist)),
-                        SnackBarModel(
-                            application.getString(R.string.kitchen_exist),
-                            application.getString(R.string.show_kitchen)
-                        ) {
-                            viewModelScope.launch { setEvent(Event.Info(routeToGrocery, it[0])) }
-                        }
+        getKitchensUseCase(true).onSuccess {
+            it.first()
+                .find { item -> item.title == kitchen.title && item.icon == kitchen.icon && item.location == kitchen.location }
+                ?.let { item ->
+                    setEvent(
+                        Event.Error(
+                            createSnackBar,
+                            Exception(application.getString(R.string.kitchen_exist)),
+                            SnackBarModel(
+                                application.getString(R.string.kitchen_exist),
+                                application.getString(R.string.show_kitchen)
+                            ) {
+                                viewModelScope.launch { setEvent(Event.Info(routeToGrocery, item)) }
+                            }
+                        )
                     )
-                )
-                return@body
-            }
+                    return@body
+                }
         }
         addKitchenUseCase(kitchen).onSuccess { setEvent(Event.Info(backFragment)) }
     }

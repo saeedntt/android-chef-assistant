@@ -13,6 +13,4 @@ interface KitchenDataSource {
     fun getAll(): Flow<List<Kitchen>>
 
     suspend fun getById(id: Int): Kitchen
-
-    suspend fun find(kitchen: Kitchen): List<Kitchen>
 }

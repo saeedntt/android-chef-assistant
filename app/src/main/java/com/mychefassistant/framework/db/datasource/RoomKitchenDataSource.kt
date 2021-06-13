@@ -13,8 +13,6 @@ class RoomKitchenDataSource(private val kitchenDao: KitchenDao) : KitchenDataSou
 
     override suspend fun getById(id: Int): Kitchen = toDomain(kitchenDao.getById(id)[0])
 
-    override suspend fun find(kitchen: Kitchen) = kitchenDao.find(kitchen).map { toDomain(it) }
-
     override suspend fun remove(kitchen: Kitchen) = kitchenDao.removeKitchen(toEntity(kitchen))
 
     override suspend fun update(kitchen: Kitchen) = kitchenDao.updateKitchen(toEntity(kitchen))
