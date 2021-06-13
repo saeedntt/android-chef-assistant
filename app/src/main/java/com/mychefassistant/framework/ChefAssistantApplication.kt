@@ -19,6 +19,7 @@ class ChefAssistantApplication : Application() {
                 kitchenUseCaseModule,
                 groceryUseCaseModule,
                 shoppingListsUseCase,
+                shoppingListItemUseCase,
                 viewModelModule,
                 commandHistory
             )

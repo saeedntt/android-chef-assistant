@@ -18,4 +18,5 @@ val databaseModule = module {
     single { get<ChefAssistantDatabase>().kitchenDao() }
     single { get<ChefAssistantDatabase>().groceryDao() }
     single { get<ChefAssistantDatabase>().shoppingListDao() }
+    single { get<ChefAssistantDatabase>().shoppingListItemDao() }
 }

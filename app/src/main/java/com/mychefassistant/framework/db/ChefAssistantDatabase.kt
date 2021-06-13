@@ -6,7 +6,7 @@ import com.mychefassistant.framework.db.dao.*
 import com.mychefassistant.framework.db.entity.*
 
 @Database(
-    entities = [KitchenEntity::class, GroceryEntity::class, ShoppingListEntity::class],
+    entities = [KitchenEntity::class, GroceryEntity::class, ShoppingListEntity::class, ShoppingListItemEntity::class],
     version = 1,
     exportSchema = false
 )
@@ -14,4 +14,5 @@ abstract class ChefAssistantDatabase : RoomDatabase() {
     abstract fun kitchenDao(): KitchenDao
     abstract fun groceryDao(): GroceryDao
     abstract fun shoppingListDao(): ShoppingListDao
+    abstract fun shoppingListItemDao(): ShoppingListItemDao
 }
