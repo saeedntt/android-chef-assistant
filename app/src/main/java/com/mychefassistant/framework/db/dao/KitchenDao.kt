@@ -1,8 +1,6 @@
 package com.mychefassistant.framework.db.dao
 
 import androidx.room.*
-import com.mychefassistant.core.domain.Kitchen
-import com.mychefassistant.core.utils.KitchenIcons
 import com.mychefassistant.framework.db.entity.KitchenEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -15,7 +13,7 @@ interface KitchenDao {
     fun getAll(): Flow<List<KitchenEntity>>
 
     @Query("select * from kitchens where id = :id")
-    suspend fun getById(id: Int): List<KitchenEntity>
+    suspend fun getById(id: Int): KitchenEntity
 
     @Delete
     suspend fun removeKitchen(kitchen: KitchenEntity)
