@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mychefassistant.core.domain.Grocery
 import com.mychefassistant.databinding.FragmentGroceryManageBinding
 import com.mychefassistant.presentation.grocery.insert.GroceryInsertFragment
+import com.mychefassistant.presentation.main.MainActivity
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.modalalert.ModalAlertModel
 import com.mychefassistant.utils.modalalert.modalAlertModelPort
@@ -39,16 +40,16 @@ class GroceryManageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = requireNotNull(binding)
+        val activity = activity as MainActivity
 
-        binding.fragmentGroceryManageFab.setOnClickListener {
+        activity.viewModel.setFabOnClickListener {
             viewModel.setViewEvent(Event.Info(GroceryManageViewModel.requestShowInsertModal))
         }
 
         viewModel
             .onInfo {
                 when (it.type) {
-                    GroceryManageViewModel.onKitchenLoad -> binding.kitchen = viewModel.kitchen
+                    GroceryManageViewModel.onKitchenLoad -> binding?.kitchen = viewModel.kitchen
                     GroceryManageViewModel.onGroceriesLoad -> setupListView()
                     GroceryManageViewModel.showInsertModal -> showInsertModal(it.data as? Grocery)
                     GroceryManageViewModel.closeInsertModal -> modal?.dismiss()

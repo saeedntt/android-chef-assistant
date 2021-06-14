@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.databinding.FragmentKitchenManageBinding
+import com.mychefassistant.presentation.main.MainActivity
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.modalalert.ModalAlertModel
 import com.mychefassistant.utils.modalalert.modalAlertModelPort
@@ -35,8 +36,9 @@ class KitchenManageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val activity = activity as MainActivity
 
-        binding?.fragmentKitchenManageFab?.setOnClickListener {
+        activity.viewModel.setFabOnClickListener {
             viewModel.setViewEvent(Event.Info(KitchenManageViewModel.kitchenSettingRequest))
         }
 
