@@ -1,8 +1,6 @@
 package com.mychefassistant.presentation.kitchen.manage
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.mychefassistant.R
 import com.mychefassistant.core.domain.Kitchen
@@ -15,6 +13,7 @@ import com.mychefassistant.utils.commandhistory.Command
 import com.mychefassistant.utils.commandhistory.CommandHistory
 import com.mychefassistant.utils.modalalert.ModalAlertModel
 import com.mychefassistant.utils.snackbar.SnackBarModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class KitchenManageViewModel(
@@ -24,10 +23,10 @@ class KitchenManageViewModel(
     private val removeKitchenUseCase: RemoveKitchenUseCase,
     private val addKitchenUseCase: AddKitchenUseCase
 ) : ChefAssistantViewModel(commandHistory) {
-    var kitchens: LiveData<List<Kitchen>>? = null
+    var kitchens: Flow<List<Kitchen>>? = null
 
     private suspend fun loadKitchens() = getKitchensUseCase(true).onSuccess {
-        kitchens = it.asLiveData()
+        kitchens = it
         setEvent(Event.Info(onKitchenLoad))
     }
 

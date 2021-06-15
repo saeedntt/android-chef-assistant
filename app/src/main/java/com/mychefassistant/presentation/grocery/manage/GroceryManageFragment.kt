@@ -5,11 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.mychefassistant.core.domain.Grocery
 import com.mychefassistant.databinding.FragmentGroceryManageBinding
 import com.mychefassistant.presentation.grocery.insert.GroceryInsertFragment
@@ -19,6 +16,7 @@ import com.mychefassistant.utils.modalalert.ModalAlertModel
 import com.mychefassistant.utils.modalalert.modalAlertModelPort
 import com.mychefassistant.utils.snackbar.SnackBarModel
 import com.mychefassistant.utils.snackbar.snackBarModelPort
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -78,14 +76,11 @@ class GroceryManageFragment : Fragment() {
     }
 
     private fun setupListView() {
-        val binding = requireNotNull(binding)
         val adapter = GroceryManageListAdapter { viewModel.setViewEvent(it) }
-        binding.fragmentGroceryManageList.layoutManager =
-            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        binding.fragmentGroceryManageList.adapter = adapter
-        viewModel.groceries?.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
-        })
+        binding!!.fragmentGroceryManageList.adapter = adapter
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.groceries?.collect { adapter.submitList(it) }
+        }
     }
 
     private fun showInsertModal(grocery: Grocery?) {

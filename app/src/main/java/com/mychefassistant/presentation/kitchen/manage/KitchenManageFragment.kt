@@ -5,11 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.databinding.FragmentKitchenManageBinding
 import com.mychefassistant.presentation.main.MainActivity
@@ -18,6 +15,7 @@ import com.mychefassistant.utils.modalalert.ModalAlertModel
 import com.mychefassistant.utils.modalalert.modalAlertModelPort
 import com.mychefassistant.utils.snackbar.SnackBarModel
 import com.mychefassistant.utils.snackbar.snackBarModelPort
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -73,11 +71,10 @@ class KitchenManageFragment : Fragment() {
 
     private fun setupListView() {
         val adapter = KitchenManageListAdapter { viewModel.setViewEvent(it) }
-        val binding = requireNotNull(binding)
-        binding.fragmentKitchenManageList.layoutManager =
-            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        binding.fragmentKitchenManageList.adapter = adapter
-        viewModel.kitchens?.observe(viewLifecycleOwner, Observer { adapter.submitList(it) })
+        binding!!.fragmentKitchenManageList.adapter = adapter
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.kitchens?.collect { adapter.submitList(it) }
+        }
     }
 
     private fun routeToKitchen(kitchen: Kitchen) = findNavController().navigate(

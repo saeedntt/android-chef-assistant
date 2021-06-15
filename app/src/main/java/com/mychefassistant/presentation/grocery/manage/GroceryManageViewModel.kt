@@ -1,8 +1,6 @@
 package com.mychefassistant.presentation.grocery.manage
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.mychefassistant.R
 import com.mychefassistant.core.domain.Grocery
@@ -15,6 +13,7 @@ import com.mychefassistant.utils.commandhistory.Command
 import com.mychefassistant.utils.commandhistory.CommandHistory
 import com.mychefassistant.utils.modalalert.ModalAlertModel
 import com.mychefassistant.utils.snackbar.SnackBarModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -29,7 +28,7 @@ class GroceryManageViewModel(
 ) : ChefAssistantViewModel(commandHistory) {
     private var kitchenId = 0
     var kitchen: Kitchen? = null
-    var groceries: LiveData<List<Grocery>>? = null
+    var groceries: Flow<List<Grocery>>? = null
 
     private suspend fun loadKitchen() = getKitchenByIdUseCase(kitchenId).onSuccess {
         kitchen = it
@@ -37,7 +36,7 @@ class GroceryManageViewModel(
     }
 
     private suspend fun loadGroceries() = getGroceriesUseCase(kitchen!!).onSuccess {
-        groceries = it.asLiveData()
+        groceries = it
         setEvent(Event.Info(onGroceriesLoad))
     }
 
