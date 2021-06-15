@@ -3,6 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <Transition
+        app:constraintSetEnd="@+id/fragment_kitchen_manage_list_show_start_menu"
+        app:constraintSetStart="@+id/fragment_kitchen_manage_list_initial_state">
+        <OnSwipe
+            app:dragDirection="dragEnd"
+            tools:touchAnchorId="@+id/fragment_kitchen_manage_list_item"
+            tools:touchAnchorSide="start" />
+    </Transition>
+
+    <Transition
+        app:constraintSetEnd="@+id/fragment_kitchen_manage_list_show_end_menu"
+        app:constraintSetStart="@+id/fragment_kitchen_manage_list_initial_state">
+        <OnSwipe
+            app:dragDirection="dragStart"
+            tools:touchAnchorId="@+id/fragment_kitchen_manage_list_item"
+            tools:touchAnchorSide="end" />
+    </Transition>
+
     <ConstraintSet android:id="@+id/fragment_kitchen_manage_list_initial_state">
         <Constraint
             android:id="@+id/fragment_kitchen_manage_list_menu_start"
@@ -91,22 +109,4 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </ConstraintSet>
-
-    <Transition
-        app:constraintSetEnd="@+id/fragment_kitchen_manage_list_show_start_menu"
-        app:constraintSetStart="@+id/fragment_kitchen_manage_list_initial_state">
-        <OnSwipe
-            app:dragDirection="dragEnd"
-            tools:touchAnchorId="@+id/fragment_kitchen_manage_list_item"
-            tools:touchAnchorSide="start" />
-    </Transition>
-
-    <Transition
-        app:constraintSetEnd="@+id/fragment_kitchen_manage_list_show_end_menu"
-        app:constraintSetStart="@+id/fragment_kitchen_manage_list_initial_state">
-        <OnSwipe
-            app:dragDirection="dragStart"
-            tools:touchAnchorId="@+id/fragment_kitchen_manage_list_item"
-            tools:touchAnchorSide="end" />
-    </Transition>
 </MotionScene>

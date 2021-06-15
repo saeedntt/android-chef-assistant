@@ -11,9 +11,8 @@ import com.mychefassistant.core.domain.Grocery
 import com.mychefassistant.databinding.FragmentGroceryManageBinding
 import com.mychefassistant.presentation.grocery.insert.GroceryInsertFragment
 import com.mychefassistant.presentation.main.MainActivity
+import com.mychefassistant.presentation.main.modal.MainModalModel
 import com.mychefassistant.utils.Event
-import com.mychefassistant.utils.modalalert.ModalAlertModel
-import com.mychefassistant.utils.modalalert.modalAlertModelPort
 import com.mychefassistant.utils.snackbar.SnackBarModel
 import com.mychefassistant.utils.snackbar.snackBarModelPort
 import kotlinx.coroutines.flow.collect
@@ -52,8 +51,7 @@ class GroceryManageFragment : Fragment() {
                     GroceryManageViewModel.showInsertModal -> showInsertModal(it.data as? Grocery)
                     GroceryManageViewModel.closeInsertModal -> modal?.dismiss()
                     GroceryManageViewModel.modalEvent -> modal?.onParentEventListener(it.data as Event)
-                    GroceryManageViewModel.createModal ->
-                        modalAlertModelPort(requireContext(), it.data as ModalAlertModel)
+                    GroceryManageViewModel.createModal -> activity.viewModel.setModal(it.data as MainModalModel)
                     GroceryManageViewModel.createSnackBar ->
                         snackBarModelPort(view, it.data as SnackBarModel)
                 }
@@ -71,8 +69,8 @@ class GroceryManageFragment : Fragment() {
     }
 
     override fun onPause() {
-        super.onPause()
         viewLifecycleOwner.lifecycleScope.launch { viewModel.resetEvents() }
+        super.onPause()
     }
 
     private fun setupListView() {

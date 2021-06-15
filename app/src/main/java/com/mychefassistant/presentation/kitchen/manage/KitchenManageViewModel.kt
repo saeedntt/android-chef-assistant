@@ -11,7 +11,7 @@ import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.commandhistory.Command
 import com.mychefassistant.utils.commandhistory.CommandHistory
-import com.mychefassistant.utils.modalalert.ModalAlertModel
+import com.mychefassistant.presentation.main.modal.MainModalModel
 import com.mychefassistant.utils.snackbar.SnackBarModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -66,7 +66,7 @@ class KitchenManageViewModel(
     private suspend fun createRemoveWarningModal(kitchen: Kitchen) = setEvent(
         Event.Info(
             createModal,
-            ModalAlertModel(
+            MainModalModel(
                 application.getString(R.string.remove_warning),
                 application.getString(R.string.remove_kitchen_warning_message, kitchen.title)
             ) {

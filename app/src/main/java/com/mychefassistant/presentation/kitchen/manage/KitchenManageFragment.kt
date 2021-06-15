@@ -11,8 +11,7 @@ import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.databinding.FragmentKitchenManageBinding
 import com.mychefassistant.presentation.main.MainActivity
 import com.mychefassistant.utils.Event
-import com.mychefassistant.utils.modalalert.ModalAlertModel
-import com.mychefassistant.utils.modalalert.modalAlertModelPort
+import com.mychefassistant.presentation.main.modal.MainModalModel
 import com.mychefassistant.utils.snackbar.SnackBarModel
 import com.mychefassistant.utils.snackbar.snackBarModelPort
 import kotlinx.coroutines.flow.collect
@@ -46,8 +45,7 @@ class KitchenManageFragment : Fragment() {
                     KitchenManageViewModel.onKitchenLoad -> setupListView()
                     KitchenManageViewModel.routeToKitchen -> routeToKitchen(it.data as Kitchen)
                     KitchenManageViewModel.routeToKitchenSetting -> routeToKitchenSetting(it.data as? Kitchen)
-                    KitchenManageViewModel.createModal ->
-                        modalAlertModelPort(requireContext(), it.data as ModalAlertModel)
+                    KitchenManageViewModel.createModal -> activity.viewModel.setModal(it.data as MainModalModel)
                     KitchenManageViewModel.createSnackBar ->
                         snackBarModelPort(view, it.data as SnackBarModel)
                 }
@@ -65,8 +63,8 @@ class KitchenManageFragment : Fragment() {
     }
 
     override fun onPause() {
-        super.onPause()
         viewLifecycleOwner.lifecycleScope.launch { viewModel.resetEvents() }
+        super.onPause()
     }
 
     private fun setupListView() {

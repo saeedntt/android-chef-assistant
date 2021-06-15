@@ -24,4 +24,9 @@
     <dimen name="navigation_menu_layout_width">540dp</dimen>
     <dimen name="navigation_menu_layout_margin_start">-120dp</dimen>
     <dimen name="navigation_menu_layout_margin_top">60dp</dimen>
+
+    <dimen name="alert_hide_height">100dp</dimen>
+    <dimen name="alert_height">390dp</dimen>
+    <dimen name="alert_margin_start">-90dp</dimen>
+    <dimen name="alert_margin_top">-190dp</dimen>
 </resources>

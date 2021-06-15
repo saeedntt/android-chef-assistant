@@ -92,8 +92,8 @@ class KitchenInsertFragment : Fragment() {
     }
 
     override fun onPause() {
-        super.onPause()
         viewLifecycleOwner.lifecycleScope.launch { viewModel.resetEvents() }
+        super.onPause()
     }
 
     private fun routeToGrocery(kitchen: Kitchen) = findNavController().navigate(

@@ -1,8 +1,11 @@
 package com.mychefassistant.presentation.main
 
+import androidx.lifecycle.viewModelScope
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.commandhistory.CommandHistory
+import com.mychefassistant.presentation.main.modal.MainModalModel
+import kotlinx.coroutines.launch
 
 class MainActivityViewModel(commandHistory: CommandHistory) :
     ChefAssistantViewModel(commandHistory) {
@@ -12,18 +15,23 @@ class MainActivityViewModel(commandHistory: CommandHistory) :
         fabOnClickHandler = listener
     }
 
+    fun setModal(mainModalModel: MainModalModel) = viewModelScope.launch {
+        setEvent(Event.Info(showModal, mainModalModel))
+    }
+
     override suspend fun viewEventListener(event: Event) {
         when (event) {
             is Event.Info -> when (event.type) {
-                requestSetOpenMenu -> setEvent(Event.Info(setOpenMenu, event.data))
+                requestNavigationMenu -> setEvent(Event.Info(setOpenMenu, event.data))
                 fabClicked -> fabOnClickHandler()
             }
         }
     }
 
     companion object {
-        const val requestSetOpenMenu = 1
+        const val requestNavigationMenu = 1
         const val setOpenMenu = 2
         const val fabClicked = 3
+        const val showModal = 4
     }
 }

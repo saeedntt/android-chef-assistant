@@ -11,7 +11,7 @@ import com.mychefassistant.presentation.grocery.insert.GroceryInsertFragment
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.commandhistory.Command
 import com.mychefassistant.utils.commandhistory.CommandHistory
-import com.mychefassistant.utils.modalalert.ModalAlertModel
+import com.mychefassistant.presentation.main.modal.MainModalModel
 import com.mychefassistant.utils.snackbar.SnackBarModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -124,30 +124,31 @@ class GroceryManageViewModel(
 
     private suspend fun createUpdateGroceryValueEvent(grocery: Grocery, newGrocery: Grocery) =
         setEvent(
-            Event.Info(createModal, ModalAlertModel(
-                application.getString(R.string.grocery_exist),
-                application.getString(
-                    R.string.ask_update_grocery_value,
-                    grocery.title,
-                    kitchen?.title
-                )
-            ) {
-                history.run(Command(
-                    execute = {
-                        viewModelScope.launch {
-                            updateGrocery(
-                                Grocery(
-                                    grocery.id,
-                                    grocery.kitchen,
-                                    grocery.title,
-                                    newGrocery.value
-                                ), 1
-                            )
-                        }
-                    },
-                    unExecute = { viewModelScope.launch { updateGrocery(grocery, -1) } }
-                ))
-            })
+            Event.Info(createModal,
+                MainModalModel(
+                    application.getString(R.string.grocery_exist),
+                    application.getString(
+                        R.string.ask_update_grocery_value,
+                        grocery.title,
+                        kitchen?.title
+                    )
+                ) {
+                    history.run(Command(
+                        execute = {
+                            viewModelScope.launch {
+                                updateGrocery(
+                                    Grocery(
+                                        grocery.id,
+                                        grocery.kitchen,
+                                        grocery.title,
+                                        newGrocery.value
+                                    ), 1
+                                )
+                            }
+                        },
+                        unExecute = { viewModelScope.launch { updateGrocery(grocery, -1) } }
+                    ))
+                })
         )
 
     private fun requestAddGrocery(grocery: Grocery) = viewModelScope.launch body@{

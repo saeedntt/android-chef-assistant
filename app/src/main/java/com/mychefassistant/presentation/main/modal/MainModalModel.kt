@@ -1,6 +1,6 @@
-package com.mychefassistant.utils.modalalert
+package com.mychefassistant.presentation.main.modal
 
-data class ModalAlertModel (
+data class MainModalModel (
     val title: String,
     val message: String? = null,
     val onNegative: (() -> Unit)? = null,

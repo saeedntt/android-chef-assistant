@@ -1,11 +1,17 @@
 package com.mychefassistant.presentation.main
 
 import android.os.Bundle
-import androidx.activity.addCallback
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.mychefassistant.R
 import com.mychefassistant.databinding.ActivityMainBinding
+import com.mychefassistant.presentation.main.modal.MainModal
+import com.mychefassistant.presentation.main.navigation.menu.MainNavigationMenu
+import com.mychefassistant.presentation.main.navigation.menu.MainNavigationMenuAdapter
 import com.mychefassistant.utils.Event
+import com.mychefassistant.presentation.main.modal.MainModalModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -13,6 +19,9 @@ class MainActivity : AppCompatActivity() {
     val viewModel: MainActivityViewModel by viewModel()
     private var binding: ActivityMainBinding? = null
     private var menuOpened = false
+    private var modalOpened = false
+    private val isRTL by lazy { View.LAYOUT_DIRECTION_RTL == resources.configuration.layoutDirection }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -22,53 +31,60 @@ class MainActivity : AppCompatActivity() {
 
     private fun initView() {
         val binding = requireNotNull(binding)
+        val navigationMenu = MainNavigationMenu(onBackPressedDispatcher, binding)
+        val mainModal = MainModal(onBackPressedDispatcher, binding)
 
         binding.activityMainNavigationFabButton.setOnClickListener {
             viewModel.setViewEvent(Event.Info(MainActivityViewModel.fabClicked))
         }
 
         binding.activityMainNavigationStartButton.setOnClickListener {
-            viewModel.setViewEvent(Event.Info(MainActivityViewModel.requestSetOpenMenu, true))
+            viewModel.setViewEvent(Event.Info(MainActivityViewModel.requestNavigationMenu, true))
         }
 
-        binding.activityMainNavigationMenuBackground.setOnClickListener {
-            viewModel.setViewEvent(Event.Info(MainActivityViewModel.requestSetOpenMenu, false))
+        binding.activityMainNavigationEndButton.setOnClickListener {
+            openAlert()
         }
 
-        binding.activityMainNavigationMenuClose.setOnClickListener {
-            viewModel.setViewEvent(Event.Info(MainActivityViewModel.requestSetOpenMenu, false))
+
+        val menus = arrayOf(
+            "Settings",
+            "Share App",
+            "Rate This App"
+        )
+
+        binding.activityMainNavigationMenuList.adapter = MainNavigationMenuAdapter(menus) {
+            viewModel.setViewEvent(Event.Info(MainActivityViewModel.requestNavigationMenu, false))
         }
 
-        binding.activityMainNavigationMenuContent.setOnClickListener { }
+        if (isRTL) {
+            binding.activityMainNavigationMenuLayout.getConstraintSet(R.id.activity_main_navigation_menu_show)
+                .setTranslationX(
+                    binding.activityMainNavigationMenuContent.id,
+                    -resources.getDimension(R.dimen.navigation_menu_layout_margin_start)
+                )
+        }
 
         viewModel.onInfo {
             when (it.type) {
-                MainActivityViewModel.setOpenMenu -> openMenu(it.data as Boolean)
+                MainActivityViewModel.setOpenMenu -> navigationMenu.open(it.data as Boolean)
+                MainActivityViewModel.showModal -> mainModal.create(it.data as MainModalModel)
             }
         }
+
         lifecycleScope.launchWhenStarted { viewModel.eventListener() }
     }
 
-    private fun openMenu(request: Boolean) {
-        val binding = requireNotNull(binding)
-        if (request) {
-            binding.activityMainNavigationMenuLayout.transitionToEnd()
-            onBackPressedDispatcher.addCallback(this) {
-                val last = menuOpened
-                openMenu(false)
-                isEnabled = false
-                if (!last) {
-                    onBackPressed()
-                }
-            }
-        } else {
-            binding.activityMainNavigationMenuLayout.transitionToStart()
+    private fun openAlert() {
+        binding!!.activityMainAlertLayout.transitionToEnd()
+        lifecycleScope.launchWhenStarted {
+            delay(5000)
+            binding!!.activityMainAlertLayout.transitionToStart()
         }
-        menuOpened = request
     }
 
     override fun onPause() {
-        super.onPause()
         lifecycleScope.launch { viewModel.resetEvents() }
+        super.onPause()
     }
 }

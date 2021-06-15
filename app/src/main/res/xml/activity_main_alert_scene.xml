@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        app:constraintSetEnd="@+id/activity_main_alert_show"
+        app:constraintSetStart="@id/activity_main_alert_hide"
+        app:duration="500">
+        <KeyFrameSet />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/activity_main_alert_hide">
+        <Constraint
+            android:id="@+id/activity_main_alert_content"
+            android:layout_width="@dimen/alert_hide_height"
+            android:layout_height="0dp"
+            android:translationY="@dimen/alert_margin_top"
+            android:translationX="@dimen/alert_margin_start"
+            android:visibility="invisible"
+            app:layout_constraintDimensionRatio="1, 1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/activity_main_alert_show">
+        <Constraint
+            android:id="@+id/activity_main_alert_content"
+            android:layout_width="@dimen/alert_height"
+            android:layout_height="0dp"
+            android:translationY="@dimen/alert_margin_top"
+            android:translationX="@dimen/alert_margin_start"
+            app:layout_constraintDimensionRatio="1, 1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </ConstraintSet>
+</MotionScene>
