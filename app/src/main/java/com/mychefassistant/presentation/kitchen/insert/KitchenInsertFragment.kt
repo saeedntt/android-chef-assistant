@@ -11,10 +11,10 @@ import androidx.navigation.fragment.navArgs
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.databinding.FragmentKitchenInsertBinding
 import com.mychefassistant.presentation.grocery.manage.GroceryManageFragmentArgs
+import com.mychefassistant.presentation.main.MainActivity
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.iconpicker.IconPicker
-import com.mychefassistant.utils.snackbar.SnackBarModel
-import com.mychefassistant.utils.snackbar.snackBarModelPort
+import com.mychefassistant.presentation.main.alert.MainAlertModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -36,6 +36,7 @@ class KitchenInsertFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val activity = activity as MainActivity
         val binding = requireNotNull(binding)
 
         iconPicker = IconPicker(childFragmentManager, KitchenInsertIcons.list) {
@@ -63,15 +64,14 @@ class KitchenInsertFragment : Fragment() {
                 when (it.type) {
                     KitchenInsertViewModel.setKitchen -> binding.kitchen = it.data as Kitchen
                     KitchenInsertViewModel.routeToGrocery -> routeToGrocery(it.data as Kitchen)
-                    KitchenInsertViewModel.backFragment -> activity?.onBackPressed()
+                    KitchenInsertViewModel.backFragment -> activity.onBackPressed()
                 }
             }
             .onError {
                 when (it.type) {
                     KitchenInsertViewModel.setTitleInputError ->
                         binding.fragmentKitchenInsertTitle.error = it.exception.message
-                    KitchenInsertViewModel.createSnackBar ->
-                        snackBarModelPort(view, it.data as SnackBarModel)
+                    KitchenInsertViewModel.createAlert -> activity.viewModel.setAlert(it.data as MainAlertModel)
                 }
             }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted { viewModel.start(kitchenId) }

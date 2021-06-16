@@ -8,11 +8,11 @@ import com.mychefassistant.core.interactors.AddKitchenUseCase
 import com.mychefassistant.core.interactors.GetKitchensUseCase
 import com.mychefassistant.core.interactors.RemoveKitchenUseCase
 import com.mychefassistant.framework.ChefAssistantViewModel
+import com.mychefassistant.presentation.main.alert.MainAlertModel
+import com.mychefassistant.presentation.main.modal.MainModalModel
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.commandhistory.Command
 import com.mychefassistant.utils.commandhistory.CommandHistory
-import com.mychefassistant.presentation.main.modal.MainModalModel
-import com.mychefassistant.utils.snackbar.SnackBarModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -34,8 +34,8 @@ class KitchenManageViewModel(
         .onSuccess {
             setEvent(
                 Event.Info(
-                    createSnackBar,
-                    SnackBarModel(
+                    createAlert,
+                    MainAlertModel(
                         application.getString(R.string.kitchen_success_removed, item.title),
                         application.getString(R.string.undo)
                     ) { history.undo() }
@@ -54,8 +54,8 @@ class KitchenManageViewModel(
     private suspend fun createKitchen(item: Kitchen) = addKitchenUseCase(item).onSuccess {
         setEvent(
             Event.Info(
-                createSnackBar,
-                SnackBarModel(
+                createAlert,
+                MainAlertModel(
                     application.getString(R.string.kitchen_success_create, item.title),
                     application.getString(R.string.redo)
                 ) { history.redo() }
@@ -94,7 +94,7 @@ class KitchenManageViewModel(
     companion object {
         const val onKitchenLoad = 1
         const val createModal = 2
-        const val createSnackBar = 3
+        const val createAlert = 3
         const val createErrorAlert = 4
         const val kitchenRemoveRequest = 5
         const val kitchenRouteRequest = 6

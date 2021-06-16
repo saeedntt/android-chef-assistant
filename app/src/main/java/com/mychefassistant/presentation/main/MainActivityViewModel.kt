@@ -2,9 +2,10 @@ package com.mychefassistant.presentation.main
 
 import androidx.lifecycle.viewModelScope
 import com.mychefassistant.framework.ChefAssistantViewModel
+import com.mychefassistant.presentation.main.modal.MainModalModel
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.commandhistory.CommandHistory
-import com.mychefassistant.presentation.main.modal.MainModalModel
+import com.mychefassistant.presentation.main.alert.MainAlertModel
 import kotlinx.coroutines.launch
 
 class MainActivityViewModel(commandHistory: CommandHistory) :
@@ -17,6 +18,10 @@ class MainActivityViewModel(commandHistory: CommandHistory) :
 
     fun setModal(mainModalModel: MainModalModel) = viewModelScope.launch {
         setEvent(Event.Info(showModal, mainModalModel))
+    }
+
+    fun setAlert(mainAlertModel: MainAlertModel) = viewModelScope.launch {
+        setEvent(Event.Info(showAlert, mainAlertModel))
     }
 
     override suspend fun viewEventListener(event: Event) {
@@ -33,5 +38,6 @@ class MainActivityViewModel(commandHistory: CommandHistory) :
         const val setOpenMenu = 2
         const val fabClicked = 3
         const val showModal = 4
+        const val showAlert = 5
     }
 }

@@ -8,6 +8,10 @@
         <variable
             name="modalModel"
             type="com.mychefassistant.presentation.main.modal.MainModalModel" />
+
+        <variable
+            name="alertModel"
+            type="com.mychefassistant.presentation.main.alert.MainAlertModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,7 +74,7 @@
                     android:layout_marginTop="36dp"
                     android:gravity="center_vertical"
                     android:singleLine="true"
-                    android:text="Test"
+                    android:text="Message"
                     android:textColor="@color/background"
                     android:textSize="28sp"
                     android:textStyle="bold"
@@ -81,16 +85,31 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="30dp"
+                    android:layout_marginEnd="60dp"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="8dp"
-                    android:text="A user interface element that displays text to the user!"
+                    android:text="@{alertModel.title, default=alert}"
                     android:textColor="@color/background"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="@id/activity_main_alert_content"
                     app:layout_constraintStart_toStartOf="@id/activity_main_alert_title"
                     app:layout_constraintTop_toBottomOf="@id/activity_main_alert_title" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/activity_main_alert_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_navigation_fab"
+                android:clickable="true"
+                android:elevation="10dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="16dp"
+                android:singleLine="true"
+                android:text="@{alertModel.btnText, default=Button}"
+                android:textColor="@color/background"
+                android:textStyle="bold" />
         </androidx.constraintlayout.motion.widget.MotionLayout>
 
         <fragment
@@ -311,9 +330,11 @@
                     android:layout_height="36dp"
                     android:background="@drawable/shape_ripple_primary"
                     android:backgroundTint="@color/background"
+                    android:elevation="5dp"
                     android:gravity="center"
+                    android:outlineProvider="bounds"
                     android:paddingHorizontal="20dp"
-                    android:text="Cancel"
+                    android:text="@string/no"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/activity_main_modal_accept"
@@ -327,15 +348,18 @@
                     android:layout_height="36dp"
                     android:background="@drawable/shape_ripple_primary"
                     android:backgroundTint="@color/background"
+                    android:elevation="5dp"
                     android:gravity="center"
+                    android:outlineProvider="bounds"
                     android:paddingHorizontal="20dp"
-                    android:text="Accept"
+                    android:text="@string/yes"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/activity_main_modal_cancel"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.4" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.motion.widget.MotionLayout>

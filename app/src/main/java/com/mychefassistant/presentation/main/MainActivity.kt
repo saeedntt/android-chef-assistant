@@ -6,20 +6,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.mychefassistant.R
 import com.mychefassistant.databinding.ActivityMainBinding
+import com.mychefassistant.presentation.main.alert.MainAlert
+import com.mychefassistant.presentation.main.alert.MainAlertModel
 import com.mychefassistant.presentation.main.modal.MainModal
+import com.mychefassistant.presentation.main.modal.MainModalModel
 import com.mychefassistant.presentation.main.navigation.menu.MainNavigationMenu
 import com.mychefassistant.presentation.main.navigation.menu.MainNavigationMenuAdapter
 import com.mychefassistant.utils.Event
-import com.mychefassistant.presentation.main.modal.MainModalModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     val viewModel: MainActivityViewModel by viewModel()
     private var binding: ActivityMainBinding? = null
-    private var menuOpened = false
-    private var modalOpened = false
     private val isRTL by lazy { View.LAYOUT_DIRECTION_RTL == resources.configuration.layoutDirection }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         val binding = requireNotNull(binding)
         val navigationMenu = MainNavigationMenu(onBackPressedDispatcher, binding)
         val mainModal = MainModal(onBackPressedDispatcher, binding)
+        val mainAlert = MainAlert(lifecycleScope, binding)
 
         binding.activityMainNavigationFabButton.setOnClickListener {
             viewModel.setViewEvent(Event.Info(MainActivityViewModel.fabClicked))
@@ -43,9 +43,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.activityMainNavigationEndButton.setOnClickListener {
-            openAlert()
+            viewModel.setAlert(MainAlertModel("test to test", "test") {})
         }
-
 
         val menus = arrayOf(
             "Settings",
@@ -57,30 +56,15 @@ class MainActivity : AppCompatActivity() {
             viewModel.setViewEvent(Event.Info(MainActivityViewModel.requestNavigationMenu, false))
         }
 
-        if (isRTL) {
-            binding.activityMainNavigationMenuLayout.getConstraintSet(R.id.activity_main_navigation_menu_show)
-                .setTranslationX(
-                    binding.activityMainNavigationMenuContent.id,
-                    -resources.getDimension(R.dimen.navigation_menu_layout_margin_start)
-                )
-        }
-
         viewModel.onInfo {
             when (it.type) {
                 MainActivityViewModel.setOpenMenu -> navigationMenu.open(it.data as Boolean)
                 MainActivityViewModel.showModal -> mainModal.create(it.data as MainModalModel)
+                MainActivityViewModel.showAlert -> mainAlert.create(it.data as MainAlertModel)
             }
         }
 
         lifecycleScope.launchWhenStarted { viewModel.eventListener() }
-    }
-
-    private fun openAlert() {
-        binding!!.activityMainAlertLayout.transitionToEnd()
-        lifecycleScope.launchWhenStarted {
-            delay(5000)
-            binding!!.activityMainAlertLayout.transitionToStart()
-        }
     }
 
     override fun onPause() {

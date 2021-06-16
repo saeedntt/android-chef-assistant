@@ -11,10 +11,9 @@ import com.mychefassistant.core.domain.Grocery
 import com.mychefassistant.databinding.FragmentGroceryManageBinding
 import com.mychefassistant.presentation.grocery.insert.GroceryInsertFragment
 import com.mychefassistant.presentation.main.MainActivity
+import com.mychefassistant.presentation.main.alert.MainAlertModel
 import com.mychefassistant.presentation.main.modal.MainModalModel
 import com.mychefassistant.utils.Event
-import com.mychefassistant.utils.snackbar.SnackBarModel
-import com.mychefassistant.utils.snackbar.snackBarModelPort
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -52,14 +51,13 @@ class GroceryManageFragment : Fragment() {
                     GroceryManageViewModel.closeInsertModal -> modal?.dismiss()
                     GroceryManageViewModel.modalEvent -> modal?.onParentEventListener(it.data as Event)
                     GroceryManageViewModel.createModal -> activity.viewModel.setModal(it.data as MainModalModel)
-                    GroceryManageViewModel.createSnackBar ->
-                        snackBarModelPort(view, it.data as SnackBarModel)
+                    GroceryManageViewModel.createAlert -> activity.viewModel.setAlert(it.data as MainAlertModel)
                 }
             }
             .onError {
                 when (it.type) {
                     GroceryManageViewModel.createErrorAlert -> it.exception.message?.let { x ->
-                        snackBarModelPort(view, SnackBarModel(x))
+                        activity.viewModel.setAlert(MainAlertModel(x))
                     }
                 }
             }

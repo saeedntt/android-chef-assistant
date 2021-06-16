@@ -16,8 +16,6 @@ class MainModal(
 
     fun create(mainModalModel: MainModalModel) {
         binding.modalModel = mainModalModel
-        binding.activityMainModalLayout.transitionToEnd()
-        _open = true
         binding.activityMainModalCancel.setOnClickListener {
             if (mainModalModel.onNegative == null) hide()
             else mainModalModel.onNegative.invoke()
@@ -26,7 +24,13 @@ class MainModal(
             mainModalModel.onPositive()
             hide()
         }
+        show()
         createBackPressCallBack()
+    }
+
+    private fun show() {
+        binding.activityMainModalLayout.transitionToEnd()
+        _open = true
     }
 
     private fun hide() {

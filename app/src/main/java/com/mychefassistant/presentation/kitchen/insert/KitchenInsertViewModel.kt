@@ -12,7 +12,7 @@ import com.mychefassistant.core.utils.KitchenIcons
 import com.mychefassistant.framework.ChefAssistantViewModel
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.commandhistory.CommandHistory
-import com.mychefassistant.utils.snackbar.SnackBarModel
+import com.mychefassistant.presentation.main.alert.MainAlertModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -44,9 +44,9 @@ class KitchenInsertViewModel(
                 ?.let { item ->
                     setEvent(
                         Event.Error(
-                            createSnackBar,
+                            createAlert,
                             Exception(application.getString(R.string.kitchen_exist)),
-                            SnackBarModel(
+                            MainAlertModel(
                                 application.getString(R.string.kitchen_exist),
                                 application.getString(R.string.show_kitchen)
                             ) {
@@ -98,7 +98,7 @@ class KitchenInsertViewModel(
 
     companion object {
         const val setTitleInputError = 1
-        const val createSnackBar = 2
+        const val createAlert = 2
         const val routeToGrocery = 3
         const val backFragment = 4
         const val requestSaveKitchen = 5

@@ -9,18 +9,30 @@
         <KeyFrameSet />
     </Transition>
 
+    <Transition
+        app:constraintSetEnd="@+id/activity_main_alert_show_with_button"
+        app:constraintSetStart="@id/activity_main_alert_hide"
+        app:duration="500">
+        <KeyFrameSet />
+    </Transition>
+
     <ConstraintSet android:id="@+id/activity_main_alert_hide">
         <Constraint
             android:id="@+id/activity_main_alert_content"
             android:layout_width="@dimen/alert_hide_height"
             android:layout_height="0dp"
-            android:translationY="@dimen/alert_margin_top"
             android:translationX="@dimen/alert_margin_start"
+            android:translationY="@dimen/alert_margin_top"
             android:visibility="invisible"
             app:layout_constraintDimensionRatio="1, 1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Constraint
+            android:id="@+id/activity_main_alert_button"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/activity_main_alert_show">
@@ -28,10 +40,41 @@
             android:id="@+id/activity_main_alert_content"
             android:layout_width="@dimen/alert_height"
             android:layout_height="0dp"
-            android:translationY="@dimen/alert_margin_top"
             android:translationX="@dimen/alert_margin_start"
+            android:translationY="@dimen/alert_margin_top"
             app:layout_constraintDimensionRatio="1, 1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
+            android:id="@+id/activity_main_alert_button"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/activity_main_alert_show_with_button">
+        <Constraint
+            android:id="@+id/activity_main_alert_content"
+            android:layout_width="@dimen/alert_height"
+            android:layout_height="0dp"
+            android:translationX="@dimen/alert_margin_start"
+            android:translationY="@dimen/alert_margin_top"
+            app:layout_constraintDimensionRatio="1, 1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
+            android:id="@+id/activity_main_alert_button"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1, 1"
+            app:flow_firstHorizontalBias="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/activity_main_alert_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.80"
+            app:layout_constraintVertical_bias="0.05" />
     </ConstraintSet>
 </MotionScene>

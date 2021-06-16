@@ -1,5 +1,7 @@
 package com.mychefassistant.core.utils
 
+import kotlin.jvm.Throws
+
 abstract class BaseSuspendUseCase<in Request, Response> {
     suspend operator fun invoke(parameter: Request): Result<Response> = try {
         execute(parameter)

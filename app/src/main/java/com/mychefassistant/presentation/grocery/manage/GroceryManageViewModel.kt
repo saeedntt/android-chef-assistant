@@ -12,7 +12,7 @@ import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.commandhistory.Command
 import com.mychefassistant.utils.commandhistory.CommandHistory
 import com.mychefassistant.presentation.main.modal.MainModalModel
-import com.mychefassistant.utils.snackbar.SnackBarModel
+import com.mychefassistant.presentation.main.alert.MainAlertModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -66,8 +66,8 @@ class GroceryManageViewModel(
         updateGroceryUseCase(kitchen!! to grocery).onSuccess {
             setEvent(
                 Event.Info(
-                    createSnackBar,
-                    SnackBarModel(
+                    createAlert,
+                    MainAlertModel(
                         application.getString(R.string.grocery_success_update, grocery.title),
                         application.getString(if (historyAction > 0) R.string.undo else R.string.redo)
                     ) { if (historyAction > 0) history.undo() else history.redo() }
@@ -91,8 +91,8 @@ class GroceryManageViewModel(
         addGroceryUseCase(kitchen!! to grocery).onSuccess {
             setEvent(
                 Event.Info(
-                    createSnackBar,
-                    SnackBarModel(
+                    createAlert,
+                    MainAlertModel(
                         application.getString(
                             R.string.grocery_success_create,
                             grocery.title
@@ -109,8 +109,8 @@ class GroceryManageViewModel(
             removeGroceryUseCase(kitchen!! to grocery).onSuccess {
                 setEvent(
                     Event.Info(
-                        createSnackBar,
-                        SnackBarModel(
+                        createAlert,
+                        MainAlertModel(
                             application.getString(
                                 R.string.grocery_success_remove,
                                 grocery.title
@@ -203,7 +203,7 @@ class GroceryManageViewModel(
         const val modalEvent = 5
         const val setTitleInputError = 6
         const val createModal = 7
-        const val createSnackBar = 8
+        const val createAlert = 8
         const val createErrorAlert = 9
         const val onGroceriesLoad = 10
         const val groceryUpdateRequest = 11

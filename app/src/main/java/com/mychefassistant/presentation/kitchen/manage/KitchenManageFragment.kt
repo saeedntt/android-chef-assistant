@@ -10,10 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.mychefassistant.core.domain.Kitchen
 import com.mychefassistant.databinding.FragmentKitchenManageBinding
 import com.mychefassistant.presentation.main.MainActivity
-import com.mychefassistant.utils.Event
+import com.mychefassistant.presentation.main.alert.MainAlertModel
 import com.mychefassistant.presentation.main.modal.MainModalModel
-import com.mychefassistant.utils.snackbar.SnackBarModel
-import com.mychefassistant.utils.snackbar.snackBarModelPort
+import com.mychefassistant.utils.Event
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -46,14 +45,13 @@ class KitchenManageFragment : Fragment() {
                     KitchenManageViewModel.routeToKitchen -> routeToKitchen(it.data as Kitchen)
                     KitchenManageViewModel.routeToKitchenSetting -> routeToKitchenSetting(it.data as? Kitchen)
                     KitchenManageViewModel.createModal -> activity.viewModel.setModal(it.data as MainModalModel)
-                    KitchenManageViewModel.createSnackBar ->
-                        snackBarModelPort(view, it.data as SnackBarModel)
+                    KitchenManageViewModel.createAlert -> activity.viewModel.setAlert(it.data as MainAlertModel)
                 }
             }
             .onError {
                 when (it.type) {
                     KitchenManageViewModel.createErrorAlert -> it.exception.message?.let { x ->
-                        snackBarModelPort(view, SnackBarModel(x))
+                        activity.viewModel.setAlert(MainAlertModel(x))
                     }
                 }
             }
