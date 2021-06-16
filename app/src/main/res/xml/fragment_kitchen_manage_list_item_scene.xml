@@ -4,32 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <Transition
-        app:constraintSetEnd="@+id/fragment_kitchen_manage_list_show_start_menu"
-        app:constraintSetStart="@+id/fragment_kitchen_manage_list_initial_state">
+        app:constraintSetEnd="@id/fragment_kitchen_manage_list_show_start_menu"
+        app:constraintSetStart="@id/fragment_kitchen_manage_list_initial_state">
         <OnSwipe
             app:dragDirection="dragEnd"
-            tools:touchAnchorId="@+id/fragment_kitchen_manage_list_item"
+            tools:touchAnchorId="@id/fragment_kitchen_manage_list_item"
             tools:touchAnchorSide="start" />
     </Transition>
 
     <Transition
-        app:constraintSetEnd="@+id/fragment_kitchen_manage_list_show_end_menu"
-        app:constraintSetStart="@+id/fragment_kitchen_manage_list_initial_state">
+        app:constraintSetEnd="@id/fragment_kitchen_manage_list_show_end_menu"
+        app:constraintSetStart="@id/fragment_kitchen_manage_list_initial_state">
         <OnSwipe
             app:dragDirection="dragStart"
-            tools:touchAnchorId="@+id/fragment_kitchen_manage_list_item"
+            tools:touchAnchorId="@id/fragment_kitchen_manage_list_item"
             tools:touchAnchorSide="end" />
     </Transition>
 
     <ConstraintSet android:id="@+id/fragment_kitchen_manage_list_initial_state">
         <Constraint
-            android:id="@+id/fragment_kitchen_manage_list_menu_start"
+            android:id="@id/fragment_kitchen_manage_list_menu_start"
             android:layout_width="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <Constraint
-            android:id="@+id/fragment_kitchen_manage_list_item"
+            android:id="@id/fragment_kitchen_manage_list_item"
             android:layout_width="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +43,7 @@
                 app:customColorValue="@color/primaryTextColor" />
         </Constraint>
         <Constraint
-            android:id="@+id/fragment_kitchen_manage_list_menu_end"
+            android:id="@id/fragment_kitchen_manage_list_menu_end"
             android:layout_width="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="parent"
@@ -52,13 +52,13 @@
 
     <ConstraintSet android:id="@+id/fragment_kitchen_manage_list_show_start_menu">
         <Constraint
-            android:id="@+id/fragment_kitchen_manage_list_menu_start"
+            android:id="@id/fragment_kitchen_manage_list_menu_start"
             android:layout_width="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <Constraint
-            android:id="@+id/fragment_kitchen_manage_list_item"
+            android:id="@id/fragment_kitchen_manage_list_item"
             android:layout_width="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +72,7 @@
                 app:customColorValue="#eeeeee" />
         </Constraint>
         <Constraint
-            android:id="@+id/fragment_kitchen_manage_list_menu_end"
+            android:id="@id/fragment_kitchen_manage_list_menu_end"
             android:layout_width="0dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -82,14 +82,14 @@
 
     <ConstraintSet android:id="@+id/fragment_kitchen_manage_list_show_end_menu">
         <Constraint
-            android:id="@+id/fragment_kitchen_manage_list_menu_start"
+            android:id="@id/fragment_kitchen_manage_list_menu_start"
             android:layout_width="0dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <Constraint
-            android:id="@+id/fragment_kitchen_manage_list_item"
+            android:id="@id/fragment_kitchen_manage_list_item"
             android:layout_width="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +103,7 @@
                 app:customColorValue="#eeeeee" />
         </Constraint>
         <Constraint
-            android:id="@+id/fragment_kitchen_manage_list_menu_end"
+            android:id="@id/fragment_kitchen_manage_list_menu_end"
             android:layout_width="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

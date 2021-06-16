@@ -36,8 +36,7 @@
                 android:layout_height="0dp"
                 android:background="@drawable/shape_circle_gradient"
                 android:elevation="10dp"
-                android:onClick="@{() -> null}"
-                app:layout_constraintDimensionRatio="1, 1">
+                android:onClick="@{() -> null}">
 
                 <View
                     android:id="@+id/activity_main_alert_first_circle"
@@ -101,9 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_navigation_fab"
-                android:clickable="true"
                 android:elevation="10dp"
-                android:focusable="true"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="16dp"
                 android:singleLine="true"
@@ -259,7 +256,6 @@
                 android:elevation="10dp"
                 android:padding="@dimen/navigation_button_icon_button_padding"
                 android:src="@drawable/ic_round_add_24"
-                app:layout_constraintDimensionRatio="1, 1"
                 app:tint="@color/background" />
 
         </androidx.constraintlayout.motion.widget.MotionLayout>
@@ -277,11 +273,7 @@
                 android:id="@+id/activity_main_modal_background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/modalBackground"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:background="@color/modalBackground" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/activity_main_modal_content"
@@ -289,12 +281,33 @@
                 android:layout_height="0dp"
                 android:background="@drawable/shape_circle_gradient"
                 android:elevation="10dp"
-                android:onClick="@{() -> null}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1,1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent">
+                android:onClick="@{() -> null}">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/shape_circle_gradient"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1, 1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.35"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.20"
+                    app:layout_constraintWidth_percent="0.24" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/shape_circle_gradient"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1, 1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.75"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.10"
+                    app:layout_constraintWidth_percent="0.14" />
 
                 <TextView
                     android:id="@+id/activity_main_modal_title"
@@ -359,8 +372,6 @@
                     app:layout_constraintStart_toEndOf="@id/activity_main_modal_cancel"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.4" />
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.motion.widget.MotionLayout>
 

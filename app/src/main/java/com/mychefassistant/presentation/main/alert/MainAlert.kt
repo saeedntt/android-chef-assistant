@@ -30,8 +30,8 @@ class MainAlert(
     fun create(mainAlertModel: MainAlertModel) = lifecycleScope.launchWhenStarted {
         hide()
         val hasAction = mainAlertModel.btnAction != null
-        binding.alertModel = mainAlertModel
         if (binding.activityMainAlertLayout.progress != 0.0F) delay(500)
+        binding.alertModel = mainAlertModel
         binding.activityMainAlertLayout.transitionToState(if (hasAction) R.id.activity_main_alert_show_with_button else R.id.activity_main_alert_show)
         binding.activityMainAlertButton.setOnClickListener {
             hide()
