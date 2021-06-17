@@ -39,6 +39,8 @@ class KitchenInsertFragment : Fragment() {
         val activity = activity as MainActivity
         val binding = requireNotNull(binding)
 
+        activity.viewModel.setFullView()
+
         iconPicker = IconPicker(childFragmentManager, KitchenInsertIcons.list) {
             val lastKitchen = getLastKitchen()
             viewModel.setViewEvent(

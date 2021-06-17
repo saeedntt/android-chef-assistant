@@ -34,6 +34,8 @@ class KitchenManageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val activity = activity as MainActivity
 
+        activity.viewModel.setNormalView()
+
         activity.viewModel.setFabOnClickListener {
             viewModel.setViewEvent(Event.Info(KitchenManageViewModel.kitchenSettingRequest))
         }

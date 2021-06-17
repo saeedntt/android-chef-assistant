@@ -62,6 +62,8 @@ class MainActivity : AppCompatActivity() {
                 MainActivityViewModel.setOpenMenu -> navigationMenu.open(it.data as Boolean)
                 MainActivityViewModel.showModal -> mainModal.create(it.data as MainModalModel)
                 MainActivityViewModel.showAlert -> mainAlert.create(it.data as MainAlertModel)
+                MainActivityViewModel.setNormalView -> binding.activityMainLayout.transitionToStart()
+                MainActivityViewModel.setFullView -> binding.activityMainLayout.transitionToEnd()
             }
         }
 

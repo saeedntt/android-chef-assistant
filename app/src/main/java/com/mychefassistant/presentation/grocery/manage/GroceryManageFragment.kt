@@ -38,6 +38,8 @@ class GroceryManageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val activity = activity as MainActivity
 
+        activity.viewModel.setNormalView()
+
         activity.viewModel.setFabOnClickListener {
             viewModel.setViewEvent(Event.Info(GroceryManageViewModel.requestShowInsertModal))
         }
