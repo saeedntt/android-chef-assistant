@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="modalModel"
+            type="com.mychefassistant.presentation.main.modal.MainModalModel" />
+    </data>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/activity_main_modal_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/activity_main_modal_scene">
+
+        <View
+            android:id="@+id/activity_main_modal_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/modalBackground" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_main_modal_content"
+            android:layout_width="550dp"
+            android:layout_height="0dp"
+            android:background="@drawable/shape_circle_gradient"
+            android:elevation="10dp"
+            android:onClick="@{() -> null}">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/shape_circle_gradient"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1, 1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.35"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.20"
+                app:layout_constraintWidth_percent="0.24" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/shape_circle_gradient"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1, 1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.75"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.10"
+                app:layout_constraintWidth_percent="0.14" />
+
+            <TextView
+                android:id="@+id/activity_main_modal_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@{modalModel.title, default=title}"
+                android:textColor="@color/background"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/activity_main_modal_message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:lineSpacingExtra="8dp"
+                android:text="@{modalModel.message, default=title}"
+                android:textColor="@color/background"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_main_modal_title"
+                app:layout_constraintWidth_percent="0.55" />
+
+            <TextView
+                android:id="@+id/activity_main_modal_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:background="@drawable/shape_ripple_primary"
+                android:backgroundTint="@color/background"
+                android:elevation="5dp"
+                android:gravity="center"
+                android:outlineProvider="bounds"
+                android:paddingHorizontal="20dp"
+                android:text="@string/no"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/activity_main_modal_accept"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.4" />
+
+            <TextView
+                android:id="@+id/activity_main_modal_accept"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:background="@drawable/shape_ripple_primary"
+                android:backgroundTint="@color/background"
+                android:elevation="5dp"
+                android:gravity="center"
+                android:outlineProvider="bounds"
+                android:paddingHorizontal="20dp"
+                android:text="@string/yes"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/activity_main_modal_cancel"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.4" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>

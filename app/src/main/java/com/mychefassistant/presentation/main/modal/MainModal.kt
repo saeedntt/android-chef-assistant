@@ -2,11 +2,11 @@ package com.mychefassistant.presentation.main.modal
 
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.addCallback
-import com.mychefassistant.databinding.ActivityMainBinding
+import com.mychefassistant.databinding.ActivityMainModalBinding
 
 class MainModal(
     private val onBackPressedDispatcher: OnBackPressedDispatcher,
-    private val binding: ActivityMainBinding
+    val binding: ActivityMainModalBinding
 ) {
     private var _open = false
 

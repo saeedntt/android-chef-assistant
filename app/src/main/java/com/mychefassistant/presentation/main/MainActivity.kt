@@ -1,10 +1,8 @@
 package com.mychefassistant.presentation.main
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.mychefassistant.R
 import com.mychefassistant.databinding.ActivityMainBinding
 import com.mychefassistant.presentation.main.alert.MainAlert
 import com.mychefassistant.presentation.main.alert.MainAlertModel
@@ -19,7 +17,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
     val viewModel: MainActivityViewModel by viewModel()
     private var binding: ActivityMainBinding? = null
-    private val isRTL by lazy { View.LAYOUT_DIRECTION_RTL == resources.configuration.layoutDirection }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,19 +27,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun initView() {
         val binding = requireNotNull(binding)
-        val navigationMenu = MainNavigationMenu(onBackPressedDispatcher, binding)
-        val mainModal = MainModal(onBackPressedDispatcher, binding)
-        val mainAlert = MainAlert(lifecycleScope, binding)
+        val navigationMenu =
+            MainNavigationMenu(onBackPressedDispatcher, binding.activityMainNavigationMenu)
+        val mainModal = MainModal(onBackPressedDispatcher, binding.activityMainModal)
+        val mainAlert = MainAlert(lifecycleScope, binding.activityMainAlert)
 
-        binding.activityMainNavigationFabButton.setOnClickListener {
+        binding.activityMainNavigation.activityMainNavigationFabButton.setOnClickListener {
             viewModel.setViewEvent(Event.Info(MainActivityViewModel.fabClicked))
         }
 
-        binding.activityMainNavigationStartButton.setOnClickListener {
+        binding.activityMainNavigation.activityMainNavigationStartButton.setOnClickListener {
             viewModel.setViewEvent(Event.Info(MainActivityViewModel.requestNavigationMenu, true))
         }
 
-        binding.activityMainNavigationEndButton.setOnClickListener {
+        binding.activityMainNavigation.activityMainNavigationEndButton.setOnClickListener {
             viewModel.setAlert(MainAlertModel("test to test", "test") {})
         }
 
@@ -52,9 +50,12 @@ class MainActivity : AppCompatActivity() {
             "Rate This App"
         )
 
-        binding.activityMainNavigationMenuList.adapter = MainNavigationMenuAdapter(menus) {
-            viewModel.setViewEvent(Event.Info(MainActivityViewModel.requestNavigationMenu, false))
-        }
+        navigationMenu.binding.activityMainNavigationMenuList.adapter =
+            MainNavigationMenuAdapter(menus) {
+                viewModel.setViewEvent(
+                    Event.Info(MainActivityViewModel.requestNavigationMenu, false)
+                )
+            }
 
         viewModel.onInfo {
             when (it.type) {
