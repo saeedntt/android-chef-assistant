@@ -20,7 +20,7 @@ class SwapItemAdapterHelper(
     init {
         motionLayout.setOnTouchListener { _, event ->
             when (event.action) {
-                MotionEvent.ACTION_UP ->if (motionLayout.progress == 0.0F && motionLayout.currentState == initialState)
+                MotionEvent.ACTION_UP -> if (motionLayout.progress == 0.0F && motionLayout.currentState == initialState)
                     onClick()
                 MotionEvent.ACTION_CANCEL -> motionLayout.transitionToStart()
             }
@@ -28,21 +28,25 @@ class SwapItemAdapterHelper(
         }
     }
 
-    fun setupStartMenu(startMenu: ConstraintLayout, startMenuState: Int) {
+    fun setupStartMenu(startMenu: ConstraintLayout, back: View, startMenuState: Int) {
         var startMenuWidth = calcWidth(startMenu)
         if (isRTL) startMenuWidth = -startMenuWidth
         motionLayout.getConstraintSet(startMenuState).setTranslationX(itemView.id, startMenuWidth)
+        motionLayout.getConstraintSet(startMenuState).setTranslationX(back.id, startMenuWidth)
     }
 
-
-    fun setupEndMenu(endMenu: ConstraintLayout, endMenuState: Int) {
+    fun setupEndMenu(endMenu: ConstraintLayout, back: View, endMenuState: Int) {
         var endMenuWidth = -calcWidth(endMenu)
         if (isRTL) endMenuWidth = -endMenuWidth
         motionLayout.getConstraintSet(endMenuState).setTranslationX(itemView.id, endMenuWidth)
+        motionLayout.getConstraintSet(endMenuState).setTranslationX(back.id, endMenuWidth)
     }
 
     private fun calcWidth(constraintLayout: ConstraintLayout) = constraintLayout.children
-        .map { it.layoutParams.width }
+        .map {
+            it.measure(0, 0)
+            it.measuredWidth
+        }
         .reduce { acc, x -> acc + x }
         .toFloat()
 }

@@ -42,4 +42,6 @@
     <string name="grocery_fail_create">(%1$s) grocery fail create</string>
     <string name="grocery_success_remove">(%1$s) grocery success remove</string>
     <string name="grocery_fail_remove">(%1$s) grocery fail remove</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
 </resources>

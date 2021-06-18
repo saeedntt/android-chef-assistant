@@ -15,7 +15,8 @@
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/fragment_kitchen_manage_list_view"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
         app:layoutDescription="@xml/fragment_kitchen_manage_list_item_scene">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,25 +24,40 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/fragment_kitchen_manage_list_item_archive"
-                android:layout_width="?android:attr/listPreferredItemHeight"
+            <TextView
+                android:id="@+id/fragment_kitchen_manage_list_item_edit"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@color/cardview_dark_background"
-                android:foreground="?selectableItemBackground"
-                android:padding="20dp"
-                android:src="@drawable/ic_baseline_archive_24"
+                android:background="@drawable/shape_warning_5_gradient"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/screen_padding_horizontal"
+                android:lines="1"
+                android:text="@string/edit"
+                android:textColor="@color/primaryColor"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/primaryTextColor" />
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/fragment_kitchen_manage_list_item_background_start"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_black_10_gradient"
+            android:orientation="horizontal" />
+
+        <View
+            android:id="@+id/fragment_kitchen_manage_list_item_background_end"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_black_10_gradient_alt"
+            android:orientation="horizontal" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fragment_kitchen_manage_list_item"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/fragment_kitchen_manage_list_item_icon"
@@ -53,6 +69,7 @@
                 android:background="@drawable/shape_circle"
                 android:backgroundTint="@color/primaryLightColor"
                 android:padding="12dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/fragment_kitchen_manage_list_item_title"
                 app:layout_constraintStart_toStartOf="parent"
@@ -62,11 +79,15 @@
             <TextView
                 android:id="@+id/fragment_kitchen_manage_list_item_title"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:lines="1"
-                android:paddingHorizontal="@dimen/margin_medium"
-                android:text="@{kitchen.title, default=Item}"
+                android:background="@color/transparent"
+                android:lineSpacingExtra="4dp"
+                android:paddingHorizontal="@dimen/screen_padding_horizontal"
+                android:paddingVertical="18dp"
+                android:text="@{kitchen.title, default=Title}"
+                android:textColor="@color/textColor"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/fragment_kitchen_manage_list_item_icon"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -77,33 +98,20 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
-            <ImageView
+            <TextView
                 android:id="@+id/fragment_kitchen_manage_list_item_delete"
-                android:layout_width="?android:attr/listPreferredItemHeight"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@color/primaryDarkColor"
-                android:foreground="?selectableItemBackground"
-                android:padding="20dp"
-                android:src="@drawable/ic_baseline_delete_24"
+                android:background="@drawable/shape_danger_5_gradient"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/screen_padding_horizontal"
+                android:lines="1"
+                android:text="@string/delete"
+                android:textColor="@color/danger"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/fragment_kitchen_manage_list_item_edit"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/primaryTextColor" />
-
-            <ImageView
-                android:id="@+id/fragment_kitchen_manage_list_item_edit"
-                android:layout_width="?android:attr/listPreferredItemHeight"
-                android:layout_height="match_parent"
-                android:background="@color/secondaryDarkColor"
-                android:foreground="?selectableItemBackground"
-                android:padding="20dp"
-                android:src="@drawable/ic_baseline_edit_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/fragment_kitchen_manage_list_item_delete"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/primaryTextColor" />
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.motion.widget.MotionLayout>

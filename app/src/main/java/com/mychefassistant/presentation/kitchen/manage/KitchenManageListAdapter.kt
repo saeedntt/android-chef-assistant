@@ -1,6 +1,5 @@
 package com.mychefassistant.presentation.kitchen.manage
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -24,10 +23,6 @@ class KitchenManageListAdapter(private val eventGate: (Event.Info) -> Unit) :
         holder.binding.kitchen = item
 
         val motion = holder.binding.fragmentKitchenManageListView
-        holder.binding.fragmentKitchenManageListItemArchive.setOnClickListener {
-            motion.transitionToStart()
-            Log.d("console.debug", "onBindViewHolder: archive")
-        }
         holder.binding.fragmentKitchenManageListItemDelete.setOnClickListener {
             motion.transitionToStart()
             eventGate(Event.Info(KitchenManageViewModel.kitchenRemoveRequest, item))
@@ -45,11 +40,13 @@ class KitchenManageListAdapter(private val eventGate: (Event.Info) -> Unit) :
 
         swapHelper.setupStartMenu(
             holder.binding.fragmentKitchenManageListMenuStart,
+            holder.binding.fragmentKitchenManageListItemBackgroundStart,
             R.id.fragment_kitchen_manage_list_show_start_menu
         )
 
         swapHelper.setupEndMenu(
             holder.binding.fragmentKitchenManageListMenuEnd,
+            holder.binding.fragmentKitchenManageListItemBackgroundEnd,
             R.id.fragment_kitchen_manage_list_show_end_menu
         )
     }

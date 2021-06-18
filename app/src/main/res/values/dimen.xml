@@ -11,9 +11,8 @@
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_tiny">4dp</dimen>
 
-    <dimen name="screen_padding_top">20dp</dimen>
-    <dimen name="screen_padding_left">20dp</dimen>
-    <dimen name="screen_padding_right">20dp</dimen>
+    <dimen name="screen_padding_top">140dp</dimen>
+    <dimen name="screen_padding_horizontal">30dp</dimen>
     <dimen name="screen_padding_bottom">20dp</dimen>
 
     <dimen name="navigation_height">80dp</dimen>
