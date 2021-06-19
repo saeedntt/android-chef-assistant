@@ -26,11 +26,10 @@
 
             <View
                 android:id="@+id/activity_main_alert_first_circle"
+                style="@style/Theme.MyChefAssistant.GradientCircle"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@drawable/shape_circle_gradient"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1, 1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.43"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,11 +38,10 @@
                 app:layout_constraintWidth_percent="0.34" />
 
             <View
+                style="@style/Theme.MyChefAssistant.GradientCircle"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@drawable/shape_circle_gradient"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1, 1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.84"
                 app:layout_constraintStart_toStartOf="parent"
@@ -83,9 +81,9 @@
 
         <TextView
             android:id="@+id/activity_main_alert_button"
+            style="@style/Theme.MyChefAssistant.GradientCircleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_navigation_fab"
             android:elevation="10dp"
             android:gravity="center_vertical"
             android:paddingHorizontal="16dp"

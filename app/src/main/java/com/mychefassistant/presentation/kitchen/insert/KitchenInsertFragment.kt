@@ -41,6 +41,10 @@ class KitchenInsertFragment : Fragment() {
 
         activity.viewModel.setFullView()
 
+        binding.fragmentKitchenInsertBack.setOnClickListener {
+            viewModel.setViewEvent(Event.Info(KitchenInsertViewModel.requestBackToKitchens))
+        }
+
         iconPicker = IconPicker(childFragmentManager, KitchenInsertIcons.list) {
             val lastKitchen = getLastKitchen()
             viewModel.setViewEvent(
@@ -66,7 +70,7 @@ class KitchenInsertFragment : Fragment() {
                 when (it.type) {
                     KitchenInsertViewModel.setKitchen -> binding.kitchen = it.data as Kitchen
                     KitchenInsertViewModel.routeToGrocery -> routeToGrocery(it.data as Kitchen)
-                    KitchenInsertViewModel.backFragment -> activity.onBackPressed()
+                    KitchenInsertViewModel.backToKitchens -> activity.onBackPressed()
                 }
             }
             .onError {

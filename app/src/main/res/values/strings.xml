@@ -44,4 +44,5 @@
     <string name="grocery_fail_remove">(%1$s) grocery fail remove</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
+    <string name="kitchens">Kitchens</string>
 </resources>

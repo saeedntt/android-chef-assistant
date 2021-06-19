@@ -10,9 +10,9 @@ import com.mychefassistant.core.interactors.GetKitchensUseCase
 import com.mychefassistant.core.interactors.UpdateKitchenUseCase
 import com.mychefassistant.core.utils.KitchenIcons
 import com.mychefassistant.framework.ChefAssistantViewModel
+import com.mychefassistant.presentation.main.alert.MainAlertModel
 import com.mychefassistant.utils.Event
 import com.mychefassistant.utils.commandhistory.CommandHistory
-import com.mychefassistant.presentation.main.alert.MainAlertModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -57,7 +57,7 @@ class KitchenInsertViewModel(
                     return@body
                 }
         }
-        addKitchenUseCase(kitchen).onSuccess { setEvent(Event.Info(backFragment)) }
+        addKitchenUseCase(kitchen).onSuccess { setEvent(Event.Info(backToKitchens)) }
     }
 
     private suspend fun updateKitchen(kitchen: Kitchen) = run body@{
@@ -65,7 +65,7 @@ class KitchenInsertViewModel(
             setEvent(Event.Error(setTitleInputError, it))
             return@body
         }
-        updateKitchenUseCase(kitchen).onSuccess { setEvent(Event.Info(backFragment)) }
+        updateKitchenUseCase(kitchen).onSuccess { setEvent(Event.Info(backToKitchens)) }
     }
 
     private suspend fun saveKitchenRequest(kitchen: Kitchen) {
@@ -92,6 +92,7 @@ class KitchenInsertViewModel(
             is Event.Info -> when (event.type) {
                 requestSaveKitchen -> saveKitchenRequest(event.data as Kitchen)
                 setKitchenRequest -> setEvent(Event.Info(setKitchen, event.data as Kitchen))
+                requestBackToKitchens -> setEvent(Event.Info(backToKitchens))
             }
         }
     }
@@ -100,9 +101,10 @@ class KitchenInsertViewModel(
         const val setTitleInputError = 1
         const val createAlert = 2
         const val routeToGrocery = 3
-        const val backFragment = 4
+        const val backToKitchens = 4
         const val requestSaveKitchen = 5
         const val setKitchen = 6
         const val setKitchenRequest = 7
+        const val requestBackToKitchens = 8
     }
 }

@@ -49,15 +49,14 @@
 
                 <ImageView
                     android:id="@+id/activity_main_navigation_fab_button"
+                    style="@style/Theme.MyChefAssistant.GradientCircleButton"
                     android:layout_width="@dimen/navigation_height"
                     android:layout_height="0dp"
                     android:layout_marginBottom="@dimen/screen_padding_bottom"
-                    android:background="@drawable/shape_navigation_fab"
                     android:elevation="@dimen/navigation_fab_padding"
                     android:padding="@dimen/navigation_fab_padding"
                     android:src="@drawable/ic_round_add_24"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1, 1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

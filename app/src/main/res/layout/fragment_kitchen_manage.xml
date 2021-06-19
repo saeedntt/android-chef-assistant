@@ -15,17 +15,15 @@
 
             <TextView
                 android:id="@+id/fragment_kitchen_manage_title"
+                style="@style/Theme.MyChefAssistant.PageHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Kitchens"
-                android:textStyle="bold"
-                android:textSize="50sp"
                 android:layout_marginBottom="30dp"
-                android:textColor="@color/textColor"
+                android:paddingHorizontal="@dimen/screen_padding_horizontal"
+                android:text="@string/kitchens"
                 app:layout_constraintBottom_toTopOf="@id/fragment_kitchen_manage_list"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:paddingHorizontal="@dimen/screen_padding_horizontal"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView

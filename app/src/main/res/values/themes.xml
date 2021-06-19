@@ -24,4 +24,55 @@
     <style name="Theme.MyChefAssistant.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.MyChefAssistant.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.MyChefAssistant.PageHeader">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">50sp</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="Theme.MyChefAssistant.GradientCircle">
+        <item name="android:background">@drawable/shape_circle_gradient</item>
+        <item name="layout_constraintDimensionRatio">1, 1</item>
+    </style>
+
+    <style name="Theme.MyChefAssistant.GradientCircleButton">
+        <item name="android:background">@drawable/shape_circle_ripple_gradient</item>
+        <item name="android:stateListAnimator">@animator/button_elevation</item>
+        <item name="layout_constraintDimensionRatio">1, 1</item>
+    </style>
+
+    <style name="Theme.MyChefAssistant.PageSubmit">
+        <item name="android:minHeight">60dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/background</item>
+        <item name="android:background">@drawable/shape_ripple_gradient</item>
+        <item name="android:elevation">10dp</item>
+        <item name="android:layout_marginStart">@dimen/screen_padding_horizontal</item>
+        <item name="android:layout_marginEnd">@dimen/screen_padding_horizontal</item>
+        <item name="android:layout_marginBottom">@dimen/screen_padding_bottom</item>
+        <item name="android:gravity">center</item>
+        <item name="android:stateListAnimator">@animator/button_elevation</item>
+    </style>
+
+    <style name="Theme.MyChefAssistant.ModalButton">
+        <item name="android:minHeight">36dp</item>
+        <item name="android:background">@drawable/shape_ripple_primary</item>
+        <item name="android:backgroundTint">@color/background</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:outlineProvider">bounds</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:stateListAnimator">@animator/button_elevation</item>
+    </style>
+
+    <style name="Theme.MyChefAssistant.Input" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">@color/background</item>
+        <item name="boxStrokeWidth">3dp</item>
+        <item name="boxStrokeColor">@color/text_layout_border</item>
+        <item name="android:elevation">10dp</item>
+        <item name="hintTextColor">@color/secondaryColor</item>
+    </style>
 </resources>

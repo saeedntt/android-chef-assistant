@@ -5,7 +5,7 @@
     <Transition
         app:constraintSetEnd="@id/activity_main_layout_full"
         app:constraintSetStart="@id/activity_main_layout_normal"
-        app:duration="500">
+        app:duration="100">
         <KeyFrameSet />
     </Transition>
 
