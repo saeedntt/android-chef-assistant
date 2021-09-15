@@ -1,5 +1,7 @@
 package com.mychefassistant.core.utils
 
+import kotlin.jvm.Throws
+
 abstract class BaseUseCase<in Request, Response> {
     open operator fun invoke(parameter: Request): Result<Response> = try {
         execute(parameter)

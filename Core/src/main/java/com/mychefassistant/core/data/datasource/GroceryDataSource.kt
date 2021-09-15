@@ -5,7 +5,7 @@ import com.mychefassistant.core.domain.Kitchen
 import kotlinx.coroutines.flow.Flow
 
 interface GroceryDataSource {
-    suspend fun add(kitchen: Kitchen, grocery: Grocery)
+    suspend fun add(kitchen: Kitchen, grocery: Grocery): Int
 
     fun getAll(kitchen: Kitchen): Flow<List<Grocery>>
 

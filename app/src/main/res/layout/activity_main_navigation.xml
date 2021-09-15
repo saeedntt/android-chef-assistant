@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_main_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_main_navigation_start"
+                android:layout_width="@dimen/navigation_button_width"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/screen_padding_bottom"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/activity_main_navigation_fab"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/activity_main_navigation_start_button"
+                    android:layout_width="@dimen/navigation_button_height"
+                    android:layout_height="0dp"
+                    android:background="@drawable/shape_circle_ripple_primary"
+                    android:backgroundTint="@color/background"
+                    android:padding="@dimen/navigation_button_icon_button_padding"
+                    android:src="@drawable/ic_round_menu_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1, 1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/iconColor" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_main_navigation_fab"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/activity_main_navigation_end"
+                app:layout_constraintStart_toEndOf="@id/activity_main_navigation_start"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/activity_main_navigation_fab_button"
+                    style="@style/Theme.MyChefAssistant.GradientCircleButton"
+                    android:layout_width="@dimen/navigation_height"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="@dimen/screen_padding_bottom"
+                    android:elevation="@dimen/navigation_fab_padding"
+                    android:padding="@dimen/navigation_fab_padding"
+                    android:src="@drawable/ic_round_add_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/secondaryTextColor" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_main_navigation_end"
+                android:layout_width="@dimen/navigation_button_width"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/screen_padding_bottom"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/activity_main_navigation_fab"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/activity_main_navigation_end_button"
+                    android:layout_width="@dimen/navigation_button_height"
+                    android:layout_height="0dp"
+                    android:background="@drawable/shape_circle_ripple_primary"
+                    android:backgroundTint="@color/background"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="@dimen/navigation_button_icon_button_padding"
+                    android:src="@drawable/ic_outline_shopping_basket_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1, 1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/iconColor" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

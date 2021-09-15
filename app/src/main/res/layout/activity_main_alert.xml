@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="alertModel"
+            type="com.mychefassistant.presentation.main.alert.MainAlertModel" />
+    </data>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/activity_main_alert_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        app:layoutDescription="@xml/activity_main_alert_scene">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_main_alert_content"
+            android:layout_width="@dimen/alert_height"
+            android:layout_height="0dp"
+            android:background="@drawable/shape_circle_gradient"
+            android:elevation="10dp"
+            android:onClick="@{() -> null}">
+
+            <View
+                android:id="@+id/activity_main_alert_first_circle"
+                style="@style/Theme.MyChefAssistant.GradientCircle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.43"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.74"
+                app:layout_constraintWidth_percent="0.34" />
+
+            <View
+                style="@style/Theme.MyChefAssistant.GradientCircle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.84"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.80"
+                app:layout_constraintWidth_percent="0.18" />
+
+            <TextView
+                android:id="@+id/activity_main_alert_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12pt"
+                android:layout_marginTop="36dp"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="Message"
+                android:textColor="@color/background"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/activity_main_alert_first_circle"
+                app:layout_constraintTop_toTopOf="@id/activity_main_alert_first_circle" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="60dp"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="8dp"
+                android:text="@{alertModel.title, default=alert}"
+                android:textColor="@color/background"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@id/activity_main_alert_content"
+                app:layout_constraintStart_toStartOf="@id/activity_main_alert_title"
+                app:layout_constraintTop_toBottomOf="@id/activity_main_alert_title" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/activity_main_alert_button"
+            style="@style/Theme.MyChefAssistant.GradientCircleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:singleLine="true"
+            android:text="@{alertModel.btnText, default=Button}"
+            android:textColor="@color/background"
+            android:textStyle="bold" />
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>

@@ -4,47 +4,85 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.mychefassistant.R
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
+import com.mychefassistant.core.domain.Grocery
+import com.mychefassistant.databinding.FragmentGroceryManageBinding
+import com.mychefassistant.presentation.grocery.insert.GroceryInsertFragment
+import com.mychefassistant.presentation.main.MainActivity
+import com.mychefassistant.presentation.main.alert.MainAlertModel
+import com.mychefassistant.presentation.main.modal.MainModalModel
+import com.mychefassistant.utils.Event
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GroceryManageFragment : Fragment() {
     private val viewModel: GroceryManageViewModel by viewModel()
-    private var kitchenId = 0
-    private lateinit var title: TextView
+    private val args: GroceryManageFragmentArgs by navArgs()
+    private val kitchenId by lazy { args.kitchenId }
+    private var binding: FragmentGroceryManageBinding? = null
+    private var modal: GroceryInsertFragment? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_grocery, container, false)
+    ): View? {
+        binding = FragmentGroceryManageBinding.inflate(inflater, container, false)
+        return binding?.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getArgs()
-        title = view.findViewById(R.id.title)
+        val activity = activity as MainActivity
 
-        viewModel.eventListener(viewLifecycleOwner)
+        activity.viewModel.setNormalView()
+
+        activity.viewModel.setFabOnClickListener {
+            viewModel.setViewEvent(Event.Info(GroceryManageViewModel.requestShowInsertModal))
+        }
+
+        viewModel
             .onInfo {
                 when (it.type) {
-                    GroceryManageViewModel.onKitchenLoad -> onKitchenLoad()
+                    GroceryManageViewModel.onKitchenLoad -> binding?.kitchen = viewModel.kitchen
+                    GroceryManageViewModel.onGroceriesLoad -> setupListView()
+                    GroceryManageViewModel.showInsertModal -> showInsertModal(it.data as? Grocery)
+                    GroceryManageViewModel.closeInsertModal -> modal?.dismiss()
+                    GroceryManageViewModel.modalEvent -> modal?.onParentEventListener(it.data as Event)
+                    GroceryManageViewModel.createModal -> activity.viewModel.setModal(it.data as MainModalModel)
+                    GroceryManageViewModel.createAlert -> activity.viewModel.setAlert(it.data as MainAlertModel)
+                }
+            }
+            .onError {
+                when (it.type) {
+                    GroceryManageViewModel.createErrorAlert -> it.exception.message?.let { x ->
+                        activity.viewModel.setAlert(MainAlertModel(x))
+                    }
                 }
             }
 
-        viewModel.start(kitchenId)
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted { viewModel.eventListener() }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted { viewModel.start(kitchenId) }
     }
 
     override fun onPause() {
+        viewLifecycleOwner.lifecycleScope.launch { viewModel.resetEvents() }
         super.onPause()
-        viewModel.resetEvents()
     }
 
-    private fun getArgs() = arguments?.apply {
-        kitchenId = getInt("id")
+    private fun setupListView() {
+        val adapter = GroceryManageListAdapter { viewModel.setViewEvent(it) }
+        binding!!.fragmentGroceryManageList.adapter = adapter
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.groceries?.collect { adapter.submitList(it) }
+        }
     }
 
-    private fun onKitchenLoad() {
-        title.text = viewModel.kitchen.title
+    private fun showInsertModal(grocery: Grocery?) {
+        modal = GroceryInsertFragment(childFragmentManager, grocery) { viewModel.setViewEvent(it) }
+        modal?.show()
     }
 }

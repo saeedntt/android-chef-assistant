@@ -7,7 +7,6 @@ val kitchenUseCaseModule = module {
     single { AddKitchenUseCase(get()) }
     single { GetKitchensUseCase(get()) }
     single { GetKitchenByIdUseCase(get()) }
-    single { FindKitchenUseCase(get()) }
     single { RemoveKitchenUseCase(get()) }
     single { UpdateKitchenUseCase(get()) }
 }

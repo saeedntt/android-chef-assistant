@@ -4,75 +4,105 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
-import com.mychefassistant.R
+import androidx.navigation.fragment.navArgs
+import com.mychefassistant.core.domain.Kitchen
+import com.mychefassistant.databinding.FragmentKitchenInsertBinding
+import com.mychefassistant.presentation.grocery.manage.GroceryManageFragmentArgs
+import com.mychefassistant.presentation.main.MainActivity
+import com.mychefassistant.utils.Event
+import com.mychefassistant.utils.iconpicker.IconPicker
+import com.mychefassistant.presentation.main.alert.MainAlertModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class KitchenInsertFragment : Fragment() {
     private val viewModel: KitchenInsertViewModel by viewModel()
-    private lateinit var titleInput: TextInputEditText
-    private lateinit var titleInputLayout: TextInputLayout
-    private lateinit var locationInput: TextInputEditText
-    private var iconInput = 1
+    private var binding: FragmentKitchenInsertBinding? = null
+    private var iconPicker: IconPicker? = null
+    private val args: GroceryManageFragmentArgs by navArgs()
+    private val kitchenId by lazy { args.kitchenId }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_kitchen_insert, container, false)
+    ): View? {
+        binding = FragmentKitchenInsertBinding.inflate(inflater, container, false)
+        return binding?.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        titleInput = view.findViewById(R.id.title_input)
-        titleInputLayout = view.findViewById(R.id.title_layout)
-        locationInput = view.findViewById(R.id.location_input)
+        val activity = activity as MainActivity
+        val binding = requireNotNull(binding)
 
-        view.findViewById<Button>(R.id.button).setOnClickListener {
-            viewModel.addKitchenRequest(
-                title = titleInput.text.toString(),
-                location = if (locationInput.text.isNullOrBlank()) null else locationInput.text.toString()
-                    .toInt(),
-                icon = iconInput
+        activity.viewModel.setFullView()
+
+        binding.fragmentKitchenInsertBack.setOnClickListener {
+            viewModel.setViewEvent(Event.Info(KitchenInsertViewModel.requestBackToKitchens))
+        }
+
+        iconPicker = IconPicker(childFragmentManager, KitchenInsertIcons.list) {
+            val lastKitchen = getLastKitchen()
+            viewModel.setViewEvent(
+                Event.Info(
+                    KitchenInsertViewModel.setKitchenRequest,
+                    Kitchen(lastKitchen.id, lastKitchen.title, it.label, lastKitchen.location)
+                )
             )
         }
 
-        viewModel.eventListener(viewLifecycleOwner)
+        binding.fragmentKitchenInsertIcon.setOnClickListener {
+            iconPicker?.show()
+        }
+
+        binding.fragmentKitchenInsertSubmit.setOnClickListener {
+            viewModel.setViewEvent(
+                Event.Info(KitchenInsertViewModel.requestSaveKitchen, getLastKitchen())
+            )
+        }
+
+        viewModel
             .onInfo {
                 when (it.type) {
-                    KitchenInsertViewModel.backFragment -> activity?.onBackPressed()
+                    KitchenInsertViewModel.setKitchen -> binding.kitchen = it.data as Kitchen
+                    KitchenInsertViewModel.routeToGrocery -> routeToGrocery(it.data as Kitchen)
+                    KitchenInsertViewModel.backToKitchens -> activity.onBackPressed()
                 }
             }
             .onError {
                 when (it.type) {
                     KitchenInsertViewModel.setTitleInputError ->
-                        titleInputLayout.error = it.exception.message
-                    KitchenInsertViewModel.createAlertWithButton ->
-                        snackBarWithAction(it.data as KitchenInsertViewModel.AlertButtonModel)
+                        binding.fragmentKitchenInsertTitle.error = it.exception.message
+                    KitchenInsertViewModel.createAlert -> activity.viewModel.setAlert(it.data as MainAlertModel)
                 }
             }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted { viewModel.start(kitchenId) }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted { viewModel.eventListener() }
+    }
+
+    private fun getLastKitchen(): Kitchen {
+        val binding = requireNotNull(binding)
+        val lastKitchen = requireNotNull(binding.kitchen)
+        val locationText = binding.fragmentKitchenInsertLocation.editText?.text
+        return Kitchen(
+            lastKitchen.id,
+            binding.fragmentKitchenInsertTitle.editText?.text.toString(),
+            lastKitchen.icon,
+            if (locationText.isNullOrBlank()) null else locationText.toString()
+                .toInt()
+        )
     }
 
     override fun onPause() {
+        viewLifecycleOwner.lifecycleScope.launch { viewModel.resetEvents() }
         super.onPause()
-        viewModel.resetEvents()
     }
 
-    private fun snackBarWithAction(alert: KitchenInsertViewModel.AlertButtonModel) =
-        Snackbar.make(requireView(), alert.title, Snackbar.LENGTH_LONG)
-            .setAction(alert.btnTitle) {
-                when (alert.action) {
-                    KitchenInsertViewModel.routeToGrocery -> routeToGrocery(alert.data as Int)
-                }
-            }
-            .show()
-
-    private fun routeToGrocery(id: Int) = findNavController().navigate(
-        R.id.action_kitchen_insert_to_grocery_manage2, bundleOf("id" to id)
+    private fun routeToGrocery(kitchen: Kitchen) = findNavController().navigate(
+        KitchenInsertFragmentDirections.actionFragmentKitchenInsertToFragmentGroceryManage(kitchen.id)
     )
 }

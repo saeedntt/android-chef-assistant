@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/activity_main_navigation_menu_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/activity_main_navigation_menu_scene">
+
+        <View
+            android:id="@+id/activity_main_navigation_menu_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/modalBackground" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_main_navigation_menu_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_circle_gradient"
+            android:elevation="10dp"
+            android:onClick="@{() -> null}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activity_main_navigation_menu_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.68"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.6"
+                tools:listitem="@layout/navigation_menu_item" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/activity_main_navigation_menu_close"
+            android:layout_width="@dimen/navigation_height"
+            android:layout_height="0dp"
+            android:background="@drawable/shape_circle"
+            android:elevation="10dp"
+            android:padding="@dimen/navigation_button_icon_button_padding"
+            android:src="@drawable/ic_round_add_24"
+            app:tint="@color/background" />
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>

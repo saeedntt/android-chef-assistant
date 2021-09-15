@@ -10,11 +10,13 @@ val databaseModule = module {
         Room.databaseBuilder(
             androidApplication(),
             ChefAssistantDatabase::class.java,
-            "ca_v4.db"
+            "app_v1.db"
         )
             .fallbackToDestructiveMigration()
             .build()
     }
     single { get<ChefAssistantDatabase>().kitchenDao() }
     single { get<ChefAssistantDatabase>().groceryDao() }
+    single { get<ChefAssistantDatabase>().shoppingListDao() }
+    single { get<ChefAssistantDatabase>().shoppingListItemDao() }
 }

@@ -4,7 +4,7 @@ import com.mychefassistant.core.domain.Kitchen
 import kotlinx.coroutines.flow.Flow
 
 interface KitchenDataSource {
-    suspend fun add(kitchen: Kitchen)
+    suspend fun add(kitchen: Kitchen): Int
 
     suspend fun remove(kitchen: Kitchen)
 
@@ -13,6 +13,4 @@ interface KitchenDataSource {
     fun getAll(): Flow<List<Kitchen>>
 
     suspend fun getById(id: Int): Kitchen
-
-    suspend fun find(kitchen: Kitchen): List<Kitchen>
 }

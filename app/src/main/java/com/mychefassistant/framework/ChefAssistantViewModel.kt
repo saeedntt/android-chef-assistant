@@ -1,30 +1,36 @@
 package com.mychefassistant.framework
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mychefassistant.utils.Event
+import com.mychefassistant.utils.commandhistory.CommandHistory
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-abstract class ChefAssistantViewModel : ViewModel() {
-    private val event: MutableLiveData<Event> = MutableLiveData()
-    private var onErrorListener: (Event.Error) -> Unit = fun(_) {}
-    private var onInfoListener: (Event.Info) -> Unit = fun(_) {}
+abstract class ChefAssistantViewModel(protected val history: CommandHistory) : ViewModel() {
+    private val resetEvent = Event.Info(onResetEvents)
+    private val event = MutableStateFlow<Event>(resetEvent)
+    private var onErrorListener: (Event.Error) -> Unit = {}
+    private var onInfoListener: (Event.Info) -> Unit = {}
 
-    protected fun setEvent(x: Event) = event.postValue(x)
+    protected suspend fun setEvent(x: Event) = event.emit(x)
 
-    open fun onFragmentEventListener(event: Event.Info) {}
+    suspend fun resetEvents() = event.emit(resetEvent)
 
-    fun eventListener(lifecycleOwner: LifecycleOwner): ChefAssistantViewModel {
-        event.observe(lifecycleOwner, Observer {
+    suspend fun eventListener(): ChefAssistantViewModel {
+        event.collect {
             when (it) {
-                is Event.Error -> onErrorListener(it)
-                is Event.Info -> when(it.type) {
-                    onFragmentEvent -> onFragmentEventListener(it.data as Event.Info)
+                is Event.Error -> when (it.type) {
+                    onViewEvent -> viewEventListener(it.data as Event.Error)
+                    else -> onErrorListener(it)
+                }
+                is Event.Info -> when (it.type) {
+                    onViewEvent -> viewEventListener(it.data as Event.Info)
                     else -> onInfoListener(it)
                 }
             }
-        })
+        }
         return this
     }
 
@@ -38,14 +44,14 @@ abstract class ChefAssistantViewModel : ViewModel() {
         return this
     }
 
-    fun resetEvents() = event.postValue(Event.Info(onResetEvents))
-
-    fun setFragmentEvent(event: Event.Info) {
-        setEvent(Event.Info(onFragmentEvent, event))
+    fun setViewEvent(event: Event.Info) {
+        viewModelScope.launch { setEvent(Event.Info(onViewEvent, event)) }
     }
 
+    open suspend fun viewEventListener(event: Event) {}
+
     companion object {
-        const val onResetEvents = "onResetEvents"
-        const val onFragmentEvent = "onFragmentEvent"
+        const val onResetEvents = -1
+        const val onViewEvent = 0
     }
 }

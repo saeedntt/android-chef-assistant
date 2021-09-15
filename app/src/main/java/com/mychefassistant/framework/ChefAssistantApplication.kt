@@ -1,11 +1,8 @@
 package com.mychefassistant.framework
 
 import android.app.Application
-import com.mychefassistant.framework.modules.databaseModule
-import com.mychefassistant.framework.modules.roomsModule
-import com.mychefassistant.framework.modules.usecase.groceryUseCaseModule
-import com.mychefassistant.framework.modules.usecase.kitchenUseCaseModule
-import com.mychefassistant.framework.modules.viewModelModule
+import com.mychefassistant.framework.modules.*
+import com.mychefassistant.framework.modules.usecase.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -21,7 +18,10 @@ class ChefAssistantApplication : Application() {
                 roomsModule,
                 kitchenUseCaseModule,
                 groceryUseCaseModule,
-                viewModelModule
+                shoppingListsUseCase,
+                shoppingListItemUseCase,
+                viewModelModule,
+                commandHistory
             )
         }
     }

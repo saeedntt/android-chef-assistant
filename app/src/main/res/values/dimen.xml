@@ -7,7 +7,25 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_tiny">4dp</dimen>
-    <dimen name="margin_medium">16dp</dimen>
+
+    <dimen name="screen_padding_top">140dp</dimen>
+    <dimen name="screen_padding_horizontal">30dp</dimen>
+    <dimen name="screen_padding_bottom">20dp</dimen>
+
+    <dimen name="navigation_height">80dp</dimen>
+    <dimen name="navigation_fab_padding">12dp</dimen>
+    <dimen name="navigation_button_height">60dp</dimen>
+    <dimen name="navigation_button_width">100dp</dimen>
+    <dimen name="navigation_button_icon_button_padding">12dp</dimen>
+    <dimen name="navigation_menu_layout_width">540dp</dimen>
+    <dimen name="navigation_menu_layout_margin_start">-120dp</dimen>
+    <dimen name="navigation_menu_layout_margin_top">60dp</dimen>
+
+    <dimen name="alert_hide_height">100dp</dimen>
+    <dimen name="alert_height">390dp</dimen>
+    <dimen name="alert_margin_start">-90dp</dimen>
+    <dimen name="alert_margin_top">-190dp</dimen>
 </resources>

@@ -3,7 +3,7 @@ package com.mychefassistant.framework.db.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Groceries")
+@Entity(tableName = "groceries")
 data class GroceryEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
@@ -12,7 +12,5 @@ data class GroceryEntity(
 
     val title: String,
 
-    val value: String = "",
-
-    val status: Boolean = false
+    val value: String? = null
 )

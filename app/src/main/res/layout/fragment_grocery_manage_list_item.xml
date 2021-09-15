@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="grocery"
+            type="com.mychefassistant.core.domain.Grocery" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:background="?selectableItemBackground"
+        android:paddingVertical="@dimen/margin_tiny">
+
+        <TextView
+            android:id="@+id/fragment_grocery_manage_list_item_title"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/margin_medium"
+            android:text="@{grocery.title, default=Title}"
+            app:layout_constraintBottom_toTopOf="@id/fragment_grocery_manage_list_item_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fragment_grocery_manage_list_item_value"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/margin_medium"
+            android:text="@{grocery.value, default=value}"
+            android:textColor="@color/secondaryTextColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_grocery_manage_list_item_title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
